@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
+import ToDoPage from "../src/pages/todo/Todo";
+import { ErrorProvider } from "./contexts/ErrorContext";
+import Alert from "./components/alert/Alert";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorProvider>
+      <div className="app-container">
+        <Navbar/>
+        <Alert />
+        <div className="content-container">
+          <ToDoPage />
+        </div>
+      </div>
+    </ErrorProvider>
   );
 }
 
