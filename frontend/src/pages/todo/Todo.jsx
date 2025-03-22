@@ -5,9 +5,12 @@ import Task from "./Task";
 import AddTaskPanel from "./AddTaskPanel";
 import Calendar from "./Calendar";
 import { useError } from "../../contexts/ErrorContext";
+import { useTasks } from "../../contexts/TaskContexts"; 
+
 
 const ToDoPage = () => {
     const { showError } = useError();
+    const { tasks, setTasks, deleteTask, toggleTaskCompletion } = useTasks();
 
     const greetings = {
         overdueFew: "You've got a few overdue tasks! Let's catch up.",
@@ -23,12 +26,6 @@ const ToDoPage = () => {
     const [taskTypes, setTaskTypes] = useState([
         { taskTypeKey: 1, taskTypeName: "Work", taskColor: "#ff6347" },
         { taskTypeKey: 2, taskTypeName: "Personal", taskColor: "#4682b4" },
-        { taskTypeKey: 3, taskTypeName: "Shopping", taskColor: "#32cd32" },
-        { taskTypeKey: 1, taskTypeName: "Work", taskColor: "#ff6347" },
-        { taskTypeKey: 2, taskTypeName: "Personal", taskColor: "#4682b4" },
-        { taskTypeKey: 3, taskTypeName: "Shopping", taskColor: "#32cd32" },
-        { taskTypeKey: 1, taskTypeName: "Work", taskColor: "#ff6347" },
-        { taskTypeKey: 2, taskTypeName: "Personal", taskColor: "#4682b4" },
         { taskTypeKey: 3, taskTypeName: "Shopping", taskColor: "#32cd32" }
     ]);
 
@@ -36,29 +33,6 @@ const ToDoPage = () => {
         return tasks.slice().sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
     };
 
-
-    const [tasks, setTasks] = useState([
-        { taskKey: 1, taskName: "Buy groceries", taskType: "Shopping", taskColor: "#ff6347", isCompleted: false, dueDate: "2025-03-19", taskDescription: "Milk, eggs, bread" },
-        { taskKey: 2, taskName: "Meeting", taskType: "Work", taskColor: "#4682b4",isCompleted: false, dueDate: "2025-03-21", taskDescription: "Client call at 3PM" },
-        { taskKey: 3, taskName: "Workout", taskType: "Personal", taskColor: "#32cd32", isCompleted: true, dueDate: "2025-03-22", taskDescription: "1-hour gym session" },
-        { taskKey: 4, taskName: "Read book", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-23", taskDescription: "Read 20 pages" },
-        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#9370db", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" },
-        { taskKey: 1, taskName: "Buy groceries", taskType: "Shopping", taskColor: "#ff6347", isCompleted: false, dueDate: "2025-03-19", taskDescription: "Milk, eggs, bread" },
-        { taskKey: 2, taskName: "Meeting", taskType: "Work", taskColor: "#4682b4",isCompleted: false, dueDate: "2025-03-21", taskDescription: "Client call at 3PM" },
-        { taskKey: 3, taskName: "Workout", taskType: "Personal", taskColor: "#32cd32", isCompleted: true, dueDate: "2025-03-22", taskDescription: "1-hour gym session" },
-        { taskKey: 4, taskName: "Read book", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-23", taskDescription: "Read 20 pages" },
-        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#9370db", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" },
-        { taskKey: 1, taskName: "Buy groceries", taskType: "Shopping", taskColor: "#ff6347", isCompleted: false, dueDate: "2025-03-19", taskDescription: "Milk, eggs, bread" },
-        { taskKey: 2, taskName: "Meeting", taskType: "Work", taskColor: "#4682b4",isCompleted: false, dueDate: "2025-03-21", taskDescription: "Client call at 3PM" },
-        { taskKey: 3, taskName: "Workout", taskType: "Personal", taskColor: "#32cd32", isCompleted: true, dueDate: "2025-03-22", taskDescription: "1-hour gym session" },
-        { taskKey: 4, taskName: "Read book", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-23", taskDescription: "Read 20 pages" },
-        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#9370db", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" },
-        { taskKey: 1, taskName: "Buy groceries", taskType: "Shopping", taskColor: "#ff6347", isCompleted: false, dueDate: "2025-03-19", taskDescription: "Milk, eggs, bread" },
-        { taskKey: 2, taskName: "Meeting", taskType: "Work", taskColor: "#4682b4",isCompleted: false, dueDate: "2025-03-21", taskDescription: "Client call at 3PM" },
-        { taskKey: 3, taskName: "Workout", taskType: "Personal", taskColor: "#32cd32", isCompleted: true, dueDate: "2025-03-22", taskDescription: "1-hour gym session" },
-        { taskKey: 4, taskName: "Read book", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-23", taskDescription: "Read 20 pages" },
-        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#9370db", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" },
-    ]);
 
     const [taskPanel, setTaskPanel] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
@@ -75,13 +49,11 @@ const ToDoPage = () => {
         setTaskTypes([...taskTypes, newTaskType]);
     };
 
-    const deleteTask = (taskKey) => {
-        setTasks(tasks.filter(task => task.taskKey !== taskKey));
-    };
+    
 
     const deleteTaskType = (taskTypeKey) => {
         const taskType = taskTypes.find(tt => tt.taskTypeKey === taskTypeKey);
-        const hasTasks = tasks.some(task => task.taskColor === taskType.taskColor);
+        const hasTasks = tasks.some(task => task.taskType === taskType.taskTypeName);
 
         if (hasTasks) {
             showError("Cannot delete this task type! There are tasks associated with it.");
@@ -112,13 +84,6 @@ const ToDoPage = () => {
         return tasks.filter(task => task.taskType === taskTypeName).length;
     };
 
-    const toggleTaskCompletion = (task) => {
-        const updatedTasks = tasks.map(t =>
-            t.taskKey === task.taskKey ? { ...t, isCompleted: !t.isCompleted } : t
-        );
-        setTasks(updatedTasks);
-    };
-
     return (
         <div id="todoPage">
             <div id="greeting">
@@ -130,7 +95,7 @@ const ToDoPage = () => {
 
                 </button>)}
             </div>
-            {!taskPanel && (<Calendar tasks={tasks}/>)}
+            <div id="calendar">{!taskPanel && (<Calendar tasks={tasks}/>)}</div>
             {!taskPanel && (<div id="taskTypeList">
                 {taskTypes.map((taskType) => (
                     <TaskType

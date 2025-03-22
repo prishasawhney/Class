@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Todo.css";
 import Calendar from "./Calendar";
+import dayjs from "dayjs";
 
 const AddTaskPanel = ({
     setTaskPanel,
@@ -14,7 +15,7 @@ const AddTaskPanel = ({
 }) => {
     const [taskName, setTaskName] = useState(editingTask?.taskName || "");
     const [taskDescription, setTaskDescription] = useState(editingTask?.taskDescription || "");
-    const [dueDate, setDueDate] = useState(editingTask?.dueDate || "");
+    const [dueDate, setDueDate] = useState(editingTask?.dueDate || dayjs().format("YYYY-MM-DD"));
     const [taskType, setTaskType] = useState(editingTask?.taskType || "");
     const [customTaskType, setCustomTaskType] = useState("");
     const [customTaskColor, setCustomTaskColor] = useState("#ff6347");
@@ -33,7 +34,7 @@ const AddTaskPanel = ({
             setTaskName("");
             setTaskType("");
             setTaskDescription("");
-            setDueDate("");
+            setDueDate(dayjs().format("YYYY-MM-DD"));
         }
     }, [editingTask]);
     
@@ -41,7 +42,7 @@ const AddTaskPanel = ({
     const removeContent = () => {
         setTaskName("");
         setTaskDescription("");
-        setDueDate("");
+        setDueDate(dayjs().format("YYYY-MM-DD"));
         setTaskType("");
         setCustomTaskType("");
         setCustomTaskColor("#ff6347");
@@ -88,7 +89,7 @@ const AddTaskPanel = ({
                     <box-icon type="solid" name="chevron-right" onClick={() => setTaskPanel(false)}></box-icon>
                     <h2>{editingTask ? "Edit Task" : "New Task"}:</h2>
                 </div>
-                <Calendar tasks={tasks}/>
+                <Calendar tasks={tasks} dueDate={dueDate} setDueDate={setDueDate}/>
                 <form onSubmit={saveTask}>
                     <div className="input-group">
                         <input
@@ -119,6 +120,7 @@ const AddTaskPanel = ({
                             type="date"
                             id="dueDate"
                             value={dueDate}
+                            placeholder="Set Due Date"
                             onChange={(e) => setDueDate(e.target.value)}
                             required
                         />

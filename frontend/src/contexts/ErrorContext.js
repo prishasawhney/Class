@@ -7,7 +7,7 @@ export const ErrorProvider = ({ children }) => {
 
     const showError = (message) => {
         setError(message);
-        setTimeout(() => setError(""), 3000); // Clears error after 3 sec
+        setTimeout(() => setError(""), 7000); // Clears error after 3 sec
     };
 
     return (

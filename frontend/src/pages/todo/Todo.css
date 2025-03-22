@@ -47,7 +47,7 @@
 #taskTypeList{
     grid-column-start:4;
     grid-column-end:5;
-    grid-row-start: 3;
+    grid-row-start: 4;
     grid-row-end: 6;
     border-radius: 5px;
     padding:5px;
@@ -561,6 +561,13 @@
     cursor: pointer;
     background: none;
 }
+
+.custom-task-group input[type="text"]:focus,
+.custom-task-group input[type="text"]:valid {
+    outline: none;
+    border: 1.5px solid #1a73e8;
+}
+
 
 .custom-task-group button {
     height:40px;

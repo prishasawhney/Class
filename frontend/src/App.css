@@ -61,3 +61,7 @@ body {
 ::-webkit-scrollbar-thumb:active {
   background: rgba(100, 100, 100, 0.8);
 }
+
+.nav-link {
+  text-decoration: none;
+}

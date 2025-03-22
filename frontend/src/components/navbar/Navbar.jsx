@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./SideNav.css";
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
+import { useTasks } from "../../contexts/TaskContexts";
 defineElement(lottie.loadAnimation);
 
 const NavBar = () => {
@@ -11,10 +12,19 @@ const NavBar = () => {
     const [studentCorner, setStudentCorner] = useState(false);
     const [profCorner, setProfCorner] = useState(false);
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
+    const { tasks } = useTasks();
+
 
     const toggleNavbar = () => {
         setIsNavbarOpen(!isNavbarOpen);
     };
+
+    useEffect(() => {
+        const countUncompletedTasks = tasks.filter(
+            (task) => !task.isCompleted
+        ).length;
+        setUncompletedTasksCount(countUncompletedTasks);
+    }, [tasks]);
 
     return (
         <div id="menu" style={{ flex: isNavbarOpen ? 0.7 : 0.1 }}>
@@ -47,24 +57,34 @@ const NavBar = () => {
                             Dashboard
                         </li>
                     </div>
-                    <div className="tasks">
-                        <box-icon name="task"></box-icon>
-                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                            To Do
-                        </li>
-                    </div>
+                    <NavLink to="/todo" className="nav-link" activeClassName="active">
+                        <div className="tasks">
+                            <box-icon name='task'></box-icon>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }} onClick={() => { setProfCorner(false); setStudentCorner(false) }}>
+                                To Do
+                            </li>
+                            <div
+                                className="number"
+                                style={{ display: isNavbarOpen ? "block" : "none" }}
+                            >
+                                <span>{uncompletedTasksCount}</span>
+                            </div>
+                        </div>
+                    </NavLink>
                     <div className="tasks">
                         <box-icon name="calendar"></box-icon>
                         <li style={{ display: isNavbarOpen ? "block" : "none" }}>
                             Calendar
                         </li>
                     </div>
-                    <div className="tasks">
-                        <box-icon name="message-rounded-detail"></box-icon>
-                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                            Community
-                        </li>
-                    </div>
+                    <NavLink to="/community" className="nav-link" activeClassName="active" onClick={() => { setProfCorner(false); setStudentCorner(false) }}>
+                        <div className="tasks">
+                            <box-icon name="message-rounded-detail"></box-icon>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                                Community
+                            </li>
+                        </div>
+                    </NavLink>
                 </ul>
 
                 {/* Student Corner */}

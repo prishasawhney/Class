@@ -1,75 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateCalendar, DayCalendarSkeleton, PickersDay } from "@mui/x-date-pickers";
+import React, { useState, useEffect, useMemo } from "react";
 import dayjs from "dayjs";
+import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import { Eventcalendar, setOptions } from '@mobiscroll/react';
 
-const Calendar = ({ tasks }) => {
+setOptions({
+    theme: 'material',
+    themeVariant: 'light'
+});
+
+const Calendar = ({ tasks, dueDate, setDueDate }) => {
     const [highlightedDays, setHighlightedDays] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const initialValue = dayjs(); // Default to today
+    const [selectedDate, setSelectedDate] = useState(dueDate || dayjs().format("YYYY-MM-DD")); // Default to dueDate or today
 
     useEffect(() => {
         const pendingTasks = tasks.filter(task => !task.isCompleted);
-        const highlightDates = pendingTasks.map(task => dayjs(task.dueDate).format("YYYY-MM-DD")); // Store full date
-        setHighlightedDays(highlightDates);
+        const labelDates = pendingTasks.map(task => ({
+            date: dayjs(task.dueDate).format("YYYY-MM-DD"),
+            text: "", // No text, just a dot
+            color: "#F3729C" // Pink dot for tasks
+        }));
+
+        setHighlightedDays(labelDates);
     }, [tasks]);
 
-    const handleMonthChange = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 500); // Simulating data fetching delay
-    };
+    useEffect(() => {
+        if (dueDate) {
+            setSelectedDate(dueDate); // Update selected date when dueDate changes
+        }
+    }, [dueDate]);
 
-    const ServerDay = (props) => {
-        const { day, outsideCurrentMonth, ...other } = props;
-        const formattedDay = day.format("YYYY-MM-DD"); // Get full date as string
-        const isHighlighted = highlightedDays.includes(formattedDay); // Check full date match
+    const myView = useMemo(() => ({
+        calendar: { type: 'month' },
+    }), []);
 
-        return (
-            <PickersDay
-                {...other}
-                day={day}
-                outsideCurrentMonth={outsideCurrentMonth}
-                sx={{
-                    position: "relative",
-                    fontWeight: isHighlighted ? "bold" : "normal",
-                    "&::after": isHighlighted
-                        ? {
-                            content: '""',
-                            width: "6px",
-                            height: "6px",
-                            backgroundColor: "#F2719B", 
-                            borderRadius: "50%",
-                            position: "absolute",
-                            bottom: "2px",
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                        }
-                        : {},
-                }}
-            />
-        );
+    // Function to handle date click
+    const handleDateClick = (event) => {
+        const newDate = dayjs(event.date).format("YYYY-MM-DD");
+        setDueDate(newDate); // Update external dueDate state
+        setSelectedDate(newDate); // Update local selected date
     };
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-                defaultValue={initialValue}
-                loading={isLoading}
-                onMonthChange={handleMonthChange}
-                renderLoading={() => <DayCalendarSkeleton />}
-                slots={{
-                    day: ServerDay,
-                }}
-                slotProps={{
-                    day: (ownerState) => ({
-                        highlightedDays,
-                    }),
-                }}
-            />
-        </LocalizationProvider>
+        // <Eventcalendar
+        //     view={myView}
+        //     labels={highlightedDays}
+        //     selectedDate={selectedDate} 
+        //     clickToCreate={false}
+        //     dragToCreate={false}
+        //     dragToMove={false}
+        //     dragToResize={false}
+        //     eventDelete={false}
+        //     showEventTooltip={false}
+        //     onCellClick={handleDateClick} 
+        // />
+        <div>print calendar here</div>
     );
 };
 
