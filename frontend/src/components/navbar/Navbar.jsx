@@ -4,6 +4,7 @@ import "./SideNav.css";
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
 import { useTasks } from "../../contexts/TaskContexts";
+import MusicPlayer from "../musicPlayer/MusicPlayer";
 defineElement(lottie.loadAnimation);
 
 const NavBar = () => {
@@ -26,27 +27,51 @@ const NavBar = () => {
         setUncompletedTasksCount(countUncompletedTasks);
     }, [tasks]);
 
+    const letterColors = (letter) => {
+        const colors = {
+            A: "#D3C047",
+            B: "#D99228",
+            C: "#C67947",
+            D: "#D94A28",
+            E: "#D94337",
+            F: "#CD3F66",
+            G: "#E2597D",
+            H: "#D36576",
+            I: "#EDA29B",
+            J: "#C84F8B",
+            K: "#A659C9",
+            L: "#822436",
+            M: "#632838",
+            N: "#6CD2DF",
+            O: "#27A1C4",
+            P: "#2F83DB",
+            Q: "#2C44BE",
+            R: "#27455F",
+            S: "#57311C",
+            T: "#121212",
+            U: "#8ED029",
+            V: "#2DAF27",
+            W: "#279479",
+            X: "#2F8347",
+            Y: "#6B7C46",
+            Z: "#324317"
+        };
+
+        return colors[letter?.toUpperCase()] || "#888";
+    };
+
     return (
-        <div id="menu" style={{ flex: isNavbarOpen ? 0.7 : 0.1 }}>
-            <div id="userprofile">
-                <lord-icon
-                    src="https://cdn.lordicon.com/zfmcashd.json"
-                    trigger="hover"
-                    state="hover-jump"
-                    style={{ width: "50px", height: "50px" }}
-                    onClick={toggleNavbar}
-                ></lord-icon>
-                <p
-                    id="username"
-                    style={{
-                        display: isNavbarOpen ? "flex" : "none",
-                        position: "relative",
-                        top: 11,
-                        left: 4,
-                    }}
-                >
-                    {username}
-                </p>
+        <div id="menu" style={{ flex: isNavbarOpen ? 0.7 : 0.1, cursor: "pointer" }}>
+            <div id="openClose" onClick={toggleNavbar}>
+                <box-icon name='menu'></box-icon>
+                <span style={{ display: isNavbarOpen ? "block" : "none" }}>Menu</span>
+            </div>
+
+            <div>
+                <div className="tasks" style={{ marginTop: "20px", display: !isNavbarOpen ? "block" : "none" }}><box-icon name='music' type='solid'></box-icon></div>
+                <div style={{ display: isNavbarOpen ? "block" : "none" }}>
+                    <MusicPlayer />
+                </div>
             </div>
 
             <div id="tasks">
@@ -71,12 +96,12 @@ const NavBar = () => {
                             </div>
                         </div>
                     </NavLink>
-                    <div className="tasks">
+                    {/* <div className="tasks">
                         <box-icon name="calendar"></box-icon>
                         <li style={{ display: isNavbarOpen ? "block" : "none" }}>
                             Calendar
                         </li>
-                    </div>
+                    </div> */}
                     <NavLink to="/community" className="nav-link" activeClassName="active" onClick={() => { setProfCorner(false); setStudentCorner(false) }}>
                         <div className="tasks">
                             <box-icon name="message-rounded-detail"></box-icon>
@@ -85,11 +110,11 @@ const NavBar = () => {
                             </li>
                         </div>
                     </NavLink>
-                </ul>
+                    {/* </ul> */}
 
-                {/* Student Corner */}
-                <br />
-                <div
+                    {/* Student Corner */}
+                    {/* <br /> */}
+                    {/* <div
                     style={{ display: "flex", cursor: "pointer", alignItems: "center" }}
                     onClick={() => {
                         setStudentCorner(!studentCorner);
@@ -104,39 +129,33 @@ const NavBar = () => {
                         }}
                     ></box-icon>
                     <p style={{ display: isNavbarOpen ? "block" : "none" }}>Student Corner</p>
-                </div>
-                {studentCorner && (
-                    <ul>
-                        <div className="tasks">
-                            <box-icon name="note"></box-icon>
-                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                                Notes
-                            </li>
-                        </div>
-                        <div className="tasks">
-                            <box-icon name="image-add"></box-icon>
-                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                                SnapSolver
-                            </li>
-                        </div>
-                        <div className="tasks">
-                            <box-icon name="brain"></box-icon>
-                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                                Memory Cards
-                            </li>
-                        </div>
-                        <div className="tasks">
-                            <box-icon name="book-open"></box-icon>
-                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                                Summarizer
-                            </li>
-                        </div>
-                    </ul>
-                )}
+                </div> */}
 
-                {/* Professional Corner */}
-                <br />
-                <div
+                    <NavLink to="/notes" className="nav-link" activeClassName="active">
+                    <div className="tasks">
+                        <box-icon name="note"></box-icon>
+                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                            Notes
+                        </li>
+                    </div>
+                    </NavLink>
+                    <div className="tasks">
+                        <box-icon name="image-add"></box-icon>
+                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                            SnapSolver
+                        </li>
+                    </div>
+                    <div className="tasks">
+                        <box-icon name="brain"></box-icon>
+                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                            B.R.A.I.N.
+                        </li>
+                    </div>
+                    {/* </ul> */}
+
+                    {/* Professional Corner */}
+                    {/* <br /> */}
+                    {/* <div
                     style={{ display: "flex", cursor: "pointer", alignItems: "center" }}
                     onClick={() => {
                         setProfCorner(!profCorner);
@@ -151,31 +170,65 @@ const NavBar = () => {
                         }}
                     ></box-icon>
                     <p style={{ display: isNavbarOpen ? "block" : "none" }}>Professional Corner</p>
-                </div>
-                {profCorner && (
-                    <ul>
+                </div> */}
+
+                    {/* <ul> */}
+                    <NavLink to="/interview" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name="laptop"></box-icon>
                             <li style={{ display: isNavbarOpen ? "block" : "none" }}>
                                 Interview Preparation
                             </li>
                         </div>
+                    </NavLink>
+                    <NavLink to="/resume" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name="file"></box-icon>
                             <li style={{ display: isNavbarOpen ? "block" : "none" }}>
                                 Resume Scorer
                             </li>
                         </div>
-                    </ul>
-                )}
+                    </NavLink>
+                </ul>
             </div>
 
             {/* Logout Button */}
-            <div id="logoutButton">
-                <box-icon name="power-off" color="#aaa" size="20px"></box-icon>
-                {isNavbarOpen && <p>Logout</p>}
+            <div id="logoutButton" style={{display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:"auto"}}>
+                <div id="userprofile" style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                        id="profileLogo"
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 30,
+                            height: 30,
+                            borderRadius: "50%",
+                            backgroundColor: letterColors(username?.charAt(0)), // Get color based on first letter
+                            color: "#fff", // White text for contrast
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                            textTransform: "uppercase",
+                        }}
+                    >
+                        {username?.charAt(0)}
+                    </div>
+                    <div
+                        id="username"
+                        style={{
+                            display: isNavbarOpen ? "flex" : "none",
+                        }}
+                    >
+                        {username}
+                    </div>
+                </div>
+                {isNavbarOpen && (<div style={{display:"flex", gap:"5px" ,alignItems:"center"}}>
+                    <box-icon name="power-off" color="#aaa" size="20px"></box-icon>
+                    <p>Logout</p>
+                </div>)}
             </div>
         </div>
+
     );
 };
 

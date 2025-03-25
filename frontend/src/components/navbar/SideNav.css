@@ -1,14 +1,16 @@
 #menu {
     flex: 0.7;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 5px;
     height:92.5vh;
     padding: 20px;
     overflow-x: hidden;
     z-index: 1;
     color: black;
-    border: 2px solid #dddddd;
+    border: 2px solid #dddddd;  
     transition: 0.5s ease-in-out; 
+    background: white;
+    position:relative;
   }
 
   #userprofile {
@@ -33,7 +35,7 @@
 
 #tasks,
 #lists {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 #tasks p,
@@ -107,8 +109,20 @@
     display:flex;
     color:#aaa;
     align-items: center;
-    gap: 10px;
     cursor:pointer;
-    position:absolute;
     bottom:10px;
+    width:90%;
+    position: absolute;
+
+}
+
+#openClose{
+  display:flex;
+  align-items: center;
+  gap:10px;
+  margin-bottom: 20px;
+}
+
+#openClose span{
+  font-size: 20px;
 }

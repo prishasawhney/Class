@@ -8,7 +8,8 @@ setOptions({
     themeVariant: 'light'
 });
 
-const Calendar = ({ tasks, dueDate, setDueDate }) => {
+
+const CalendarComponent = ({ tasks, dueDate, setDueDate }) => {
     const [highlightedDays, setHighlightedDays] = useState([]);
     const [selectedDate, setSelectedDate] = useState(dueDate || dayjs().format("YYYY-MM-DD")); // Default to dueDate or today
 
@@ -39,22 +40,22 @@ const Calendar = ({ tasks, dueDate, setDueDate }) => {
         setDueDate(newDate); // Update external dueDate state
         setSelectedDate(newDate); // Update local selected date
     };
+      
 
     return (
-        // <Eventcalendar
-        //     view={myView}
-        //     labels={highlightedDays}
-        //     selectedDate={selectedDate} 
-        //     clickToCreate={false}
-        //     dragToCreate={false}
-        //     dragToMove={false}
-        //     dragToResize={false}
-        //     eventDelete={false}
-        //     showEventTooltip={false}
-        //     onCellClick={handleDateClick} 
-        // />
-        <div>print calendar here</div>
+        <Eventcalendar
+            view={myView}
+            labels={highlightedDays}
+            selectedDate={selectedDate} 
+            clickToCreate={false}
+            dragToCreate={false}
+            dragToMove={false}
+            dragToResize={false}
+            eventDelete={false}
+            showEventTooltip={false}
+            onCellClick={handleDateClick} 
+        />
     );
 };
 
-export default Calendar;
+export default CalendarComponent;

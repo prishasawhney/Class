@@ -3,11 +3,7 @@ import "boxicons";
 import "./Todo.css";
 
 const ToDoItem = ({ task, setTaskPanel, setEditingTask, deleteTask, toggleTaskCompletion }) => {
-    const [expand, setExpand] = useState(false);
-    const isOverdue = (dueDate) => {
-        const today = new Date().toISOString().split("T")[0];
-        return dueDate < today;
-    };
+    const [expand, setExpand] = useState(false); 
 
     return (
         <div className="newtodo">
@@ -45,9 +41,6 @@ const ToDoItem = ({ task, setTaskPanel, setEditingTask, deleteTask, toggleTaskCo
 
 
                     {/*  */}
-                    {isOverdue(task.dueDate) && !task.isCompleted && (
-                        <box-icon name="time-five" color="#f40b0b" size="20px"></box-icon>
-                    )}
                     <p className={`task-name ${task.isCompleted ? "completed" : ""}`}>
                         <span className="task-name-tooltip">
                             {task.taskName.length > 10 ? task.taskName.slice(0, 30) + "..." : task.taskName}
