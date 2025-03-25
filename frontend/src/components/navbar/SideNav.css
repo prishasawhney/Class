@@ -1,0 +1,128 @@
+#menu {
+    flex: 0.7;
+    border-radius: 10px;
+    margin: 5px;
+    height:92.5vh;
+    padding: 20px;
+    overflow-x: hidden;
+    z-index: 1;
+    color: black;
+    border: 2px solid #dddddd;  
+    transition: 0.5s ease-in-out; 
+    background: white;
+    position:relative;
+  }
+
+  #userprofile {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    /* width: 200px; 
+    height: 50px; */
+  } 
+
+  #username {
+    margin-left: 10px;
+    color: rgb(97, 97, 97);
+  }
+
+  #tasks li,
+#lists li {
+  padding: 10px;
+  list-style: none;
+  text-decoration: none;
+}
+
+#tasks,
+#lists {
+  margin-top: 30px;
+}
+
+#tasks p,
+#lists p {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+
+.tasks,
+.lists {
+  display:flex;
+    align-items: center;
+    width:100%;
+    justify-content: left;
+    transition: font-weight 0.3s ease, background 0.3s ease;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #eeeeee;
+    margin: 3px;
+    color:black;
+    text-decoration: none;
+}
+
+.tasks:hover,
+.lists:hover {
+  background: #dddddd;
+}
+
+.tasks box-icon {
+    opacity: 0.7;
+    margin: 10px;
+  }
+
+  .tasks:hover box-icon,
+.lists box-icon:hover {
+  opacity: 1;
+}
+
+#tasks ul, #lists ul{
+    width:100%;
+    padding:0;
+    list-style: none;
+  }
+  
+  .tasks:hover{
+    background: #dddddd;
+     
+  }
+  
+  .tasks box-icon{
+     opacity:0.7;
+     margin:10px;
+  }
+  
+  .tasks:hover box-icon{
+     opacity:1;
+  }
+
+  .active .tasks {
+    background-color: #765BEE;
+    color: white;
+  }
+  
+  .active .tasks box-icon {
+    fill: white;
+    color: white;
+  }
+
+#logoutButton{
+    display:flex;
+    color:#aaa;
+    align-items: center;
+    cursor:pointer;
+    bottom:10px;
+    width:90%;
+    position: absolute;
+
+}
+
+#openClose{
+  display:flex;
+  align-items: center;
+  gap:10px;
+  margin-bottom: 20px;
+}
+
+#openClose span{
+  font-size: 20px;
+}
