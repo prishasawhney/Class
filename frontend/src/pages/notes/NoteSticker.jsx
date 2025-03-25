@@ -19,10 +19,8 @@ const NoteSticker = ({
   creationDate,
   color,
   deleteNote,
-  editNote,
-  viewnote,
-  editingNoteKey,
-  setEditingNoteKey,
+  editNoteFunction,
+  viewnote
 }) => {
   const parseMarkdownToPlainText = (markdownText) => {
     if (!markdownText) {
@@ -156,7 +154,7 @@ const NoteSticker = ({
           <button onClick={() => deleteNote(noteKey)}>
             <box-icon name="trash-alt"></box-icon>
           </button>
-          <button onClick={() => editNote(noteKey)}>
+          <button onClick={() => editNoteFunction(noteKey)}>
             <box-icon name="pencil"></box-icon>
           </button>
         </div>

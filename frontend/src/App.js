@@ -8,31 +8,34 @@ import InterviewAnalyzer from "../src/pages/interview/InterviewPreparationAnalyz
 import ChatBot from "../src/components/chatbot/ChatBot";
 import NotesPage from "../src/pages/notes/NotesPage";
 import { ErrorProvider } from "./contexts/ErrorContext";
-import { TaskProvider } from "./contexts/TaskContexts";
+import { TaskProvider } from "./contexts/TaskContext";
+import { NotesProvider } from "./contexts/NotesContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 
 function App() {
-  const username="NewUser";
+  const username = "NewUser";
   return (
     <ErrorProvider>
       <TaskProvider>
-        <Router>
-          <div className="app-container">
-            <Navbar />
-            <Alert />
-            <div className="content-container">
-              <Switch>
-                <Route path="/todo" component={ToDoPage} />
-                <Route path="/community" render={(props) => <CommunityPage {...props} username={username} />} />
-                <Route path="/resume" component={ResumeScorer} />
-                <Route path="/interview" component={InterviewAnalyzer} />
-                <Route path="/notes" component={NotesPage} />
-              </Switch>
-              <ChatBot/>
+        <NotesProvider>
+          <Router>
+            <div className="app-container">
+              <Navbar />
+              <Alert />
+              <div className="content-container">
+                <Switch>
+                  <Route path="/todo" component={ToDoPage} />
+                  <Route path="/community" render={(props) => <CommunityPage {...props} username={username} />} />
+                  <Route path="/resume" component={ResumeScorer} />
+                  <Route path="/interview" component={InterviewAnalyzer} />
+                  <Route path="/notes" component={NotesPage} />
+                </Switch>
+                <ChatBot />
+              </div>
             </div>
-          </div>
-        </Router>
+          </Router>
+        </NotesProvider>
       </TaskProvider>
     </ErrorProvider>
   );

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./SideNav.css";
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
-import { useTasks } from "../../contexts/TaskContexts";
+import { useTasks } from "../../contexts/TaskContext";
 import MusicPlayer from "../musicPlayer/MusicPlayer";
 defineElement(lottie.loadAnimation);
 

@@ -1,42 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./NotesPage.css";
 import "boxicons";
 import NoteSticker from "./NoteSticker";
 import NoteWriter from "./NoteWriter.jsx";
 import NoteViewer from "./NoteViewer.jsx";
+import SidePanel from "./SidePanel.jsx";
 // import { readTodos, readTaskType } from "../../API/todo.api.js";
 // import { createNote, readNotes, deleteNoteByKey, updateNote } from "../../API/note.api.js";
 import Lottie from 'react-lottie';
 import NotesAnimation from '../../assets/Notes.json';
 import ImageAnimation from '../../assets/Image Solver.json';
 import VideoAnimation from '../../assets/Interview Prep.json';
+import { NotesContext } from "../../contexts/NotesContext";
 
-const Notes = ({
-  // tasks,
-  setTasks,
-  // taskTypeList,
-  // setTaskTypeList,
-  // notes,
-  // setNotes,
+const NotesPage = ({
   username,
 }) => {
   const colors = ["#BAE1FF", "#f5ee89"];
   const [editingNoteKey, setEditingNoteKey] = useState(false);
-  const [notes, setNotes] = useState([]);
+  // const [notes, setNotes] = useState([]);
   const [noteText, setNoteText] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
   const [viewingNote, setViewingNote] = useState(false);
   const [isNoteWriterVisible, setIsNoteWriterVisible] = useState(false);
   const [isNoteViewerVisible, setIsNoteViewerVisible] = useState(false);
   const [isGlassEffectVisible, setIsGlassEffectVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { notes, setNotes, addNote, deleteNote, searchQuery,setSearchQuery, loadNotes} = useContext(NotesContext);
+  // const [searchQuery, setSearchQuery] = useState("");
 
-  // useEffect(() => {
-  //   loadTasks(username);
-  //   loadTaskTypeList(username);
-  // loadNotes(username);
-  // }, []);
+  useEffect(() => {
+    loadNotes(username);
+  }, []);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -45,75 +40,6 @@ const Notes = ({
   const filteredNotes = notes.filter((note) =>
     note.noteTitle.toLowerCase().includes(searchQuery)
   );
-
-  // const loadTasks = async (username) => {
-  //   try {
-  //     const todos = await readTodos(username);
-  //     const mappedTasks = todos.map((task) => {
-  //       return {
-  //         taskKey: task.taskKey,
-  //         taskName: task.taskName,
-  //         taskDescription: task.taskDescription,
-
-  //         dueDate: task.dueDate,
-  //         taskColor: task.taskColor,
-  //         taskType: task.taskType,
-  //         isCompleted: task.isCompleted,
-  //       };
-  //     });
-  //     setTasks(mappedTasks);
-  //   } catch (error) {
-  //     console.error("Error loading tasks:", error);
-  //   }
-  // };
-
-  // const loadTaskTypeList = async (username) => {
-  //   try {
-  //     const taskTypes = await readTaskType(username);
-  //     const mappedTaskTypeList = taskTypes.map((taskType) => {
-  //       return {
-  //         taskTypeKey: taskType.taskTypeKey,
-  //         taskTypeName: taskType.taskTypeName,
-  //         taskColor: taskType.taskTypeColor,
-  //       };
-  //     });
-  //     await setTaskTypeList(mappedTaskTypeList);
-  //   } catch (error) {
-  //     console.error("Error loading task types:", error);
-  //   }
-  // };
-
-  // const loadNotes = async (username) => {
-  //   try {
-  //     const notesList = await readNotes(username);
-  //     const mappedNotesList = notesList.map((note) => {
-  //       return {
-  //         noteKey: note.noteKey,
-  //         noteTitle: note.noteTitle,
-  //         noteText: note.noteText,
-  //         creationDate: note.creationDate,
-  //       };
-  //     });
-  //     setNotes(mappedNotesList);
-  //   } catch (error) {
-  //     console.error("Error loading task types:", error);
-  //   }
-  // };
-
-  const addToNotes = (note) => {
-    setNotes((prevNotes) => [...prevNotes, note]);
-  };
-
-  const deleteNote = async (key) => {
-    console.log("delete");
-    const deleteNoteSchema = {
-      username: username,
-      noteKey: key,
-    };
-    // await deleteNoteByKey(deleteNoteSchema);
-    const newNotes = notes.filter((note) => note.noteKey !== key);
-    setNotes(newNotes);
-  };
 
   const addnotewriter = () => {
     setIsNoteWriterVisible(true);
@@ -124,12 +50,12 @@ const Notes = ({
     setEditingNoteKey(false);
   };
 
-  const editNote = (noteKey) => {
+  const editNoteFunction = (noteKey) => {
     const noteToEdit = notes.find((note) => note.noteKey === noteKey);
     if (noteToEdit) {
       setNoteTitle(noteToEdit.noteTitle);
       setNoteText(noteToEdit.noteText);
-      setEditingNoteKey(noteKey); // Set editingNoteKey with the noteKey of the note being edited
+      setEditingNoteKey(noteKey); 
     }
     setIsNoteWriterVisible(true);
     setIsNoteViewerVisible(false);
@@ -168,7 +94,7 @@ const Notes = ({
       username: username,
       noteTitle: noteTitle,
       noteText: noteText,
-      noteKey: editingNoteKey || undefined, // Include noteKey if editing, otherwise undefined
+      noteKey: editingNoteKey || undefined,
     };
 
     try {
@@ -187,10 +113,10 @@ const Notes = ({
         delete noteData.noteKey;
         noteData.creationDate = getCurrentDate();
         // const response = await createNote(noteData);
-        const response="hello";
+        const response = "hello";
         noteData.noteKey = response.noteKey; // Get the noteKey from the response
         delete noteData.username;
-        addToNotes(noteData);
+        addNote(noteData);
       }
 
       // Reset form and close note writer
@@ -198,7 +124,7 @@ const Notes = ({
       setNoteText("");
       setIsGlassEffectVisible(false);
       setIsNoteWriterVisible(false);
-      setEditingNoteKey(false); // Reset editingNoteKey after submission
+      setEditingNoteKey(false);
     } catch (error) {
       console.error("Error saving note:", error);
     }
@@ -248,7 +174,7 @@ const Notes = ({
           discardNote={discardNote}
           closeNoteWriter={closeNoteWriter}
           editingNoteKey={editingNoteKey}
-          username = {username}
+          username={username}
         />
       )}
       {isNoteViewerVisible && (
@@ -256,7 +182,7 @@ const Notes = ({
           notes={notes}
           ViewingNoteKey={viewingNote}
           closeNoteViewer={closeNoteViewer}
-          editNote={editNote}
+          editNote={editNoteFunction}
           setEditingNoteKey={setEditingNoteKey}
         />
       )}
@@ -276,7 +202,7 @@ const Notes = ({
           </div>
           <div id="notescontainer">
             <div id="notesbuttons">
-              <Link to="/notes" id="takeanoteid" >
+              <Link to="/notes" id="takeanoteid" className="nav-link">
                 <button id="takeanote" className="thisButton" onClick={addnotewriter}>
                   <Lottie
                     options={addNoteButtonAnimationOptions}
@@ -288,7 +214,7 @@ const Notes = ({
                   </div>
                 </button>
               </Link>
-              <Link to="/imagechat" id="withdrawingid" >
+              <Link to="/imagechat" id="withdrawingid" className="nav-link">
                 <button id="withdrawing" className="thisButton">
                   <Lottie
                     options={ImageSolverButtonAnimationOptions}
@@ -300,7 +226,7 @@ const Notes = ({
                   </div>
                 </button>
               </Link>
-              <Link to="/interview-prep" id="withimageid">
+              <Link to="/interview-prep" id="withimageid" className="nav-link">
                 <button id="withimage" className="thisButton">
                   <Lottie
                     options={InterviewPrepButtonAnimationOptions}
@@ -322,16 +248,17 @@ const Notes = ({
                   creationDate={note.creationDate}
                   color={colors[index % colors.length]}
                   deleteNote={deleteNote}
-                  editNote={editNote}
+                  editNoteFunction={editNoteFunction}
                   viewnote={viewnote}
                 />
               ))}
             </div>
           </div>
         </div>
+        <SidePanel />
       </div>
     </>
   );
 };
 
-export default Notes;
+export default NotesPage;

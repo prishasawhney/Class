@@ -138,6 +138,7 @@
     gap: 20px;
     width: 500px;
     margin-right: 30px;
+    height:100%;
 }
 
 .meter {
@@ -149,6 +150,7 @@
     box-sizing: border-box;
     position: relative;
     /* Allow absolute positioning of .meter-score */
+    height:60px;
 }
 
 .meter-label {

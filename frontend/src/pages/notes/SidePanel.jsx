@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "boxicons";
 import "./NotesPage.css";
-import Song from './song.jsx';
+import Song from './Song.jsx';
 
 const SidePanel = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrack, setCurrentTrack] = useState(0); 
-    const audioRef = useRef(null);
+    const audioRef = useRef(null); 
 
     // const tracks = [
     //     {
@@ -30,17 +30,17 @@ const SidePanel = () => {
         {
             title: "Perfect",
             artist: "Ed Sheeran",
-            src: "https://mr-jat.in/dlod/6239?&volume=75&showstop=1&showvolume=1" // Replace with actual URL
+            src: "https://mr-jat.in/dlod/6239?&volume=75&showstop=1&showvolume=1"
         },
         {
             title: "Apna Bana Le - Bhediya",
             artist: "Arijit Singh",
-            src: "https://pagalfree.com/musics/128-Apna%20Bana%20Le%20-%20Bhediya%20128%20Kbps.mp3" // Replace with actual URL
+            src: "https://pagalfree.com/musics/128-Apna%20Bana%20Le%20-%20Bhediya%20128%20Kbps.mp3" 
         },
         {
             title: "Softly - Making Memories",
             artist: "Karan Aujla",
-            src: "https://pagalfree.com/musics/128-Softly%20-%20Making%20Memories%20128%20Kbps.mp3" // Replace with actual URL
+            src: "https://pagalfree.com/musics/128-Softly%20-%20Making%20Memories%20128%20Kbps.mp3" 
         }
     ];
     

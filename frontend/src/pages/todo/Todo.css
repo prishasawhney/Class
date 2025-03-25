@@ -329,9 +329,9 @@
     margin-bottom: 5px;
 }
 
-#expandedName, #expandedDate{
+#expandedName{
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 #expandedDate{
@@ -340,10 +340,12 @@
     align-items: center;
     justify-content: center;
     gap:5px;
+    font-size: 1.01rem;
+    font-weight: 400;
 }
 
 #expandedDescription{
-    border-bottom: 2px solid #ddd;
+    /* border-bottom: 2px solid #ddd; */
     padding-bottom: 5px;
     margin-bottom: 15px;
 }

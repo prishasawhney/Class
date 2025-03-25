@@ -1,5 +1,5 @@
 .page-outside{
-    border:2px solid #ccc;
+    /* border:2px solid #ccc; */
     border-radius: 10px;
     height:98vh;
     overflow:hidden;
@@ -15,6 +15,7 @@
     width:50%;
     padding:10px;
     border-right: 4px solid #ccc;
+    border-radius: 10px;
 }
 
 .rpv-core_text-layer{
