@@ -24,9 +24,9 @@ const ToDoPage = () => {
     };
 
     const [taskTypes, setTaskTypes] = useState([
-        { taskTypeKey: 1, taskTypeName: "Work", taskColor: "#ff6347" },
-        { taskTypeKey: 2, taskTypeName: "Personal", taskColor: "#4682b4" },
-        { taskTypeKey: 3, taskTypeName: "Shopping", taskColor: "#32cd32" }
+        { taskTypeKey: 1, taskTypeName: "Work", taskColor: "#4682b4" },
+        { taskTypeKey: 2, taskTypeName: "Personal", taskColor: "#ffa500" },
+        { taskTypeKey: 3, taskTypeName: "Shopping", taskColor: "#ff6347" }
     ]);
 
     const sortTasksByDate = (tasks) => {
@@ -69,8 +69,8 @@ const ToDoPage = () => {
     const isWeekend = [0, 6].includes(new Date().getDay());
 
     let greetingMessage = greetings.upcomingTasks;
-    if (overdueTasks.length > 0) {
-        greetingMessage = overdueTasks.length > 2 ? greetings.overdueMany : greetings.overdueFew;
+    if (overdueTasks.filter(task => !task.isCompleted).length > 0) {
+        greetingMessage = overdueTasks.filter(task => !task.isCompleted).length >2 ? greetings.overdueMany : greetings.overdueFew;
     } else if (tasks.length === completedTasks.length) {
         greetingMessage = greetings.allDone;
     } else if (upcomingTasks.length === 0) {
@@ -99,7 +99,7 @@ const ToDoPage = () => {
             <div id="greeting">
                 <h1>{greetingMessage}</h1>
             </div>
-            <div id="calendar">{!taskPanel && (<Calendar tasks={tasks} />)}</div>
+            <div id="calendar">{!taskPanel && (<Calendar />)}</div>
             {!taskPanel && (
                 <div id="taskTypeList">
                     {taskTypes.map((taskType) => (
