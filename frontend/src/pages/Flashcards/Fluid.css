@@ -41,7 +41,7 @@
 
 /* Active button colors (Warm Palette) */
 .liquid-button.active {
-  background-color: #3f073e; /* Warm Orange */
+  background-color: #ffffff; /* Warm Orange */
   color: #000000;
 }
 .content-area {

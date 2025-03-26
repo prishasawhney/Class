@@ -112,9 +112,16 @@ const FlashCardSummary = () => {
     // );
     <div className="flashcard-summary-container">
             
-    <div className="heading-container">
-        <h1>"Tell me and I forget, teach me and I may remember, involve me and I learn" - Benjamin Franklin         <br /> Upload your PDF to learn and grow!</h1>
-    </div>
+    {/* <div className="heading-container">
+        <h1>B.R.A.I.N - Behavior Replication by Analog Instruction of the Nervous System</h1>
+                </div></h1>
+    </div> */}
+    <div id="headingg">
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <img src="/brainlightbulb.gif" style={{height:"60px", gap:"5px"}}></img>
+                    <h1>B.R.A.I.N - Behavior Replication by Analog Instruction of the Nervous System</h1>
+                </div>
+            </div>
 
     {/* Content Section */}
     <div className="content-container" id='content-container'>
