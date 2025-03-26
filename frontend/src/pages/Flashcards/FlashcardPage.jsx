@@ -112,16 +112,20 @@ const FlashCardSummary = () => {
     // );
     <div className="flashcard-summary-container">
             
-    {/* <div className="heading-container">
-        <h1>B.R.A.I.N - Behavior Replication by Analog Instruction of the Nervous System</h1>
-                </div></h1>
-    </div> */}
     <div id="headingg">
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img src="/brainlightbulb.gif" style={{height:"60px", gap:"5px"}}></img>
+                    <img src="/brain.gif" style={{height:"160px"}}></img>
                     <h1>B.R.A.I.N - Behavior Replication by Analog Instruction of the Nervous System</h1>
                 </div>
+                <div id="head_para">
+          {/* <p>
+            Upload your resume to receive a detailed analysis and personalized
+            feedback. Our tool will help you enhance your resume's impact,
+            brevity, and style, showcasing your skills in the best possible way.
+          </p> */}
+          </div>
             </div>
+
 
     {/* Content Section */}
     <div className="content-container" id='content-container'>
