@@ -15,13 +15,13 @@ const FlashCardSummary = () => {
         setTimeout(() => {
             // Simulated data for now
             setFlashcards([
-                { question: "What is jvefb ghrsgv kfsjh  vsh dvkjb dfskbg vdfkjbgvkjdb vkjdfk lbjvgfj uvhf hfeveh hfjfe hfhg hhjgefeg hjvfjvwdfh vjd hjvd gyggyg ygryeg yey ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
+                { question: "What is j? ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
                 { question: "What is a Hook?", answer: "A special function in React.", hint: "useState is one of them" },
-                { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" }, { question: "What is jvefb ghrsgv kfsjh  vsh dvkjb dfskbg vdfkjbgvkjdb vkjdfk lbjvgfj uvhf hfeveh hfjfe hfhg hhjgefeg hjvfjvwdfh vjd hjvd gyggyg ygryeg yey ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
+                { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" },{ question: "What is j? ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
                 { question: "What is a Hook?", answer: "A special function in React.", hint: "useState is one of them" },
-                { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" }, { question: "What is jvefb ghrsgv kfsjh  vsh dvkjb dfskbg vdfkjbgvkjdb vkjdfk lbjvgfj uvhf hfeveh hfjfe hfhg hhjgefeg hjvfjvwdfh vjd hjvd gyggyg ygryeg yey ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
+                { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" }, ,{ question: "What is j? ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
                 { question: "What is a Hook?", answer: "A special function in React.", hint: "useState is one of them" },
-                { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" }, { question: "What is jvefb ghrsgv kfsjh  vsh dvkjb dfskbg vdfkjbgvkjdb vkjdfk lbjvgfj uvhf hfeveh hfjfe hfhg hhjgefeg hjvfjvwdfh vjd hjvd gyggyg ygryeg yey ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
+                { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" },
                 { question: "What is a Hook?", answer: "A special function in React.", hint: "useState is one of them" },
                 { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" }
 
