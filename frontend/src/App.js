@@ -7,6 +7,8 @@ import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
 import InterviewAnalyzer from "../src/pages/interview/InterviewPreparationAnalyzer";
 import ChatBot from "../src/components/chatbot/ChatBot";
 import NotesPage from "../src/pages/notes/NotesPage";
+import ChatPage from "../src/pages/chat/ChatWithImage";
+import Dashboard from "../src/pages/dashboard/Dashboard";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import { TaskProvider } from "./contexts/TaskContext";
 import { NotesProvider } from "./contexts/NotesContext";
@@ -30,6 +32,8 @@ function App() {
                   <Route path="/resume" component={ResumeScorer} />
                   <Route path="/interview" component={InterviewAnalyzer} />
                   <Route path="/notes" component={NotesPage} />
+                  <Route path="/chat" component={ChatPage} />
+                  <Route path="/dashboard" component={Dashboard} />
                 </Switch>
                 <ChatBot />
               </div>

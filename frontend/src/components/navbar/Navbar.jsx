@@ -76,12 +76,14 @@ const NavBar = () => {
 
             <div id="tasks">
                 <ul>
-                    <div className="tasks">
-                        <box-icon name="dashboard" type="solid"></box-icon>
-                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                            Dashboard
-                        </li>
-                    </div>
+                    <NavLink to="/dashboard" className="nav-link" activeClassName="active">
+                        <div className="tasks">
+                            <box-icon name="dashboard" type="solid"></box-icon>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                                Dashboard
+                            </li>
+                        </div>
+                    </NavLink>
                     <NavLink to="/todo" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name='task'></box-icon>
@@ -132,19 +134,21 @@ const NavBar = () => {
                 </div> */}
 
                     <NavLink to="/notes" className="nav-link" activeClassName="active">
-                    <div className="tasks">
-                        <box-icon name="note"></box-icon>
-                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                            Notes
-                        </li>
-                    </div>
+                        <div className="tasks">
+                            <box-icon name="note"></box-icon>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                                Notes
+                            </li>
+                        </div>
                     </NavLink>
-                    <div className="tasks">
-                        <box-icon name="image-add"></box-icon>
-                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                            SnapSolver
-                        </li>
-                    </div>
+                    <NavLink to="/chat" className="nav-link" activeClassName="active">
+                        <div className="tasks">
+                            <box-icon name="image-add"></box-icon>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                                SnapSolver
+                            </li>
+                        </div>
+                    </NavLink>
                     <div className="tasks">
                         <box-icon name="brain"></box-icon>
                         <li style={{ display: isNavbarOpen ? "block" : "none" }}>
@@ -193,7 +197,7 @@ const NavBar = () => {
             </div>
 
             {/* Logout Button */}
-            <div id="logoutButton" style={{display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:"auto"}}>
+            <div id="logoutButton" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
                 <div id="userprofile" style={{ display: "flex", alignItems: "center" }}>
                     <div
                         id="profileLogo"
@@ -222,7 +226,7 @@ const NavBar = () => {
                         {username}
                     </div>
                 </div>
-                {isNavbarOpen && (<div style={{display:"flex", gap:"5px" ,alignItems:"center"}}>
+                {isNavbarOpen && (<div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
                     <box-icon name="power-off" color="#aaa" size="20px"></box-icon>
                     <p>Logout</p>
                 </div>)}
