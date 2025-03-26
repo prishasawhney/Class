@@ -4,13 +4,11 @@ import "boxicons";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const SummerizedNote = ({content}) => {
+const SummerizedNote = ({summary}) => {
     return (
-        <div id="SummarizedNote">
            <div id="SummarizedNoteContent">
-           <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+           <ReactMarkdown children={summary} remarkPlugins={[remarkGfm]} />
            </div>
-        </div>
     );
 };
 

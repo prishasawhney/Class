@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "boxicons";
-import "./FlashcardPage.css";
+import "./Flashcard.css";
 
 const Card = ({ key, question, answer, hint, color, darkerColors }) => {
     const [flipped, setFlipped] = useState(false);
@@ -12,8 +12,7 @@ const Card = ({ key, question, answer, hint, color, darkerColors }) => {
     return (
         <div className={`flip-card ${flipped ? 'flipped' : ''}`} onClick={handleClick}>
             <div className="flip-card-inner">
-                <div className="flip-card-front" style={{ background: `linear-gradient(to bottom right, ${color}, ${darkerColors})` }}>
-                    <p className="title"></p>
+                <div className="flip-card-front" style={{ background: color }}>
                     <p>{question}</p>
                     <div id="cheatsheet" style={{ color: color }}>
                         <h4>HINT</h4>
