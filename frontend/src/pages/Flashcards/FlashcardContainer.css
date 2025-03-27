@@ -1,0 +1,14 @@
+#flashcard-container {
+  background: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 5px;
+  height: 93%;
+  overflow-y: auto;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  justify-items: flex-start;
+  align-items: flex-start; 
+}
+
