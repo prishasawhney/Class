@@ -1,13 +1,13 @@
 .flashcard-summary-container{
-  height:100vh;
+  /* height:100vh; */
   overflow-y: hidden;
   border:2px solid #ccc;
-    border-radius: 10px;
-    height:98vh;
+    /* border-radius: 10px; */
+    height:100vh;
     overflow:hidden;
     position: relative;
     top:5px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,4 +58,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+#slider{
+  width:100%;
 }

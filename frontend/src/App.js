@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginSignup from "./pages/LoginSignupPage/LoginSignup";
 import Flashcards from "./pages/Flashcards/FlashcardPage";
-import Fluid from "./pages/Flashcards/Fluid";
-
+import Toggler from "./pages/Flashcards/toggle";
 function App() {
   const [error, setError] = useState("");
 
