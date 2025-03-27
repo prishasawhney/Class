@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 const SummerizedNote = ({summary}) => {
     return (
            <div id="SummarizedNoteContent">
-           <ReactMarkdown children={summary} remarkPlugins={[remarkGfm]} />
+                <ReactMarkdown children={summary} remarkPlugins={[remarkGfm]} /> 
            </div>
     );
 };

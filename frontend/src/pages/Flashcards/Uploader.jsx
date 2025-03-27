@@ -50,32 +50,32 @@ const Uploader = ({
   });
 
   return (
-      <div id="pdfdropbox">
-        <div {...getRootProps()} id="droppdf">
-          <input
-            multiple=""
-            className="file-input"
-            id="fileInput"
-            type="file"
-            {...getInputProps()}
-          />
-          <label className="file-label" htmlFor="fileInput">
-            <p>Drag & Drop your PDF files here or click to upload</p>
-          </label>
-        </div>
-        {pdfName && (
-          <div className="pdf-info">
-            <p>Uploaded PDF: {pdfName}</p>
-            <button className="remove-button" onClick={handleRemove}>
-              Remove PDF
-            </button>
-          </div>
-        )}
-        <button id="next_button" onClick={handleNext}>
-          Next
-        </button>
-        {error && <p className="error">{error}</p>}
+    <div id="pdfdropbox1">
+      <div {...getRootProps()} id="droppdf1">
+        <input
+          multiple=""
+          className="file-input"
+          id="fileInput"
+          type="file"
+          {...getInputProps()}
+        />
+        <label className="file-label" htmlFor="fileInput">
+          <p>Drag & Drop your PDF files here or click to upload</p>
+        </label>
       </div>
+      {pdfName && (
+        <div className="pdf-info">
+          <p>Uploaded PDF: {pdfName}</p>
+          <button className="remove-button" onClick={handleRemove}>
+            Remove PDF
+          </button>
+        </div>
+      )}
+      <button id="next_button" onClick={handleNext}>
+        Next
+      </button>
+      {error && <p className="error">{error}</p>}
+    </div>
   );
 };
 

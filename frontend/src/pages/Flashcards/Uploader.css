@@ -1,41 +1,40 @@
-  #pdfdropbox {
+  #pdfdropbox1 {
     width: 100%; 
     padding: 15px; 
-    background: #ffffff;
     border-radius: 10px;
     /* background: #004080; */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
-    display: flex;
+    display: flex; 
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; 
     height:100%;
-    padding:20px;
+    padding:20px; 
   }
   
-  #pdfdropbox:hover {
+  #droppdf1:hover {
     transform: translateY(-5px);
     /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25); */
   }
   
-  #droppdf {
-    width: 90%;
+  #droppdf1 {
+    width: 70%;
     height: 80%; /* Further increased height */
     border: 4px dashed #007bff; /* Thicker border for visibility */
     border-radius: 15px;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f7f9fc;
+    transition:0.5s ease;
+    cursor:pointer;
   }
   
-  #droppdf:hover {
-    background-color: #e6f2ff;
+  #droppdf1:hover {
     border-color: #0056b3;
+    background: #5ba0eb29;
   }
   
   .file-label p {
@@ -75,8 +74,8 @@
     transition: background-color 0.3s ease;
   }
   
-  .remove-button:hover {
-    background-color: #e60000;
+  .pdf-info .remove-button:hover {
+    background-color: #dddd;
   }
   
   #next_button {

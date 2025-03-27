@@ -3,11 +3,11 @@ import "./toggle.css";
 import Uploader from "./Uploader";
 import Lottie from "lottie-react";
 import NotesAnimation from "../../assets/notes.json";
-const Toggler = ( {setShowFluid, setFlashcards, setSummary }) => {
+const Toggler = ({ setShowFluid, setFlashcards, setSummary }) => {
     const [acceptedFiles, setAcceptedFiles] = useState([]);
     const [pdfName, setPdfName] = useState("");
-    const [errorMsg,setErrorMsg]= useState("");
-  
+    const [errorMsg, setErrorMsg] = useState("");
+ 
 
     const notes = [
         { noteKey: "1", noteTitle: "Meeting Notes" },
@@ -43,13 +43,80 @@ const Toggler = ( {setShowFluid, setFlashcards, setSummary }) => {
                 { question: "What is JSX?", answer: "A syntax extension for JavaScript.", hint: "Looks like HTML inside JS" }
 
             ]);
-            setSummary("React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.React is a popular JavaScript library used for building user interfaces, primarily for single-page applications. It provides components, hooks, and a virtual DOM for efficient updates.");
+            setSummary(`# React: A Popular JavaScript Library  
+
+**React** is a popular JavaScript library used for building user interfaces primarily for **single-page applications**.  
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+**React** is a popular JavaScript library used for building user interfaces, primarily for **single-page applications**.  
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+**React** is a popular JavaScript library used for building user interfaces, primarily for **single-page applications**.  
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+**React** is a popular JavaScript library used for building user interfaces, primarily for **single-page applications**.  
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+**React** is a popular JavaScript library used for building user interfaces, primarily for **single-page applications**.  
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+**React** is a popular JavaScript library used for building user interfaces, primarily for **single-page applications**.  
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+> React is a popular JavaScript library used for building user interfaces, primarily for **single-page applications**.  
+                
+It provides:  
+                
+- **Components**  
+- **Hooks**  
+- **A Virtual DOM** for efficient updates  
+                
+---
+                
+And so on... 🚀  
+                `);
             setShowFluid(true);
         }, 1000); // Simulated processing time
     };
 
 
-    
+
 
     const [selectedNote, setSelectedNote] = useState('');
     const handleSelectChange = (event) => {
@@ -95,17 +162,17 @@ const Toggler = ( {setShowFluid, setFlashcards, setSummary }) => {
             <div id="overlayS">
                 <div id="overlayInnerS">
                     <div id="addNote">
-                    <h1>Welcome Back!</h1>
-                            <p>
-                                Access your notes here to start learning.
-                            </p>
+                        <h1>Welcome Back!</h1>
+                        <p>
+                            Access your notes here to start learning.
+                        </p>
                         <button onClick={moveSliderRight}>Add Note</button>
                     </div>
                     <div id="uploadDoc">
-                    <h1>Still Worried about your studies??</h1>
-                            <p>
-                                Start learning by uploading pdf of your chapters.
-                            </p>
+                        <h1>Still Worried about your studies??</h1>
+                        <p>
+                            Start learning by uploading pdf of your chapters.
+                        </p>
                         <button onClick={moveSliderLeft}>Add pdf</button>
                     </div>
                 </div>
@@ -113,10 +180,11 @@ const Toggler = ( {setShowFluid, setFlashcards, setSummary }) => {
             <div id="content">
                 <div id="noteContent" className="rightSideContent">
                     <div className="holderS">
-                        <h1>Upload Note <div id="animation-card1"> <Lottie animationData={NotesAnimation}  />
+                        <div style={{height:"50px",display:"flex", alignItems:"center", justifyContent:"center", marginBottom:"40px"}}>
+                            <div id="animation-card1"> <Lottie animationData={NotesAnimation} />
+                            </div>
+                            <span style={{fontSize:"30px", fontWeight:"600"}}>Upload Note</span>
                         </div>
-                       
-                        </h1>
                         <select value={selectedNote} onChange={handleSelectChange} id="selectnotesbutton">
                             <option value="">Select a note</option>
                             {notes.map(note => (
@@ -131,13 +199,13 @@ const Toggler = ( {setShowFluid, setFlashcards, setSummary }) => {
                 </div>
                 <div id="pdfContent" className="leftSideContent">
                     <div className="holderS">
-                    <Uploader
-                        onNext={handleNext}
-                        acceptedFiles={acceptedFiles}
-                        setAcceptedFiles={setAcceptedFiles}
-                        pdfName={pdfName}
-                        setPdfName={setPdfName}/>
-                        
+                        <Uploader
+                            onNext={handleNext}
+                            acceptedFiles={acceptedFiles}
+                            setAcceptedFiles={setAcceptedFiles}
+                            pdfName={pdfName}
+                            setPdfName={setPdfName} />
+
                     </div>
                 </div>
             </div>

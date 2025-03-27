@@ -5,13 +5,13 @@ import Fluid from "./Fluid";
 import "./FlashcardPage.css";
 import Toggler from "./toggle";
 
-const FlashcardPage = () => { 
-   
+const FlashcardPage = () => {
+
     const [showFluid, setShowFluid] = useState(false);
     const [flashcards, setFlashcards] = useState([]);
     const [summary, setSummary] = useState("");
 
-  
+
 
     useEffect(() => {
         const pdfButton = document.getElementById("pdf");
@@ -36,47 +36,45 @@ const FlashcardPage = () => {
     return (
         <div className="flashcard-summary-container">
 
-            <div id="headingg">
+            {!showFluid && (<div id="headingg">
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img src="/opportunities.gif" style={{ height: "70px" }}></img>
-                    <h2>B.R.A.I.N. - Boosting Resources for AI-driven Knowledge </h2>
+                    <img src="/opportunities.gif" style={{ height: "90px" }}></img>
+                    <h1 style={{padding:"0"}}>Boosting Resources for AI-driven Knowledge </h1>
                 </div>
                 <div id="head_para">
-                    {/* <p>
-            Upload your resume to receive a detailed analysis and personalized
-            feedback. Our tool will help you enhance your resume's impact,
-            brevity, and style, showcasing your skills in the best possible way.
-          </p> */}
+                    <p>
+                    Upload your notes or PDFs and let our AI transform them into concise summaries and interactive flashcards, making learning faster, smarter, and more engaging! 
+                    </p>
                 </div>
-            </div>
+            </div>)}
 
 
             {/* Content Section */}
-            <div className="content-container" id='content-container'>
+            <div className="content-container" id='content-container'> 
                 {/* <div id="slider"> */}
-                    
-                {/* </div> */}
-                
-                {!showFluid ? (
-                     <Toggler 
-                     setShowFluid={setShowFluid} 
-                     setFlashcards={setFlashcards} 
-                     setSummary={setSummary} 
-                     />
-    
 
-           
-                        // <Uploader
-                        // onNext={handleNext}
-                        // acceptedFiles={acceptedFiles}
-                        // setAcceptedFiles={setAcceptedFiles}
-                        // pdfName={pdfName}
-                        // setPdfName={setPdfName}/>
-         
-    ) : (
-    <Fluid flashcards={flashcards} summary={summary}> </Fluid>
-            
-        )}
+                {/* </div> */}
+
+                {!showFluid ? (
+                    <Toggler
+                        setShowFluid={setShowFluid}
+                        setFlashcards={setFlashcards}
+                        setSummary={setSummary}
+                    />
+
+
+
+                    // <Uploader
+                    // onNext={handleNext}
+                    // acceptedFiles={acceptedFiles}
+                    // setAcceptedFiles={setAcceptedFiles}
+                    // pdfName={pdfName}
+                    // setPdfName={setPdfName}/>
+
+                ) : (
+                    <Fluid flashcards={flashcards} summary={summary} showFluid={showFluid}> </Fluid>
+
+                )}
 
             </div>
         </div >

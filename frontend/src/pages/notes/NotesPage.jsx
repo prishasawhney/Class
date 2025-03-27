@@ -9,7 +9,7 @@ import SidePanel from "./SidePanel.jsx";
 // import { readTodos, readTaskType } from "../../API/todo.api.js";
 // import { createNote, readNotes, deleteNoteByKey, updateNote } from "../../API/note.api.js";
 import Lottie from 'react-lottie';
-import NotesAnimation from '../../assets/Notes.json';
+import NotesAnimation from '../../assets/notes.json';
 import ImageAnimation from '../../assets/Image Solver.json';
 import VideoAnimation from '../../assets/Interview Prep.json';
 import { NotesContext } from "../../contexts/NotesContext"; 

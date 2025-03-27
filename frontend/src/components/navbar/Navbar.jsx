@@ -149,12 +149,14 @@ const NavBar = () => {
                             </li>
                         </div>
                     </NavLink>
-                    <div className="tasks">
-                        <box-icon name="brain"></box-icon>
-                        <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                            B.R.A.I.N.
-                        </li>
-                    </div>
+                    <NavLink to="/brain" className="nav-link" activeClassName="active">
+                        <div className="tasks">
+                            <box-icon name="brain"></box-icon>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
+                                B.R.A.I.N.
+                            </li>
+                        </div>
+                    </NavLink>
                     {/* </ul> */}
 
                     {/* Professional Corner */}

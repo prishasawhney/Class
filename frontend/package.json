@@ -23,6 +23,7 @@
         "boxicons": "^2.1.4",
         "dayjs": "^1.11.13",
         "html-to-pdfmake": "^2.5.23",
+        "lottie-react": "^2.4.1",
         "lottie-web": "^5.12.2",
         "pdfmake": "^0.2.18",
         "primereact": "^10.9.3",

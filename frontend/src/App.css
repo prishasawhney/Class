@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
   width: 100vw; 
   height: 100vh; 
   overflow: hidden;
   background: #F6F5F5;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .app-container{

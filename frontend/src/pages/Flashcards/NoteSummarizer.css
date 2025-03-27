@@ -1,14 +1,17 @@
  #SummarizedNoteContent {
-     background: #ffffff;
+     background: white;
      height: 100%;
      overflow-y:auto ;
+     overflow-x: hidden;
      width: 100%;
      backdrop-filter: blur(10px);
      border-top-right-radius:10px ;
      border-bottom-right-radius:10px ;
+     border: 5px solid #765bee84;
+     padding:10px;
+     border-radius: 0 10px 10px 10px;
  }
-#SummarizedNoteContent p{
-    height: 100%;
-    padding: 10px;
-    padding-top: 0px;
-    font-size: 15px;}
+
+ #SummarizedNoteContent pre code{
+    width:80%;
+ }
