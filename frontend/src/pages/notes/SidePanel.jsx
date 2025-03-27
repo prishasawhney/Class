@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "boxicons";
 import "./NotesPage.css";
-import Song from './Song.jsx';
+import Song from './song.jsx';
 
 const SidePanel = () => {
     const [isPlaying, setIsPlaying] = useState(false);
