@@ -1,0 +1,14 @@
+services:
+  fastapi_app:
+    env_file: ".env"
+    build: 
+      context: .
+      dockerfile: Dockerfile  
+    container_name: playwright_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    
