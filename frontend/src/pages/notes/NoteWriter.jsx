@@ -78,7 +78,7 @@ const NoteWriter = ({
       <button id="close-button" onClick={closeNoteWriter}>
         <box-icon name="x" color="white" size="30px"></box-icon>
       </button>
-      <form onSubmit={validateAndSubmit} style={{ display: "flex", flexDirection: "column" }}>
+      <form onSubmit={validateAndSubmit} style={{ display: "flex", flexDirection: "column", width:"98%" }}>
         <textarea
           id="enterheading"
           placeholder="Heading"

@@ -6,7 +6,7 @@ const NewsCard = ({ key,
     headline,
     link,
     description,
-    image }) => {
+    image }) => { 
 
     return (
         <div id="newsCard">
@@ -16,7 +16,7 @@ const NewsCard = ({ key,
                 </div>
             ) : null}
             <div id="newsItem">
-                <a href={link}><div id="headline">{headline}</div></a>
+                <a href={link} className="nav-link"><div id="headline" >{headline}</div></a>
                 <div id="newsDescription">{description}</div>
             </div>
         </div>

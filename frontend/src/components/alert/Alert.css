@@ -13,6 +13,7 @@
     position:absolute;
     top:0px;
     left:50%;
+    z-index: 9000;
   }
   
   .warning__icon {

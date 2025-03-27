@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "boxicons";
 import "./ChatWithImage.css";
-// import axios from "axios";
 import MessageBubble from "./ChatBubble";
-import { ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner"; 
 
 const ChatWithImage = () => {
   const [messageHistory, setMessageHistory] = useState([]);
@@ -96,7 +95,7 @@ const ChatWithImage = () => {
   return (
       <div id="pageMain">
         <div id="pageNavBar">
-          <span id="nav-bar-text">Chat</span>
+          <span id="nav-bar-text">StudyMate</span>
         </div>
         <div id="pageMessagingArea">
           <div id="Messages">

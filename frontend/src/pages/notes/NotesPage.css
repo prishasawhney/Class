@@ -115,12 +115,8 @@
   padding-bottom:30px;
 }
 
-#notes::-webkit-scrollbar {
-  display: none;
-}
-
 #notesticker{
-  height:250px;
+  height:230px;
   border-radius: 10px;
   flex: 1 1 calc(33.333% - 20px);
   padding:10px;
@@ -130,7 +126,12 @@
   overflow:hidden;
   cursor: pointer;
   max-width: 30%;
+}
 
+#noteheader{
+  font-size: 18px;
+  font-weight: 650;
+  margin-bottom: 10px;
 }
 
 #glasseffect {
@@ -154,7 +155,7 @@
   padding:10px;
   border-radius: 10px;
   z-index: 2000;
-  overflow-y:scroll;
+  overflow:hidden;
   left:10%;
   top:5%;
 }
@@ -197,8 +198,7 @@
 transform: scale(1.1);
 }
 
-#inputnotetext { 
-  width:100%;
+#inputnotetext {
   height:450px; 
   padding: 10px;
   margin:none;
@@ -249,9 +249,6 @@ transform: scale(1.1);
   resize:none;
 }
 
-#inputnotetext::-webkit-scrollbar {
-  display: none;
-}
 
 #notefooter{
   position:absolute;

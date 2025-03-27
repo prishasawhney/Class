@@ -9,7 +9,7 @@ export const NotesProvider = ({ children, username }) => {
 
     useEffect(() => {
         if (username) {
-            loadNotes(username);
+            loadNotes(username); 
         }
     }, [username]);
 
@@ -78,9 +78,10 @@ export const NotesProvider = ({ children, username }) => {
     };
 
     const filteredNotes = notes.filter((note) =>
-        note.noteTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        note.noteText.toLowerCase().includes(searchQuery.toLowerCase())
-      );      
+        (note.noteTitle && note.noteTitle.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (note.noteText && note.noteText.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+         
 
     return (
         <NotesContext.Provider

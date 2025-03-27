@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from  "react-router-dom";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -12,6 +12,7 @@ import Dashboard from "../src/pages/dashboard/Dashboard";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import { TaskProvider } from "./contexts/TaskContext";
 import { NotesProvider } from "./contexts/NotesContext";
+import { PostProvider } from "./contexts/PostsContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 
@@ -21,6 +22,7 @@ function App() {
     <ErrorProvider>
       <TaskProvider>
         <NotesProvider>
+          <PostProvider>
           <Router>
             <div className="app-container">
               <Navbar />
@@ -39,6 +41,7 @@ function App() {
               </div>
             </div>
           </Router>
+          </PostProvider>
         </NotesProvider>
       </TaskProvider>
     </ErrorProvider>

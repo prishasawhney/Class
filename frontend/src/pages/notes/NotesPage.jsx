@@ -12,7 +12,7 @@ import Lottie from 'react-lottie';
 import NotesAnimation from '../../assets/Notes.json';
 import ImageAnimation from '../../assets/Image Solver.json';
 import VideoAnimation from '../../assets/Interview Prep.json';
-import { NotesContext } from "../../contexts/NotesContext";
+import { NotesContext } from "../../contexts/NotesContext"; 
 
 const NotesPage = ({
   username,
@@ -26,7 +26,7 @@ const NotesPage = ({
   const [isNoteWriterVisible, setIsNoteWriterVisible] = useState(false);
   const [isNoteViewerVisible, setIsNoteViewerVisible] = useState(false);
   const [isGlassEffectVisible, setIsGlassEffectVisible] = useState(false);
-  const { notes, setNotes, addNote, deleteNote, searchQuery,setSearchQuery, loadNotes} = useContext(NotesContext);
+  const { notes, setNotes, addNote, searchQuery,setSearchQuery, loadNotes} = useContext(NotesContext);
   // const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -36,10 +36,6 @@ const NotesPage = ({
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
-
-  const filteredNotes = notes.filter((note) =>
-    note.noteTitle.toLowerCase().includes(searchQuery)
-  );
 
   const addnotewriter = () => {
     setIsNoteWriterVisible(true);
@@ -240,14 +236,10 @@ const NotesPage = ({
               </Link>
             </div>
             <div id="notes">
-              {filteredNotes.map((note, index) => (
+              {notes.map((note, index) => (
                 <NoteSticker
-                  noteKey={note.noteKey}
-                  heading={note.noteTitle}
-                  noteText={note.noteText}
-                  creationDate={note.creationDate}
+                  note={note}
                   color={colors[index % colors.length]}
-                  deleteNote={deleteNote}
                   editNoteFunction={editNoteFunction}
                   viewnote={viewnote}
                 />

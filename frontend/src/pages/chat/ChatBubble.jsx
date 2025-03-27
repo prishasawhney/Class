@@ -4,9 +4,9 @@ import "./ChatWithImage.css";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const ImageNotePageChatBubble = ({ sender, text, image }) => {
+const ChatBubble = ({ sender, text, image }) => {
 
-    const senderClass = sender === "user" ? "userchat" : "chatbotchat";
+    const senderClass = sender === "user" ? "userchat" :  "chatbotchat";
 
     return (
         <div id="imagechatbubble" className={senderClass}>
@@ -31,4 +31,4 @@ const ImageNotePageChatBubble = ({ sender, text, image }) => {
     );
 };
 
-export default ImageNotePageChatBubble;
+export default ChatBubble;

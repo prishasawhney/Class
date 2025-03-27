@@ -6,9 +6,12 @@ import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import "./CommunityPage.css";
 import Comment from './Comment';
+import { usePosts } from "../../contexts/PostsContext";
 // import { createComment } from '../../API/community.api'; 
 
-const Post = ({ key, post, handleLikeToggle, comments, setComments, username}) => {
+const Post = ({ key, post, setComments, username}) => {
+    const {handleLikeToggle} = usePosts();
+
     const letterColors = [
         { "letter": "A", "color": "#D3C047" },
         { "letter": "B", "color": "#D99228" },
@@ -50,7 +53,7 @@ const Post = ({ key, post, handleLikeToggle, comments, setComments, username}) =
     const [isLiked, setIsLiked] = useState(false);
     const [commentBox, openCommentBox] = useState(false);
     const [newComment, addNewComment] = useState('');
-    const [postComments, setPostComments] = useState([]);
+    const [postComments, setPostComments] = useState([post.postComments]);
 
     // const firstCharacter = post.postCreatedBy.charAt(0).toUpperCase();
     const firstCharacter = username.charAt(0).toUpperCase();
@@ -79,9 +82,9 @@ const Post = ({ key, post, handleLikeToggle, comments, setComments, username}) =
     },[]);
 
     useEffect(()=>{
-        const filteredComments = comments.filter(comment => comment.commentPostKey === post.postKey);
+        const filteredComments = post.comments.filter(comment => comment.commentPostKey === post.postKey);
         setPostComments(filteredComments);
-    },[comments, post]);
+    },[post.comments, post]);
 
     const handleCommentSubmit = async (event) => {
         event.preventDefault();
@@ -98,7 +101,7 @@ const Post = ({ key, post, handleLikeToggle, comments, setComments, username}) =
                 // const response = await createComment(comment); 
                 // comment.commentKey = response.message
                 setPostComments([...postComments, comment]);   // Update the state with the saved comment
-                setComments([...comments, comment]);           // Update the global comments state if needed
+                setComments([...post.comments, comment]);           // Update the global comments state if needed
                 addNewComment('');                                  // Clear the input field
             } catch (error) {
                 console.error("Error creating comment:", error);
@@ -201,7 +204,7 @@ const Post = ({ key, post, handleLikeToggle, comments, setComments, username}) =
                                     key={index}
                                     comment={comment}
                                     postid={comment.commentPostKey}
-                                    comments={comments}
+                                    comments={post.comments}
                                     setComments={setComments}
                                     getColorByUsername={getColorByUsername}
                                     username={username}

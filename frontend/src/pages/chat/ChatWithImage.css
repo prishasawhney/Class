@@ -1,5 +1,4 @@
 #pageMain {
-  /* border: 2px solid #ccc; */
   border-radius: 10px;
   height: 98%;
   overflow: hidden;
@@ -21,14 +20,13 @@
   z-index: 1000;
   text-align: center;
 }
-
+ 
 #pageMessagingArea {
   height: 75vh;
   display: flex;
   justify-content: center;
   background: none;
   position: relative;
-  /* padding: 5px 0; */
   z-index: 1;
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -184,8 +182,6 @@ input:focus{
   word-wrap: break-word;
 }
 
-/* button */
-/* From Uiverse.io by AlimurtuzaCodes */ 
 .btn-gemini {
   border: none;
   width: 15em;

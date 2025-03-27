@@ -1,15 +1,19 @@
-import {useState, } as React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskCardContainer from "./TaskCardContainer";
-import BadgesComponent from "./BadgesComponent.jsx";
+import MedalsComponent from "./MedalsComponent.jsx";
 import "./Dashboard.css";
 import owlImage from "../../assets/dashboardOwl.png";
+import fire from "../../assets/fire.gif";
+import fire1 from "../../assets/fire1.gif";
+import bullseye from "../../assets/mission.gif";
 // import { readTodos, readTaskType } from "../../API/todo.api.js";
 // import { readNotes } from "../../API/note.api.js";
 import { Link } from "react-router-dom";
 import { quotes } from "../../data/Data.js";
 // import { completeTodo } from "../../API/todo.api.js";
-import { useTasks } from "../../contexts/TaskContext"; 
+import { useTasks } from "../../contexts/TaskContext";
+import { LineChart } from '@mui/x-charts/LineChart';
+import {useError} from "../../contexts/ErrorContext.js";
 
 const loadLordIconScript = () => {
   const script = document.createElement("script");
@@ -18,14 +22,18 @@ const loadLordIconScript = () => {
   document.body.appendChild(script);
 };
 
-const Dashboard=({
+const Dashboard = ({
   username,
   setUpcoming,
   setUpcomingButton
-})=> {
+}) => {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
   const { tasks, setTasks } = useTasks();
+  const [streak, setStreak] = useState(27);
+  const [learningStreak, setLearningStreak] = useState(15);
+  const [streakData, setStreakData] = useState([1, 9, 0, 17, 0, 2, 0, 27]);
+  const { showError } = useError();
 
   useEffect(() => {
     loadLordIconScript();
@@ -138,57 +146,56 @@ const Dashboard=({
 
   return (
     <>
-        <div id="dashBoardMain">
-          <div id="welcomeCard">
-            <div id="Welcomeuser">Welcome {username}!</div>
-            <div id="Quote">
-              <span id="quoteText">{quote}</span> <br></br>
-              <span id="quoteAuthor">By {author}</span>
-            </div>
-            <img src={owlImage}></img>
-          </div>
-          <div id="bottom">
-            <div id="bottomCards">
-              <div id="scoreCharts">
-                {/* <ChartsContainer tasks={tasks} /> */}
+      <div id="dashBoardMain">
+        <div id="welcomeCard">
+          <div id="Welcomeuser">Welcome {username}!</div>
+          <div id="Quote">
+            <span id="quoteText">{quote}</span> <br></br>
+            <span id="quoteAuthor">By {author}</span>
+            <div id="position" style={{position:"absolute", top:"10px", right:"10px"}}>
+              <div id="streak">
+                <img src={fire1}></img>
+                <span>{streak}</span>
               </div>
-              {/* <div id="Cards">
-                <div id="Card1">
-                  <lord-icon
-                    src="https://cdn.lordicon.com/egmlnyku.json"
-                    trigger="hover"
-                    style={{ width: "70px", height: "70px" }}
-                  ></lord-icon>
-                  <p>We would Love your Feedback!</p>
-                  <Link to={"https://forms.gle/8b7ZTfqMe2N7CreP7"}>
-                    <button>Click Here</button>
-                  </Link>
-                </div>
-                <div id="Card2">
-                  <lord-icon
-                    src="https://cdn.lordicon.com/tjiwvnho.json"
-                    trigger="morph"
-                    state="morph-destroyed"
-                    style={{ width: "55px", height: "55px" }}
-                  ></lord-icon>
-                  <p>
-                    Support us in Unlocking the Power of AI to Enhance Education
-                    for All!
-                  </p>
-                   <Link> 
-                    <button>Click Here</button>
-                   </Link>
-                </div>
-              </div> */}
             </div>
-            <div id="bottomTasks">
-              <TaskCardContainer
-                tasks={getTop5TasksByDate(tasks)}
-                toggleComplete={toggleComplete}
+          </div>
+          <img className="owlImage" src={owlImage}></img>
+        </div>
+        <div id="bottom">
+          <div style={{ display: "flex", height: "40%", gap: "5px", marginTop: "10px" }}>
+            <div id="streakGraph">
+              <div style={{display:"flex", alignItems:"center"}}>
+                <img src={bullseye} style={{height:"30px"}}></img>
+                Streak Stats: Climb or Crash?
+              </div>
+              <LineChart
+                series={[
+                  { curve: "linear", data: streakData, showMark: false, color: "#003366" }
+                ]}
               />
+
             </div>
+            <div id="learningStreak">
+              <div className="streak-container">
+                <h3>🔥 Daily Learning Streak Challenge</h3>
+                <div className="streak-info">
+                  <span>Current Streak: <strong>{learningStreak} days</strong></span>
+                </div>
+                <button className="streak-btn" onClick={()=>{showError("This feature is coming soon! Stay tuned!");}}>Take Today's Question</button>
+              </div>
+            </div>
+          </div>
+          <div id="rectangle">
+            <MedalsComponent />
+          </div>
+          <div id="bottomTasks">
+            <TaskCardContainer
+              tasks={getTop5TasksByDate(tasks)}
+              toggleComplete={toggleComplete}
+            />
           </div>
         </div>
+      </div>
     </>
   );
 }

@@ -3,21 +3,21 @@ import "boxicons";
 import "./CommunityPage.css";
 import DisplayCard from "./DisplayCard";
 import Post from "./Post";
-import AddNewPost from "./NewPost";
+import AddNewPost from "./NewPost"; 
+import { usePosts } from "../../contexts/PostsContext";
 // import { createPost, readPosts, readComments, like_unlike } from "../../API/community.api";
 
 const CommunityPage = ({ username }) => {
-  const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
   const [postquery, setPostQuery] = useState('');
   const [query, setQuery]=useState('');
   const [glasseffect, setglasseffect] = useState(false);
   const [addNewpost, setAddNewpost] = useState(false);
+  const { posts, handleNewPost} = usePosts();
 
-  // Function to sort posts by date
-  const sortPostsByDate = (posts) => {
-    return posts.sort((a, b) => new Date(b.postCreatedOn) - new Date(a.postCreatedOn));
-  };
+  // const sortPostsByDate = (posts) => {
+  //   return posts.sort((a, b) => new Date(b.postCreatedOn) - new Date(a.postCreatedOn));
+  // };
 
   useEffect(() => {
     const fetchPostsAndComments = async () => {
@@ -43,22 +43,22 @@ const CommunityPage = ({ username }) => {
     setAddNewpost(true);
   };
 
-  const handleLikeToggle = async (postId, isAdding) => {
-    setPosts(posts.map(post =>
-      post.postKey === postId
-        ? { ...post, postLikesCount: isAdding ? post.postLikesCount + 1 : Math.max(post.postLikesCount - 1, 0) }
-        : post
-    ));
-    const like = { postKey: postId, username: username };
-    // const response = await like_unlike(like);
-  };
+  // const handleLikeToggle = async (postId, isAdding) => {
+  //   setPosts(posts.map(post =>
+  //     post.postKey === postId
+  //       ? { ...post, postLikesCount: isAdding ? post.postLikesCount + 1 : Math.max(post.postLikesCount - 1, 0) }
+  //       : post
+  //   ));
+  //   const like = { postKey: postId, username: username };
+  //   // const response = await like_unlike(like);
+  // };
 
-  const handleNewPost = async (newPost) => {
-    // const response = await createPost(newPost);
-    // newPost.postKey = response.message;
-    const updatedPosts = [...posts, newPost];
-    setPosts(sortPostsByDate(updatedPosts)); // Sort the posts after adding a new one
-  };
+  // const handleNewPost = async (newPost) => {
+  //   // const response = await createPost(newPost);
+  //   // newPost.postKey = response.message;
+  //   const updatedPosts = [...posts, newPost];
+  //   setPosts(sortPostsByDate(updatedPosts)); // Sort the posts after adding a new one
+  // };
 
   const filteredPosts = posts.filter((post) =>
     (post.postDescription?.toLowerCase() || "").includes(postquery.toLowerCase())
@@ -86,8 +86,6 @@ const CommunityPage = ({ username }) => {
               <Post
                 key={post.postKey}
                 post={post}
-                handleLikeToggle={handleLikeToggle}
-                comments={comments}
                 setComments={setComments}
                 username={username}
               />
