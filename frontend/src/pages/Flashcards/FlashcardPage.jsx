@@ -5,7 +5,7 @@ import Fluid from "./Fluid";
 import "./FlashcardPage.css";
 import Toggler from "./toggle";
 
-const FlashCardSummary = () => {
+const FlashcardPage = () => { 
    
     const [showFluid, setShowFluid] = useState(false);
     const [flashcards, setFlashcards] = useState([]);
@@ -38,8 +38,8 @@ const FlashCardSummary = () => {
 
             <div id="headingg">
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img src="/brain.gif" style={{ height: "160px" }}></img>
-                    <h1>B.R.A.I.N - Behavior Replication by Analog Instruction of the Nervous System</h1>
+                    <img src="/opportunities.gif" style={{ height: "70px" }}></img>
+                    <h2>B.R.A.I.N. - Boosting Resources for AI-driven Knowledge </h2>
                 </div>
                 <div id="head_para">
                     {/* <p>
@@ -83,4 +83,4 @@ const FlashCardSummary = () => {
     );
 };
 
-export default FlashCardSummary;
+export default FlashcardPage;
