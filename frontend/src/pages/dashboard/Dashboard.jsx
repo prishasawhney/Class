@@ -11,9 +11,8 @@ import bullseye from "../../assets/mission.gif";
 import { Link } from "react-router-dom";
 import { quotes } from "../../data/Data.js";
 // import { completeTodo } from "../../API/todo.api.js";
-import { useTasks } from "../../contexts/TaskContext";
 import { LineChart } from '@mui/x-charts/LineChart';
-import {useError} from "../../contexts/ErrorContext.js";
+import { useError } from "../../contexts/ErrorContext.js";
 
 const loadLordIconScript = () => {
   const script = document.createElement("script");
@@ -28,8 +27,7 @@ const Dashboard = ({
   setUpcomingButton
 }) => {
   const [quote, setQuote] = useState("");
-  const [author, setAuthor] = useState("");
-  const { tasks, setTasks } = useTasks();
+  const [author, setAuthor] = useState(""); 
   const [streak, setStreak] = useState(27);
   const [learningStreak, setLearningStreak] = useState(15);
   const [streakData, setStreakData] = useState([1, 9, 0, 17, 0, 2, 0, 27]);
@@ -112,37 +110,24 @@ const Dashboard = ({
     return new Date(year, month - 1, day); // Month is zero-indexed
   };
 
-  const getTop5TasksByDate = (tasks) => {
-    return tasks
-      .filter((task) => !task.isCompleted) // Filter out completed tasks
-      .sort((a, b) => {
-        const [dayA, monthA, yearA] = a.dueDate.split("-");
-        const [dayB, monthB, yearB] = b.dueDate.split("-");
-        const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
-        const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
-        return dateA - dateB;
-      })
-      .slice(0, 5); // Retain only the first 5 tasks
-  };
-
-  const toggleComplete = async (taskKey) => {
-    let currentCompletionStatus = tasks.filter(
-      (task) => task.taskKey === taskKey
-    ).isCompleted;
-    const todo = {
-      username: username,
-      taskKey: taskKey,
-      isCompleted: !currentCompletionStatus,
-    };
-    // const response = await completeTodo(todo);
-    setTasks(
-      tasks.map((task) =>
-        task.taskKey === taskKey
-          ? { ...task, isCompleted: !task.isCompleted }
-          : task
-      )
-    );
-  };
+  // const toggleComplete = async (taskKey) => {
+  //   let currentCompletionStatus = tasks.filter(
+  //     (task) => task.taskKey === taskKey
+  //   ).isCompleted;
+  //   const todo = {
+  //     username: username,
+  //     taskKey: taskKey,
+  //     isCompleted: !currentCompletionStatus,
+  //   };
+  //   // const response = await completeTodo(todo);
+  //   setTasks(
+  //     tasks.map((task) =>
+  //       task.taskKey === taskKey
+  //         ? { ...task, isCompleted: !task.isCompleted }
+  //         : task
+  //     )
+  //   );
+  // };
 
   return (
     <>
@@ -152,7 +137,7 @@ const Dashboard = ({
           <div id="Quote">
             <span id="quoteText">{quote}</span> <br></br>
             <span id="quoteAuthor">By {author}</span>
-            <div id="position" style={{position:"absolute", top:"10px", right:"10px"}}>
+            <div id="position" style={{ position: "absolute", top: "10px", right: "10px" }}>
               <div id="streak">
                 <img src={fire1}></img>
                 <span>{streak}</span>
@@ -164,15 +149,24 @@ const Dashboard = ({
         <div id="bottom">
           <div style={{ display: "flex", height: "40%", gap: "5px", marginTop: "10px" }}>
             <div id="streakGraph">
-              <div style={{display:"flex", alignItems:"center"}}>
-                <img src={bullseye} style={{height:"30px"}}></img>
+              <div style={{ display: "flex", alignItems: "center", fontWeight: "600" }}>
+                <img src={bullseye} style={{ height: "30px" }}></img>
                 Streak Stats: Climb or Crash?
               </div>
               <LineChart
+                xAxis={[
+                  {
+                    scaleType: "point",
+                    data: streakData.map((_, index) => index), // Ensuring x-axis has valid data
+                    valueFormatter: () => "•", // Replace numbers with dots
+                  },
+                ]}
                 series={[
                   { curve: "linear", data: streakData, showMark: false, color: "#003366" }
                 ]}
               />
+
+
 
             </div>
             <div id="learningStreak">
@@ -181,7 +175,7 @@ const Dashboard = ({
                 <div className="streak-info">
                   <span>Current Streak: <strong>{learningStreak} days</strong></span>
                 </div>
-                <button className="streak-btn" onClick={()=>{showError("This feature is coming soon! Stay tuned!");}}>Take Today's Question</button>
+                <button className="streak-btn" onClick={() => { showError("This feature is coming soon! Stay tuned!"); }}>Take Today's Question</button>
               </div>
             </div>
           </div>
@@ -190,8 +184,6 @@ const Dashboard = ({
           </div>
           <div id="bottomTasks">
             <TaskCardContainer
-              tasks={getTop5TasksByDate(tasks)}
-              toggleComplete={toggleComplete}
             />
           </div>
         </div>

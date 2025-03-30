@@ -8,8 +8,10 @@ export const TaskProvider = ({ children }) => {
         { taskKey: 2, taskName: "Meeting", taskType: "Work", taskColor: "#4682b4", isCompleted: false, dueDate: "2025-03-21", taskDescription: "Client call at 3PM" },
         { taskKey: 3, taskName: "Workout", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-22", taskDescription: "1-hour gym session" },
         { taskKey: 4, taskName: "Read book", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-23", taskDescription: "Read 20 pages" },
-        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#4682b4", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" },
+        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#4682b4", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" }, 
     ]);
+
+    const [openTaskKey, setOpenTaskKey]=useState(null);
 
     const addTask = (newTask) => {
         setTasks([...tasks, { ...newTask, taskKey: tasks.length + 1 }]);
@@ -19,16 +21,17 @@ export const TaskProvider = ({ children }) => {
         setTasks(tasks.filter(task => task.taskKey !== taskKey));
     };
 
-    const toggleTaskCompletion = (task) => {
+    const toggleTaskCompletion = (taskKey) => {
         const updatedTasks = tasks.map(t =>
-            t.taskKey === task.taskKey ? { ...t, isCompleted: !t.isCompleted } : t
+            t.taskKey === taskKey ? { ...t, isCompleted: !t.isCompleted } : t
         );
         setTasks(updatedTasks);
     };
     
+    
 
     return (
-        <TaskContext.Provider value={{ tasks, setTasks, addTask, deleteTask, toggleTaskCompletion }}>
+        <TaskContext.Provider value={{ tasks, setTasks, addTask, deleteTask, toggleTaskCompletion, openTaskKey, setOpenTaskKey}}>
             {children}
         </TaskContext.Provider>
     );

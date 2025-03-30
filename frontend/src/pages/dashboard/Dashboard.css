@@ -8,7 +8,7 @@
 }
 
 #navibar{
-    background: black;
+    background: black; 
     flex:1;
 }
 
@@ -299,7 +299,7 @@
 
 
 #learningStreak{
-    height:95%;
+    height:100%;
     width:30%;
     background: white;
     border-radius: 10px;

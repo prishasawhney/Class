@@ -13,9 +13,6 @@ const Chatbot = ({ username }) => {
   const chatsEndRef = useRef(null);
   const [loading, setLoading] = useState(false);  // Add loading state
   const messagesEndRef = useRef(null);
-  const [dragging, setDragging] = useState(false);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x: 50, y: 50 });
 
   const generateChatbotResponse = async (question) => {
     const query = { question: question, username: username };
@@ -70,20 +67,6 @@ const scrollToBottom = () => {
       chatsEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatHistory]);
-
-  const handleMouseDown = (e) => {
-    setDragging(true);
-    setOffset({ x: e.clientX - position.x, y: e.clientY - position.y });
-  };
-
-  const handleMouseMove = (e) => {
-    if (!dragging) return;
-    setPosition({ x: e.clientX - offset.x, y: e.clientY - offset.y });
-  };
-
-  const handleMouseUp = () => {
-    setDragging(false);
-  };
 
   return (
     <>

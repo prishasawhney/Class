@@ -8,24 +8,6 @@ const SidePanel = () => {
     const [currentTrack, setCurrentTrack] = useState(0); 
     const audioRef = useRef(null); 
 
-    // const tracks = [
-    //     {
-    //         title: "Lofi Track 1",
-    //         artist: "chosic.com",
-    //         src: LofiTrack1
-    //     },
-    //     {
-    //         title: "Lofi Track 2",
-    //         artist: "chosic.com",
-    //         src: LofiTrack2
-    //     },
-    //     {
-    //         title: "Study Lofi Music",
-    //         artist:"",
-    //         src: StudyLofiMusic
-    //     }
-    // ];
-
     const tracks = [
         {
             title: "Perfect",
@@ -74,7 +56,7 @@ const SidePanel = () => {
 
     const handleTrackClick = (index) => {
         setCurrentTrack(index);
-        setIsPlaying(true); // Optionally start playing immediately
+        setIsPlaying(true);
     };
 
     return (

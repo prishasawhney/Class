@@ -1,22 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./toggle.css";
 import Uploader from "./Uploader";
 import Lottie from "lottie-react";
-import NotesAnimation from "../../assets/notes.json";
+import NotesAnimation from "../../assets/notes.json"; 
+import { NotesContext } from "../../contexts/NotesContext"; 
 const Toggler = ({ setShowFluid, setFlashcards, setSummary }) => {
     const [acceptedFiles, setAcceptedFiles] = useState([]);
     const [pdfName, setPdfName] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
- 
-
-    const notes = [
-        { noteKey: "1", noteTitle: "Meeting Notes" },
-        { noteKey: "2", noteTitle: "Project Ideas" },
-        { noteKey: "3", noteTitle: "To-Do List" },
-        { noteKey: "4", noteTitle: "Brainstorming Session" },
-        { noteKey: "5", noteTitle: "Shopping List" }
-    ];
-
+    const { notes} = useContext(NotesContext);
 
     const handleNextWrapper = () => {
         if (!selectedNote) {
