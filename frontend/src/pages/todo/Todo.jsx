@@ -9,7 +9,7 @@ import { useTasks } from "../../contexts/TaskContext";
 
 const ToDoPage = () => {
     const { showError } = useError();
-    const { tasks, setTasks, deleteTask, toggleTaskCompletion, openTaskKey, setOpenTaskKey } = useTasks();
+    const { tasks, setTasks, deleteTask, toggleTaskCompletion,setOpenTaskKey, openTaskKey } = useTasks();
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -111,7 +111,6 @@ const ToDoPage = () => {
                             setTaskPanel={setTaskPanel}
                             deleteTaskType={() => deleteTaskType(taskType.taskTypeKey)}
                             taskCount={countTasksByType(taskType.taskTypeName)}
-                            openTaskKey={openTaskKey}
                         />
                     ))}
                 </div>
@@ -140,16 +139,16 @@ const ToDoPage = () => {
                             <img src="/overdue.gif" style={{height:'45px'}}></img>
                             <h3>Overdue Tasks</h3>
                         </div>
-                        {filteredOverdueTasks.map((task) => ( 
+                        {filteredOverdueTasks.map((task) => (
                             <Task
                                 key={task.taskKey}
                                 task={task}
                                 setEditingTask={setEditingTask}
                                 deleteTask={() => deleteTask(task.taskKey)}
-                                toggleTaskCompletion={toggleTaskCompletion}
+                                toggleTaskCompletion={() => toggleTaskCompletion(task)}
                                 setTaskPanel={setTaskPanel}
-                                openTaskKey={openTaskKey}
                                 setOpenTaskKey={setOpenTaskKey}
+                                openTaskKey={openTaskKey}
                             />
                         ))}
                     </div>
@@ -167,7 +166,9 @@ const ToDoPage = () => {
                                 task={task}
                                 setEditingTask={setEditingTask}
                                 deleteTask={() => deleteTask(task.taskKey)}
-                                toggleTaskCompletion={toggleTaskCompletion}
+                                toggleTaskCompletion={() => toggleTaskCompletion(task)}
+                                setOpenTaskKey={setOpenTaskKey}
+                                openTaskKey={openTaskKey}
                             />
                         ))}
                     </div>
