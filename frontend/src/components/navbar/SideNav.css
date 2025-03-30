@@ -4,7 +4,7 @@
     margin: 5px;
     height:92.5vh;
     padding: 20px;
-    overflow-x: hidden;
+    overflow-x: hidden; 
     z-index: 1;
     color: black;
     border: 2px solid #dddddd;  
@@ -31,11 +31,6 @@
   padding: 10px;
   list-style: none;
   text-decoration: none;
-}
-
-#tasks,
-#lists {
-  margin-top: 30px;
 }
 
 #tasks p,

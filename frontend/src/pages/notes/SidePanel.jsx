@@ -1,66 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import "boxicons";
 import "./NotesPage.css";
 import Song from './song.jsx';
+import { useSongs } from '../../contexts/SongsContext';
 
 const SidePanel = () => {
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTrack, setCurrentTrack] = useState(0); 
-    const audioRef = useRef(null); 
-
-    const tracks = [
-        {
-            title: "Perfect",
-            artist: "Ed Sheeran",
-            src: "https://mr-jat.in/dlod/6239?&volume=75&showstop=1&showvolume=1"
-        },
-        {
-            title: "Apna Bana Le - Bhediya",
-            artist: "Arijit Singh",
-            src: "https://pagalfree.com/musics/128-Apna%20Bana%20Le%20-%20Bhediya%20128%20Kbps.mp3" 
-        },
-        {
-            title: "Softly - Making Memories",
-            artist: "Karan Aujla",
-            src: "https://pagalfree.com/musics/128-Softly%20-%20Making%20Memories%20128%20Kbps.mp3" 
-        }
-    ];
-    
-
-    useEffect(() => {
-        // Load the new track when currentTrack changes
-        if (audioRef.current) {
-            audioRef.current.load();
-            if (isPlaying) {
-                audioRef.current.play();
-            }
-        }
-    }, [currentTrack]);
-
-    const handlePlayPause = () => {
-        if (isPlaying) {
-            audioRef.current.pause();
-        } else {
-            audioRef.current.play();
-        }
-        setIsPlaying(!isPlaying);
-    };
-
-    const handleNext = () => {
-        setCurrentTrack((currentTrack + 1) % tracks.length);
-    };
-
-    const handlePrevious = () => {
-        setCurrentTrack((currentTrack - 1 + tracks.length) % tracks.length);
-    };
-
-    const handleTrackClick = (index) => {
-        setCurrentTrack(index);
-        setIsPlaying(true);
-    };
+    const {
+        tracks, currentTrack, isPlaying, handlePlayPause,
+        handleNext, handlePrevious, handleTrackClick, audioRef
+    } = useSongs();
 
     return (
         <div id="sidepanel">
+            <div id="searchSong">
+                <box-icon name='search'></box-icon>
+                <input type="text" placeholder='Search any Song'></input>
+                <button>Add to Playlist</button>
+            </div>
             <div className="card-sidepanel">
                 <div className="one-sidepanel">
                     <span className="title-sidepanel">Music</span>
@@ -162,8 +118,14 @@ const SidePanel = () => {
                 <source src={tracks[currentTrack].src} type="audio/mp3" />
             </audio>
             <div id="listOfTracks">
-                {tracks.map((track,index)=>(
-                    <Song title={track.title} artist={track.artist} index={index} handleTrackClick={handleTrackClick}/>
+                {tracks.map((track, index) => (
+                    <Song
+                        key={index}
+                        title={track.title}
+                        artist={track.artist}
+                        index={index}
+                        handleTrackClick={handleTrackClick}
+                    />
                 ))}
             </div>
         </div>

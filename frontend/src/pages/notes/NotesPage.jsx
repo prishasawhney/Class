@@ -12,7 +12,7 @@ import Lottie from 'react-lottie';
 import NotesAnimation from '../../assets/notes.json';
 import ImageAnimation from '../../assets/Image Solver.json';
 import VideoAnimation from '../../assets/Interview Prep.json';
-import { NotesContext } from "../../contexts/NotesContext"; 
+import { NotesContext } from "../../contexts/NotesContext";  
 
 const NotesPage = ({
   username,

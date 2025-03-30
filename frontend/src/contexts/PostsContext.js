@@ -6,7 +6,7 @@ const PostContext = createContext();
 export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
 
-    // Function to fetch posts (Mock API call)
+    // Function to fetch posts (Mock API call) 
     useEffect(() => {
         const fetchPosts = async () => {
             try {

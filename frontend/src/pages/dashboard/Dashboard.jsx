@@ -149,7 +149,7 @@ const Dashboard = ({
         <div id="bottom">
           <div style={{ display: "flex", height: "40%", gap: "5px", marginTop: "10px" }}>
             <div id="streakGraph">
-              <div style={{ display: "flex", alignItems: "center", fontWeight: "600" }}>
+              <div style={{ display: "flex", alignItems: "center", fontWeight: "600", gap:"5px" }}>
                 <img src={bullseye} style={{ height: "30px" }}></img>
                 Streak Stats: Climb or Crash?
               </div>

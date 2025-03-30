@@ -5,15 +5,15 @@ import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
 import { useTasks } from "../../contexts/TaskContext";
 import MusicPlayer from "../musicPlayer/MusicPlayer";
+import { useSongs } from '../../contexts/SongsContext';
 defineElement(lottie.loadAnimation);
 
 const NavBar = () => {
     const [uncompletedTasksCount, setUncompletedTasksCount] = useState(0);
     const username = "NewUser";
-    const [studentCorner, setStudentCorner] = useState(false);
-    const [profCorner, setProfCorner] = useState(false);
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
     const { tasks } = useTasks();
+    const { hasPlayedOnce } = useSongs();
 
 
     const toggleNavbar = () => {
@@ -68,14 +68,14 @@ const NavBar = () => {
             </div>
 
             <div>
-                <div className="tasks" style={{ marginTop: "20px", display: !isNavbarOpen ? "block" : "none" }}><box-icon name='music' type='solid'></box-icon></div>
-                <div style={{ display: isNavbarOpen ? "block" : "none" }}>
+                {hasPlayedOnce && (<div style={{ display: isNavbarOpen ? "block" : "none" }}>
                     <MusicPlayer />
-                </div>
+                </div>)}
             </div>
 
             <div id="tasks">
                 <ul>
+                    <div className="tasks" style={{ marginTop: "20px", display: !isNavbarOpen ? "block" : "none" }}><box-icon name='music' type='solid'></box-icon></div>
                     <NavLink to="/dashboard" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name="dashboard" type="solid"></box-icon>
@@ -87,7 +87,7 @@ const NavBar = () => {
                     <NavLink to="/todo" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name='task'></box-icon>
-                            <li style={{ display: isNavbarOpen ? "block" : "none" }} onClick={() => { setProfCorner(false); setStudentCorner(false) }}>
+                            <li style={{ display: isNavbarOpen ? "block" : "none" }}>
                                 To Do
                             </li>
                             <div
@@ -104,7 +104,7 @@ const NavBar = () => {
                             Calendar
                         </li>
                     </div> */}
-                    <NavLink to="/community" className="nav-link" activeClassName="active" onClick={() => { setProfCorner(false); setStudentCorner(false) }}>
+                    <NavLink to="/community" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name="message-rounded-detail"></box-icon>
                             <li style={{ display: isNavbarOpen ? "block" : "none" }}>
