@@ -9,7 +9,7 @@ import ChatBot from "../src/components/chatbot/ChatBot";
 import NotesPage from "../src/pages/notes/NotesPage";
 import ChatPage from "../src/pages/chat/ChatWithImage";
 import Dashboard from "../src/pages/dashboard/Dashboard";
-import Brain from "../src/pages/Flashcards/FlashcardPage";
+// import Brain from "../src/pages/Flashcards/FlashcardPage";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import { TaskProvider } from "./contexts/TaskContext";
 import { NotesProvider } from "./contexts/NotesContext";
@@ -39,7 +39,7 @@ function App() {
                       <Route path="/notes" component={NotesPage} />
                       <Route path="/chat" component={ChatPage} />
                       <Route path="/dashboard" component={Dashboard} />
-                      <Route path="/brain" component={Brain} />
+                      {/* <Route path="/brain" component={Brain} /> */}
                     </Switch>
                     <ChatBot />
                   </div>

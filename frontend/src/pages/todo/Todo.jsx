@@ -168,7 +168,7 @@ const ToDoPage = () => {
                                 deleteTask={() => deleteTask(task.taskKey)}
                                 toggleTaskCompletion={() => toggleTaskCompletion(task)}
                                 setOpenTaskKey={setOpenTaskKey}
-                                openTaskKey={openTaskKey}
+                                openTaskKey={openTaskKey} 
                             />
                         ))}
                     </div>
