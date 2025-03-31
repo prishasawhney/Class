@@ -34,6 +34,7 @@
         "react-lottie": "^1.2.10",
         "react-markdown": "^10.1.0",
         "react-quill": "^2.0.0",
+        "react-router-dom": "^7.4.1",
         "react-scripts": "5.0.1",
         "react-syntax-highlighter": "^15.6.1",
         "rehype-raw": "^7.0.0",

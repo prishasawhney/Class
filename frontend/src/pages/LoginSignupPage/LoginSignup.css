@@ -1,9 +1,3 @@
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #f0f0f0;
-}
-
-
 #signInSignUpBox { 
   position: relative;
   width: 55vw;
@@ -118,8 +112,6 @@ body {
   }
 }
 
-
-
 #overlayInner > div {
   flex: 1;
 }
@@ -196,7 +188,7 @@ body {
   font-size: 0.8rem;
 }
 
-input:focus {
+.input1 input:focus {
     outline: none;
 }
 
@@ -242,7 +234,7 @@ input:focus {
   z-index: -10;
   border-radius: 20px;
   animation: glowing 20s linear infinite;
-  transition: opacity .3s ease-in-out;
+  transition: opacity .3s ease-in-out; 
   opacity:0;
 }
 
@@ -343,7 +335,7 @@ input:focus {
   margin: 0 10px;
 }
 
-.input{
+.input1{
   display:flex;
   align-items: center;
   justify-content: center;
@@ -352,8 +344,8 @@ input:focus {
   width: 20vw;
 }
 
-.input box-icon{
-  margin-left: 1%;
+.input1 box-icon{
+  /* margin-left: 1%; */
   opacity:0.5;
   width: 18px;
 }
@@ -423,177 +415,3 @@ input:focus {
 .social-media-button:hover {
   transform: translateY(-5px);
 }
-
-
-/* The underlying css is new*/
-@media (max-width: 830px) {
-
-  #toggle-container {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      z-index: 50;
-      display: flex !important;
-      justify-content: center;
-  }
-
-  #toggle-container a{
-    font-size: 13px;
-  }
-
-  #signInSignUpBox {
-      
-      width: 90vw;
-      min-height: 70vh;
-      max-height: 90vh;
-      padding: 20px 0 70px;
-  
-  }
-
-  #overlay {
-      display: none;
-  }
-
-  #signUpForm .holder,
-  #signInForm .holder {
-    
-      padding: 20px 10px;
-      width: 100%vw;
-      box-sizing: border-box;
-      transform: none !important;
-      transition: none !important;
-  }
-
-  #forms {
-      width: 100%;
-      position: static;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-
-  #signUpForm,
-  #signInForm {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      padding-bottom: 20px;
-      border-radius: 20px;
-      transition: opacity 0.3s ease; /* Correct transition */
-  }
-
-  /* Initial state for forms (hidden) */
-  #signInForm {
-      opacity: 0;
-      z-index: -1;
-      display: none;
-  }
-
-  /* Initial state for forms (visible) */
-  #signUpForm {
-      opacity: 1;
-      z-index: 1;
-      display: block;
-  }
-
-  /* Active/inactive classes for mobile toggling */
-  .mobile-active {
-      opacity: 1 !important;
-      z-index: 2 !important;
-      display: block !important;
-  }
-
-  .mobile-inactive {
-      opacity: 0 !important;
-      z-index: -1 !important;
-      display: none !important;
-  }
-
-
-  /* Form title */
-  #signInForm h1,
-  #signUpForm h1 {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-  }
-
-  /* Form input containers */
-  .input {
-      width: 100%;
-      max-width: 280px;
-      padding: 0.5px 8px;
-      margin: 0.5rem auto;
-  }
-
-  /* Input elements */
-  #signInForm input,
-  #signUpForm input {
-      width: 85%;
-      font-size: 14px;
-  }
-
-  /* Social media buttons container */
-  #social-media-holder {
-      margin: 1rem 0;
-  }
-
-  /* Buttons */
-  .signup-signin-button {
-      padding: 8px 30px;
-      margin: 15px 0;
-      font-size: 14px;
-  }
-
-  /* Forgot password link */
-  #signInForm #forgot-password {
-      margin: 10px auto;
-      display: block;
-      text-align: center;
-  }
-
-  /* Error messages */
-  #error {
-      font-size: 14px;
-      margin: 10px auto;
-      max-width: 280px;
-  }
-
-  /* Descriptive text */
-  #signInForm p,
-  #signUpForm p {
-      font-size: 0.75rem;
-      margin: 1rem 0;
-  }
-  
-
-  /* Fix for very small screens */
-  @media (max-width: 350px) {
-      .input {
-          width: 90%;
-          max-width: 240px;
-      }
-
-      #signInForm input,
-      #signUpForm input {
-          width: 80%;
-          font-size: 13px;
-      }
-
-      #signInForm h1,
-      #signUpForm h1 {
-          font-size: 1.3rem;
-      }
-
-      .signup-signin-button:active {
-          padding: 9px 38px;
-          transition-duration: 0.1s;
-      }
-  }
-}
-
-
-
-
-

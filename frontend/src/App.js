@@ -1,6 +1,7 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginSignupPage from "../src/pages/loginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -19,8 +20,35 @@ import { FlashcardProvider } from "./contexts/FlashcardContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
   const username = "NewUser";
+
+  const shouldShowSideNav = !['/', '/login-signup'].includes(location.pathname);
+  const noChatbotPaths = !['/', '/login-signup'].includes(location.pathname);
+
+  return (
+    <div className="app-container">
+      {shouldShowSideNav && <Navbar />}
+      <Alert />
+      <div className="content-container">
+        <Routes>
+          <Route path="/login-signup" element={<LoginSignupPage />} />
+          <Route path="/todo" element={<ToDoPage />} />
+          <Route path="/community" element={<CommunityPage username={username} />} />
+          <Route path="/resume" element={<ResumeScorer />} />
+          <Route path="/interview" element={<InterviewAnalyzer />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+        {noChatbotPaths && <ChatBot />}
+      </div>
+    </div>
+  );
+}
+
+function App() {
   return (
     <ErrorProvider>
       <TaskProvider>
@@ -47,6 +75,7 @@ function App() {
                     <ChatBot />
                   </div>
                 </div>
+                <AppContent />
               </Router>
             </SongsProvider>
           </PostProvider>
