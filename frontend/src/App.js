@@ -1,6 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom"; 
 import LoginSignupPage from "../src/pages/loginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
@@ -18,11 +18,35 @@ import { SongsProvider } from "./contexts/SongsContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 
-function App({ location }) {
+function AppContent() {
+  const location = useLocation();
   const username = "NewUser";
+
   const shouldShowSideNav = !['/', '/login-signup'].includes(location.pathname);
   const noChatbotPaths = !['/', '/login-signup'].includes(location.pathname);
 
+  return (
+    <div className="app-container">
+      {shouldShowSideNav && <Navbar />}
+      <Alert />
+      <div className="content-container">
+        <Routes>
+          <Route path="/login-signup" element={<LoginSignupPage />} />
+          <Route path="/todo" element={<ToDoPage />} />
+          <Route path="/community" element={<CommunityPage username={username} />} />
+          <Route path="/resume" element={<ResumeScorer />} />
+          <Route path="/interview" element={<InterviewAnalyzer />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+        {noChatbotPaths && <ChatBot />}
+      </div>
+    </div>
+  );
+}
+
+function App() {
   return (
     <ErrorProvider>
       <TaskProvider>
@@ -30,23 +54,7 @@ function App({ location }) {
           <PostProvider>
             <SongsProvider>
               <Router>
-                <div className="app-container">
-                  {shouldShowSideNav && <Navbar />}
-                  <Alert />
-                  <div className="content-container">
-                    <Switch>
-                      <Route path="/login-signup" component={LoginSignupPage} />
-                      <Route path="/todo" component={ToDoPage} />
-                      <Route path="/community" render={(props) => <CommunityPage {...props} username={username} />} />
-                      <Route path="/resume" component={ResumeScorer} />
-                      <Route path="/interview" component={InterviewAnalyzer} />
-                      <Route path="/notes" component={NotesPage} />
-                      <Route path="/chat" component={ChatPage} />
-                      <Route path="/dashboard" component={Dashboard} />
-                    </Switch>
-                    {noChatbotPaths && <ChatBot />}
-                  </div>
-                </div>
+                <AppContent />
               </Router>
             </SongsProvider>
           </PostProvider>
@@ -56,5 +64,4 @@ function App({ location }) {
   );
 }
 
-// Wrap App with withRouter to inject location as a prop
-export default withRouter(App);
+export default App;

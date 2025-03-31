@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./LoginSignup.css";
 import "boxicons";
 // import axios from "axios";
 
-const LoginSignup = ({ setError, error, history}) => {
+const LoginSignup = ({ setError, error}) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
@@ -13,6 +13,7 @@ const LoginSignup = ({ setError, error, history}) => {
   const [signupPassword2, setSignupPassword2] = useState("");
 
   const [shake, setShake] = useState(false);
+  const navigate=useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -31,7 +32,7 @@ const LoginSignup = ({ setError, error, history}) => {
       const response="hello";
       console.log("Login successful:", response.data.username);
       document.cookie = `username=${response.data.username}; path=/`;
-      history.push("/dashboard");
+      navigate("/dashboard");
       // Handle successful login, e.g., store token, redirect, etc.
     } catch (err) {
       console.error("Login failed:", err);
@@ -51,7 +52,7 @@ const LoginSignup = ({ setError, error, history}) => {
         const response="hello";
         console.log('Signup successful:', response.data);
         document.cookie = `username=${response.data.username}; path=/`;
-        history.push("/dashboard");
+        navigate("/dashboard");
     } catch (err) {
         console.error('Signup failed:', err.response?.data?.detail || err.message);
         setError(err.response?.data?.detail || 'Failed to create an account. Please try again.');
@@ -244,4 +245,4 @@ const LoginSignup = ({ setError, error, history}) => {
   );
 };
 
-export default withRouter(LoginSignup); 
+export default LoginSignup; 

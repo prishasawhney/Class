@@ -5,8 +5,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { withRouter } from "react-router-dom";  // ✅ Use withRouter instead of useHistory
 import { useTasks } from "../../contexts/TaskContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Img = styled('img')({
   margin: 'auto',
@@ -20,15 +20,14 @@ const formatDate = (date) => {
   return isNaN(d.getTime()) ? 'Invalid Date' : d.toLocaleDateString();
 };
 
-function TaskCard({ taskKey, taskName, taskDescription, dueDate, history }) {
+function TaskCard({ taskKey, taskName, taskDescription, dueDate }) {
   const { setOpenTaskKey, toggleTaskCompletion } = useTasks();
+  const navigate=useNavigate();
 
   const handleClick = () => {
     setOpenTaskKey(taskKey);
-    
-    // Ensure navigation happens after state update
     setTimeout(() => {
-      history.push("/todo");  // ✅ Use history.push() instead of useNavigate()
+      navigate("/todo"); 
     }, 100);
   };
 
@@ -73,4 +72,4 @@ function TaskCard({ taskKey, taskName, taskDescription, dueDate, history }) {
   );
 }
 
-export default withRouter(TaskCard);  // ✅ Wrap the component with withRouter()
+export default TaskCard; 
