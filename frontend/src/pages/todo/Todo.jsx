@@ -9,7 +9,7 @@ import { useTasks } from "../../contexts/TaskContext";
 
 const ToDoPage = () => {
     const { showError } = useError();
-    const { tasks, setTasks, deleteTask, toggleTaskCompletion,setOpenTaskKey, openTaskKey } = useTasks();
+    const { tasks, setTasks, deleteTask, toggleTaskCompletion } = useTasks();
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -147,8 +147,6 @@ const ToDoPage = () => {
                                 deleteTask={() => deleteTask(task.taskKey)}
                                 toggleTaskCompletion={() => toggleTaskCompletion(task)}
                                 setTaskPanel={setTaskPanel}
-                                setOpenTaskKey={setOpenTaskKey}
-                                openTaskKey={openTaskKey}
                             />
                         ))}
                     </div>
@@ -167,8 +165,6 @@ const ToDoPage = () => {
                                 setEditingTask={setEditingTask}
                                 deleteTask={() => deleteTask(task.taskKey)}
                                 toggleTaskCompletion={() => toggleTaskCompletion(task)}
-                                setOpenTaskKey={setOpenTaskKey}
-                                openTaskKey={openTaskKey} 
                             />
                         ))}
                     </div>

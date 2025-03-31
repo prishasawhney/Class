@@ -27,12 +27,6 @@ const NotesPage = ({
   const [isNoteViewerVisible, setIsNoteViewerVisible] = useState(false);
   const [isGlassEffectVisible, setIsGlassEffectVisible] = useState(false);
   const { notes, setNotes, addNote, searchQuery,setSearchQuery, loadNotes} = useContext(NotesContext);
-  // const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    loadNotes(username);
-  }, []);
-
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };

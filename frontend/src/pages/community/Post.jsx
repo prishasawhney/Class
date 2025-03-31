@@ -141,7 +141,7 @@ const Post = ({ key, post, setComments, username}) => {
     return (
         <div id="post">
             <div id="useid">
-                <div id="userProfilePic" style={{background: getColorByUsername(post.postCreatedBy), color:'white', width:'25px', borderRadius:'50%',display:'flex', justifyContent:'center'}} >
+                <div id="userProfilePic" style={{background: getColorByUsername(post.postCreatedBy), color:'white', width:'25px', height:'25px', borderRadius:'50%',display:'flex', justifyContent:'center', alignItems:'center'}} >
                     {firstCharacter}
                 </div>
                 {post.postCreatedBy}

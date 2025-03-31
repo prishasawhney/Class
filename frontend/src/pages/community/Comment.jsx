@@ -99,7 +99,7 @@ const Comment = ({ comment, comments, setComments, getColorByUsername, username,
         <li id="commentContainer" key={comment.commentKey}>
             <div id="singleComment">
                 <div id="userComment">
-                    <div style={{ background: getColorByUsername(comment.commentCreatedBy), color: 'white', height: 'fitContent', width:'20px', borderRadius:'50%', display:'flex', justifyContent:'center' }}>{firstCharacter}</div>
+                    <div style={{ background: getColorByUsername(comment.commentCreatedBy), color: 'white', width:'20px', height:'20px', borderRadius:'50%', display:'flex', justifyContent:'center', alignItems:'center' }}>{firstCharacter}</div>
                     <span>{comment.commentCreatedBy}</span>
                 </div>
                 <div id="commentText">
