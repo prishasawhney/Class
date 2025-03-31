@@ -279,9 +279,10 @@
     color: #ffd700; /* Gold */
 }
 
-.completed {
+.level-completed {
     background: #c9cfdc;
     color: white;
+    text-decoration: line-through;
 }
 
 .medal-level:hover {

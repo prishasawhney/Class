@@ -253,6 +253,42 @@ async def update_todo_completed(todo: CompleteTodoSchema):
 
     return {"message": "Todo updated successfully"}
 
+
+@app.put("/todo/update")
+async def update_todo(todo: UpdateTodoSchema):
+    username = todo.username
+    task_key = todo.taskKey  # Ensure the request includes taskKey
+
+    # Find the user
+    user = db.Users.find_one({"username": username})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Find the task in user's todos
+    task = next((t for t in user.get("todos", []) if t["taskKey"] == task_key), None)
+    if not task:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    # Update task fields while keeping the same taskKey
+    updated_task = {
+        "taskKey": task_key,  # Keep the original taskKey
+        "taskName": todo.taskName,
+        "taskDescription": todo.taskDescription,
+        "dueDate": todo.dueDate,
+        "taskType": todo.taskType,
+        "taskColor": todo.taskColor,
+        "isCompleted": task["isCompleted"]  # Retain completion status
+    }
+
+    # Update the specific todo in the database
+    db.Users.update_one(
+        {"username": username, "todos.taskKey": task_key},
+        {"$set": {"todos.$": updated_task}}
+    )
+
+    return {"message": "Todo updated successfully"}
+
+
 @app.delete("/todo/delete")
 async def delete_todo(todo: DeleteTodoSchema):
     username = todo.username
@@ -823,4 +859,4 @@ async def make_it_litt(note: LittNoteSchema):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=False, port=8000, host="0.0.0.0")
+    uvicorn.run("app:app", reload=True, port=8000, host="0.0.0.0")

@@ -25,27 +25,30 @@ function App() {
       <TaskProvider>
         <NotesProvider>
           <PostProvider>
-            <SongsProvider>
-              <Router>
-                <div className="app-container">
-                  <Navbar />
-                  <Alert />
-                  <div className="content-container">
-                    <Switch>
-                      <Route path="/todo" component={ToDoPage} />
-                      <Route path="/community" render={(props) => <CommunityPage {...props} username={username} />} />
-                      <Route path="/resume" component={ResumeScorer} />
-                      <Route path="/interview" component={InterviewAnalyzer} />
-                      <Route path="/notes" component={NotesPage} />
-                      <Route path="/chat" component={ChatPage} />
-                      <Route path="/dashboard" component={Dashboard} />
-                      {/* <Route path="/brain" component={Brain} /> */}
-                    </Switch>
-                    <ChatBot />
-                  </div>
+            <Router>
+              <div className="app-container">
+                <Navbar />
+                <Alert />
+                <div className="content-container">
+                  <Switch>
+                    <Route path="/todo" component={ToDoPage} />
+                    <Route
+                      path="/community"
+                      render={(props) => (
+                        <CommunityPage {...props} username={username} />
+                      )}
+                    />
+                    <Route path="/resume" component={ResumeScorer} />
+                    <Route path="/interview" component={InterviewAnalyzer} />
+                    <Route path="/notes" component={NotesPage} />
+                    <Route path="/chat" component={ChatPage} />
+                    <Route path="/dashboard" component={Dashboard} />
+                    {/* <Route path="/brain" component={Brain} /> */}
+                  </Switch>
+                  <ChatBot />
                 </div>
-              </Router>
-            </SongsProvider>
+              </div>
+            </Router>
           </PostProvider>
         </NotesProvider>
       </TaskProvider>

@@ -1,12 +1,12 @@
-import { createContext, useState, useRef, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 const SongsContext = createContext();
+const audioRef = new Audio(); // ✅ Persistent audio instance across components
 
 export const SongsProvider = ({ children }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrack, setCurrentTrack] = useState(0);
     const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
-    const audioRef = useRef(new Audio()); // Initialize an Audio object
 
     const tracks = [
         {
@@ -29,43 +29,58 @@ export const SongsProvider = ({ children }) => {
         },
     ];
 
-    // Whenever `currentTrack` changes, load & play if needed
     useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.src = tracks[currentTrack].src;
-            audioRef.current.load();
-            if (isPlaying) {
-                audioRef.current.play().catch((err) => console.error("Error playing:", err));
-            }
+        if (audioRef.src !== tracks[currentTrack].src) {
+            audioRef.pause(); 
+            audioRef.src = tracks[currentTrack].src; 
+            audioRef.load();
+            audioRef.currentTime = 0; 
         }
-    }, [currentTrack]); // No need to track `isPlaying` here
+
+        if (isPlaying) {
+            audioRef.play().catch((err) => console.error("Error playing:", err));
+        }
+
+        audioRef.onended = () => handleNext();
+
+        return () => {
+            audioRef.onended = null;
+        };
+    }, [currentTrack, isPlaying]); 
 
     const handlePlayPause = () => {
-        if (!audioRef.current) return;
-
-        if (audioRef.current.paused) {
-            audioRef.current.play();
+        if (audioRef.paused) {
+            audioRef.play();
             setIsPlaying(true);
-            if (!hasPlayedOnce) setHasPlayedOnce(true); // Mark the first play
+            if (!hasPlayedOnce) setHasPlayedOnce(true);
         } else {
-            audioRef.current.pause();
+            audioRef.pause();
             setIsPlaying(false);
         }
     };
 
     const handleNext = () => {
-        setCurrentTrack((prev) => (prev + 1) % tracks.length);
-        setIsPlaying(true); // Auto-play next song
+        setIsPlaying(false); 
+        setTimeout(() => {
+            setCurrentTrack((prev) => (prev + 1) % tracks.length);
+            setIsPlaying(true);
+        }, 100);
     };
 
     const handlePrevious = () => {
-        setCurrentTrack((prev) => (prev - 1 + tracks.length) % tracks.length);
-        setIsPlaying(true); // Auto-play previous song
+        setIsPlaying(false);
+        setTimeout(() => {
+            setCurrentTrack((prev) => (prev - 1 + tracks.length) % tracks.length);
+            setIsPlaying(true);
+        }, 100);
     };
 
     const handleTrackClick = (index) => {
-        setCurrentTrack(index);
-        setIsPlaying(true);
+        setIsPlaying(false); 
+        setTimeout(() => {
+            setCurrentTrack(index); 
+            setIsPlaying(true);
+        }, 100);
     };
 
     return (

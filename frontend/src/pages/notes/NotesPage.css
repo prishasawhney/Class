@@ -1186,3 +1186,10 @@ margin-top: 2px; /* Example value, adjust as needed */
 #searchSong input:focus {
   border-color: #4c83fa;
 }
+
+.song-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}

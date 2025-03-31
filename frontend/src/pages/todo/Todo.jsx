@@ -145,7 +145,7 @@ const ToDoPage = () => {
                                 task={task}
                                 setEditingTask={setEditingTask}
                                 deleteTask={() => deleteTask(task.taskKey)}
-                                toggleTaskCompletion={() => toggleTaskCompletion(task)}
+                                toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
                                 setTaskPanel={setTaskPanel}
                                 setOpenTaskKey={setOpenTaskKey}
                                 openTaskKey={openTaskKey}
@@ -166,7 +166,7 @@ const ToDoPage = () => {
                                 task={task}
                                 setEditingTask={setEditingTask}
                                 deleteTask={() => deleteTask(task.taskKey)}
-                                toggleTaskCompletion={() => toggleTaskCompletion(task)}
+                                toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
                                 setOpenTaskKey={setOpenTaskKey}
                                 openTaskKey={openTaskKey} 
                             />
