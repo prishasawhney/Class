@@ -4,15 +4,15 @@ import Uploader from "./Uploader";
 import Lottie from "lottie-react";
 import NotesAnimation from "../../assets/notes.json"; 
 import { NotesContext } from "../../contexts/NotesContext";  
-import { FlashcardContext } from "../../contexts/FlashcardContext";  
+import { useFlashcard } from "../../contexts/FlashcardContext";  
 const Toggler = ({ setShowFluid }) => {
     const [errorMsg, setErrorMsg] = useState("");
     const {notes} = useContext(NotesContext);
-    const { selectedNote, setSelectedNote} = useContext(FlashcardContext);
+    const { selectedNote, setSelectedNote} = useFlashcard();
 
     const handleNextWrapper = () => {
         if (!selectedNote) {
-            setErrorMsg("Please upload a file before proceeding.");
+            setErrorMsg("Please upload a file before proceeding."); 
             return;
         }
         handleNext();

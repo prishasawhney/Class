@@ -4,7 +4,7 @@ export const FlashcardContext = createContext();
 
 export const FlashcardProvider = ({ children }) => {
     const [acceptedFiles, setAcceptedFiles] = useState([]);
-    const [selectedNote, setSelectedNote] = useState('');
+    const [selectedNote, setSelectedNote] = useState(''); 
     const [flashcard, setFlashcard] = useState([
         { question: "What is j? ", answer: "A JavaScript library for building UI.", hint: "Library by Facebook" },
         { question: "What is a Hook?", answer: "A special function in React.", hint: "useState is one of them" },
@@ -92,4 +92,8 @@ And so on... 🚀
             {children}
         </FlashcardContext.Provider>
     );
+};
+
+export const useFlashcard = () => {
+    return useContext(FlashcardContext);
 };

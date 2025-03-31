@@ -11,7 +11,7 @@ export const TaskProvider = ({ children }) => {
         { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#4682b4", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" }, 
     ]);
 
-    const [openTaskKey, setOpenTaskKey]=useState(null);
+    const [openTaskKey, setOpenTaskKey]=useState(null); 
 
     const addTask = (newTask) => {
         setTasks([...tasks, { ...newTask, taskKey: tasks.length + 1 }]);

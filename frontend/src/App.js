@@ -40,7 +40,8 @@ function AppContent() {
           <Route path="/interview" element={<InterviewAnalyzer />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/chat" element={<ChatPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard username={username}/>} />
+          <Route path="/brain" element={<Brain/>} />
         </Routes>
         {noChatbotPaths && <ChatBot />}
       </div>
@@ -55,28 +56,11 @@ function App() {
         <NotesProvider>
           <PostProvider>
             <SongsProvider>
+              <FlashcardProvider>
               <Router>
-                <div className="app-container">
-                  <Navbar/>
-                  <Alert/>
-                  <div className="content-container">
-                    <Switch>
-                      <Route path="/todo" component={ToDoPage} />
-                      <Route path="/community" render={(props) => <CommunityPage {...props} username={username} />} />
-                      <Route path="/resume" component={ResumeScorer} />
-                      <Route path="/interview" component={InterviewAnalyzer} />
-                      <Route path="/notes" component={NotesPage} />
-                      <Route path="/chat" component={ChatPage} />
-                      <Route path="/dashboard" component={Dashboard} />
-                      <FlashcardProvider>
-                        <Route path="/brain" component={Brain} />
-                      </FlashcardProvider>
-                    </Switch>
-                    <ChatBot />
-                  </div>
-                </div>
                 <AppContent />
               </Router>
+              </FlashcardProvider>
             </SongsProvider>
           </PostProvider>
         </NotesProvider>
