@@ -9,12 +9,11 @@ import ChatBot from "../src/components/chatbot/ChatBot";
 import NotesPage from "../src/pages/notes/NotesPage";
 import ChatPage from "../src/pages/chat/ChatWithImage";
 import Dashboard from "../src/pages/dashboard/Dashboard";
-// import Brain from "../src/pages/Flashcards/FlashcardPage";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import { TaskProvider } from "./contexts/TaskContext";
+import { TaskTypeProvider } from "./contexts/TaskTypeContext";
 import { NotesProvider } from "./contexts/NotesContext";
 import { PostProvider } from "./contexts/PostsContext";
-import { SongsProvider } from "./contexts/SongsContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 
@@ -23,6 +22,7 @@ function App() {
   return (
     <ErrorProvider>
       <TaskProvider>
+        <TaskTypeProvider>
         <NotesProvider>
           <PostProvider>
             <Router>
@@ -51,6 +51,7 @@ function App() {
             </Router>
           </PostProvider>
         </NotesProvider>
+        </TaskTypeProvider>
       </TaskProvider>
     </ErrorProvider>
   );

@@ -1,37 +1,75 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { createTodo, getTodos, toggleTodoCompletion, updateTodo, deleteTodo } from "../api/todo.api";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
-    const [tasks, setTasks] = useState([
-        { taskKey: 1, taskName: "Buy groceries", taskType: "Shopping", taskColor: "#ff6347", isCompleted: false, dueDate: "2025-03-19", taskDescription: "Milk, eggs, bread" },
-        { taskKey: 2, taskName: "Meeting", taskType: "Work", taskColor: "#4682b4", isCompleted: false, dueDate: "2025-03-21", taskDescription: "Client call at 3PM" },
-        { taskKey: 3, taskName: "Workout", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-22", taskDescription: "1-hour gym session" },
-        { taskKey: 4, taskName: "Read book", taskType: "Personal", taskColor: "#ffa500", isCompleted: false, dueDate: "2025-03-23", taskDescription: "Read 20 pages" },
-        { taskKey: 5, taskName: "Code project", taskType: "Work", taskColor: "#4682b4", isCompleted: false, dueDate: "2025-03-24", taskDescription: "Fix bugs in React app" }, 
-    ]);
+    const [tasks, setTasks] = useState([]);
+    const [openTaskKey, setOpenTaskKey] = useState(null);
+    const username = "Ikjot"; // Replace with actual logged-in user
 
-    const [openTaskKey, setOpenTaskKey]=useState(null);
+    // Fetch tasks when component mounts
+    useEffect(() => {
+        const fetchTodos = async () => {
+            try {
+                const todos = await getTodos(username);
+                setTasks(todos);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        };
+        fetchTodos();
+    }, []);
 
-    const addTask = (newTask) => {
-        setTasks([...tasks, { ...newTask, taskKey: tasks.length + 1 }]);
+    // Add a new task
+    const addTask = async (newTask) => {
+        try {
+            const response = await createTodo({ ...newTask, username });
+            setTasks([...tasks, { ...newTask, taskKey: response.taskKey, isCompleted: false }]);
+        } catch (error) {
+            console.error("Error adding task:", error);
+        }
     };
 
-    const deleteTask = (taskKey) => {
-        setTasks(tasks.filter(task => task.taskKey !== taskKey));
-    };
-
-    const toggleTaskCompletion = (taskKey) => {
-        const updatedTasks = tasks.map(t =>
-            t.taskKey === taskKey ? { ...t, isCompleted: !t.isCompleted } : t
-        );
-        setTasks(updatedTasks);
+    // Toggle task completion
+    const toggleTaskCompletion = async (taskKey) => {
+        try {
+            const updatedStatus = !(tasks.find(t => t.taskKey === taskKey)?.isCompleted);
+            await toggleTodoCompletion({ username, taskKey, isCompleted: updatedStatus });
+    
+            setTasks(tasks.map(t =>
+                t.taskKey === taskKey ? { ...t, isCompleted: updatedStatus } : t
+            ));
+        } catch (error) {
+            console.error("Error updating task completion:", error);
+        }
     };
     
-    
+
+    // Update task details
+    const editTask = async (updatedTask) => {
+        try {
+            await updateTodo({ ...updatedTask, username });
+            setTasks(tasks.map(task =>
+                task.taskKey === updatedTask.taskKey ? updatedTask : task
+            ));
+        } catch (error) {
+            console.error("Error updating task:", error);
+        }
+    };
+
+    // Delete a task
+    const removeTask = async (taskKey) => {
+        try {
+            await deleteTodo({ username, taskKey });
+            setTasks(tasks.filter(task => task.taskKey !== taskKey));
+        } catch (error) {
+            console.error("Error deleting task:", error);
+        }
+    };
 
     return (
-        <TaskContext.Provider value={{ tasks, setTasks, addTask, deleteTask, toggleTaskCompletion, openTaskKey, setOpenTaskKey}}>
+        <TaskContext.Provider value={{ tasks, addTask, toggleTaskCompletion, editTask, removeTask, openTaskKey, setOpenTaskKey }}>
             {children}
         </TaskContext.Provider>
     );

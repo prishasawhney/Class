@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Todo.css";
 import Calendar from "./Calendar";
 import dayjs from "dayjs";
+import { useTasks } from "../../contexts/TaskContext";
+import { useTaskTypes } from "../../contexts/TaskTypeContext";
 
-const AddTaskPanel = ({
-    setTaskPanel,
-    taskTypes,
-    taskPanel,
-    addTaskType,
-    tasks,
-    setTasks,
-    editingTask,
-    setEditingTask,
-}) => {
+const AddTaskPanel = ({ setTaskPanel, taskPanel, editingTask, setEditingTask }) => {
+    const { tasks, addTask, editTask } = useTasks();
+    const { taskTypes, addTaskType } = useTaskTypes();
+    
     const [taskName, setTaskName] = useState(editingTask?.taskName || "");
     const [taskDescription, setTaskDescription] = useState(editingTask?.taskDescription || "");
     const [dueDate, setDueDate] = useState(editingTask?.dueDate || dayjs().format("YYYY-MM-DD"));
@@ -38,7 +34,6 @@ const AddTaskPanel = ({
         }
     }, [editingTask]);
     
-
     const removeContent = () => {
         setTaskName("");
         setTaskDescription("");
@@ -46,10 +41,10 @@ const AddTaskPanel = ({
         setTaskType("");
         setCustomTaskType("");
         setCustomTaskColor("#ff6347");
-        setEditingTask(null); // Clear edit mode
+        setEditingTask(null);
     };
 
-    const saveTask = (e) => {
+    const saveTask = async (e) => {
         e.preventDefault();
 
         if (!taskName.trim() || !dueDate) {
@@ -57,30 +52,34 @@ const AddTaskPanel = ({
             return;
         }
 
-        if (editingTask) {
-            // Edit existing task
-            setTasks(tasks.map(task =>
-                task.taskKey === editingTask.taskKey
-                    ? { ...task, taskName, taskDescription, dueDate, taskType }
-                    : task
-            ));
+        let finalTaskType = taskType;
+        let finalTaskColor = "";
+
+        if (taskType === "custom" && customTaskType.trim()) {
+            await addTaskType(customTaskType, customTaskColor);
+            finalTaskType = customTaskType;
+            finalTaskColor = customTaskColor;
         } else {
-            // Add new task
+            const selectedTask = taskTypes.find(t => t.taskTypeName === taskType);
+            finalTaskColor = selectedTask ? selectedTask.taskTypeColor : "";
+        }
+
+        if (editingTask) {
+            await editTask({ ...editingTask, taskName, taskDescription, dueDate, taskType: finalTaskType, taskColor: finalTaskColor });
+        } else {
             const newTask = {
-                taskKey: tasks.length + 1,
                 taskName,
-                taskColor: taskTypes.find(t => t.taskTypeName === taskType)?.taskColor || "#000000",
-                isCompleted: false,
+                taskType: finalTaskType,
                 dueDate,
                 taskDescription,
+                taskColor: finalTaskColor,
             };
-
-            setTasks([...tasks, newTask]);
+            await addTask(newTask);
         }
 
         removeContent();
         setTaskPanel(false);
-    }; 
+    };
 
     return (
         <div id="taskPanel" className={taskPanel ? "show" : "hide"}>
@@ -167,9 +166,9 @@ const AddTaskPanel = ({
                             />
                             <button
                                 type="button"
-                                onClick={() => {
+                                onClick={async () => {
                                     if (customTaskType.trim()) {
-                                        addTaskType(customTaskType, customTaskColor);
+                                        await addTaskType(customTaskType, customTaskColor);
                                         setTaskType(customTaskType);
                                         setCustomTaskType("");
                                         setCustomTaskColor("#ff6347");
@@ -194,6 +193,5 @@ const AddTaskPanel = ({
         </div>
     );
 };
-
 
 export default AddTaskPanel;
