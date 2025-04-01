@@ -1,87 +1,82 @@
-import React, { createContext, useState, useEffect } from "react";
-// import { readNotes, createNote, updateNote, deleteNoteByKey } from "../API/note.api.js";
+import { createContext, useContext, useState, useEffect } from "react";
+import { createNote, readNotes, deleteNoteByKey, updateNote } from "../api/notes.api";
 
-export const NotesContext = createContext();
+const NotesContext = createContext();
 
-export const NotesProvider = ({ children, username }) => {
+export const NotesProvider = ({ children }) => {
     const [notes, setNotes] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const username = "";
 
     useEffect(() => {
         if (username) {
-            loadNotes(username); 
+            const fetchNotes = async () => {
+                try {
+                    const notesList = await readNotes(username);
+                    const mappedNotesList = notesList.map((note) => ({
+                        noteKey: note.noteKey,
+                        noteTitle: note.noteTitle,
+                        noteText: note.noteText,
+                        creationDate: note.creationDate,
+                    }));
+                    setNotes(mappedNotesList);
+                } catch (error) {
+                    console.error("Error loading notes:", error);
+                }
+            };
+            fetchNotes();
         }
     }, [username]);
 
-    const loadNotes = async (username) => {
-        try {
-            //   const notesList = await readNotes(username);
-            const notesList = [
-                {
-                    noteKey: "1",
-                    noteTitle: "Meeting Notes",
-                    noteText: "Discussed project milestones and deadlines.",
-                    creationDate: "25-03-2025",
-                },
-                {
-                    noteKey: "2",
-                    noteTitle: "Shopping List",
-                    noteText: "Milk, Eggs, Bread, Butter, Coffee.",
-                    creationDate: "24-03-2025",
-                },
-                {
-                    noteKey: "3",
-                    noteTitle: "Workout Plan",
-                    noteText: "Monday - Chest & Triceps, Tuesday - Back & Biceps.",
-                    creationDate: "23-03-2025",
-                },
-                {
-                    noteKey: "4",
-                    noteTitle: "Coding To-Do",
-                    noteText: "Refactor API calls, Optimize database queries, Fix UI bugs.",
-                    creationDate: "22-03-2025",
-                },
-            ];
-            const mappedNotesList = notesList.map((note) => {
-                return {
-                    noteKey: note.noteKey,
-                    noteTitle: note.noteTitle,
-                    noteText: note.noteText,
-                    creationDate: note.creationDate,
-                };
-            });
-            setNotes(mappedNotesList);
-        } catch (error) {
-            console.error("Error loading task types:", error);
-        }
-    };
-
     const addNote = async (note) => {
         try {
-            // const response = await createNote(note);
-            const response = { ...note }; // Mock response
-            setNotes((prev) => [...prev, response]);
+            note = {
+                ...note,
+                username: username, // Add noteKey only in this block
+            };
+            const response = await createNote(note);
+            const newNote = { 
+                ...note, 
+                noteKey: response.noteKey // Ensure the new note gets the noteKey from the backend response
+            };
+            setNotes((prev) => [...prev, newNote]);
         } catch (error) {
             console.error("Error adding note:", error);
         }
     };
+    
 
     const deleteNote = async (key) => {
-        console.log("delete");
-        const deleteNoteSchema = {
-            username: username,
-            noteKey: key,
-        };
-        // await deleteNoteByKey(deleteNoteSchema);
-        const newNotes = notes.filter((note) => note.noteKey !== key);
-        setNotes(newNotes);
+        try {
+            const deleteNoteSchema = { username, noteKey: key };
+            await deleteNoteByKey(deleteNoteSchema);
+            setNotes((prev) => prev.filter((note) => note.noteKey !== key));
+        } catch (error) {
+            console.error("Error deleting note:", error);
+        }
+    };
+
+    const editNote = async (updatedNote) => {
+        try {
+            updatedNote = {
+                ...updatedNote,
+                username: username, // Add noteKey only in this block
+            };
+            await updateNote(updatedNote);
+            setNotes((prev) =>
+                prev.map((note) =>
+                    note.noteKey === updatedNote.noteKey ? updatedNote : note
+                )
+            );
+        } catch (error) {
+            console.error("Error updating note:", error);
+        }
     };
 
     const filteredNotes = notes.filter((note) =>
         (note.noteTitle && note.noteTitle.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (note.noteText && note.noteText.toLowerCase().includes(searchQuery.toLowerCase()))
     );
-         
 
     return (
         <NotesContext.Provider
@@ -90,12 +85,16 @@ export const NotesProvider = ({ children, username }) => {
                 setNotes,
                 addNote,
                 deleteNote,
+                editNote,
                 searchQuery,
                 setSearchQuery,
-                loadNotes,
             }}
         >
             {children}
         </NotesContext.Provider>
     );
+};
+
+export const useNotes = () => {
+    return useContext(NotesContext);
 };
