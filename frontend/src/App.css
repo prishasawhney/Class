@@ -5,7 +5,7 @@ body {
   height: 100vh; 
   overflow: hidden;
   background: #F6F5F5;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif; 
 }
 
 .app-container{
@@ -18,7 +18,7 @@ body {
 .content-container{
   height:100vh;
   flex:3;
-  padding:5px;
+  /* padding:5px; */
   overflow: hidden;
 }
 

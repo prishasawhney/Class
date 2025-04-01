@@ -1,8 +1,11 @@
 #pageMain {
   border-radius: 10px;
   height: 98%;
+  width:99.5%;
+  border: 2px solid #ddd;
   overflow: hidden;
   background: white;
+  margin-top: 0.4%;
 }
 
 #pageNavBar {

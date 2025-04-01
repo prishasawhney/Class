@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect} from 'react';
 import "boxicons";
 import "./ChatBot.css";
 import ChatBubble from "./ChatBubble";
-// import { chatWithGemini } from '../../../API/chatbot.api';
+// import { chatWithGemini } from '../../../API/chatbot.api'; 
 import { ThreeDots } from 'react-loader-spinner';
 
 

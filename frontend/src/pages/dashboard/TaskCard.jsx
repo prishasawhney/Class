@@ -12,7 +12,7 @@ const Img = styled('img')({
   margin: 'auto',
   display: 'block',
   maxWidth: '100%',
-  maxHeight: '100%',
+  maxHeight: '98%',
 });
 
 const formatDate = (date) => {
@@ -37,7 +37,7 @@ function TaskCard({ taskKey, taskName, taskDescription, dueDate }) {
         p: 1,
         marginBottom: 1,
         width: '95%',
-        height: 55,
+        height: 53,
         backgroundColor: '#fff',
         padding: '10px',
         borderRadius: '10px'

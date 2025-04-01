@@ -1,6 +1,6 @@
 #todoPage{
-    width:99%;
-    height:97%;
+    width:98.5%;
+    height:96.5%;
     border-radius: 10px;
     display:grid;
     gap:5px; 
@@ -8,6 +8,8 @@
     overflow: hidden;
     transition: grid-template-columns 0.4s ease-in-out;
     background: white;
+    border: 2px solid #ddd;
+    margin-top: 0.4%;
 }
 
 #greeting{
