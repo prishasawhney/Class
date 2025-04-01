@@ -1,10 +1,14 @@
 #dashBoardMain{
-    flex:1;
     display:flex;
     gap:5px;
     flex-direction: column;
     padding:5px;
-
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    width:98.5%;
+    margin-top: 0.4%;
+    height:96.5%;
 }
 
 #navibar{
@@ -16,7 +20,7 @@
     height:25vh;
     width:100%;
     background: linear-gradient(to right,#184ccf,#6183d9);
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
     position:relative;
 }
@@ -136,7 +140,10 @@
     gap:20px;
     border-radius: 10px;
     padding:10px;
-    box-shadow: 4px 4px 15px rgba(3, 31, 104, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
     margin-top: 10px;
 }
 
@@ -192,6 +199,7 @@
     overflow-y: hidden;
     /* background: yellow; */
     gap:5px;
+    padding:5px 0 0 5px;
 }
 
 .medalTask{
@@ -235,7 +243,10 @@
     background: white;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 15px;
 }
 
@@ -279,9 +290,10 @@
     color: #ffd700; /* Gold */
 }
 
-.completed {
+.level-completed {
     background: #c9cfdc;
     color: white;
+    text-decoration: line-through;
 }
 
 .medal-level:hover {
@@ -295,6 +307,10 @@
     border-radius: 10px;
     background: white;
     padding:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
 }
 
 
@@ -304,6 +320,10 @@
     background: white;
     border-radius: 10px;
     background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
 }
 
 .streak-container {
