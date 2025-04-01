@@ -43,7 +43,7 @@ function AppContent() {
           <Route path="/dashboard" element={<Dashboard username={username}/>} />
           <Route path="/brain" element={<Brain/>} />
         </Routes>
-        {noChatbotPaths && <ChatBot />}
+        {noChatbotPaths && <ChatBot username={username}/>}
       </div>
     </div>
   );
