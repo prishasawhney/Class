@@ -31,6 +31,15 @@ class TodoSchema(BaseModel):
     taskType: str
     taskColor: str
 
+class UpdateTodoSchema(BaseModel):
+    username: str
+    taskKey: str
+    taskName: str
+    taskDescription: str
+    dueDate: str
+    taskType: str
+    taskColor: str
+
 class DeleteTodoSchema(BaseModel):
     username: str
     taskKey: str
