@@ -14,6 +14,7 @@ import Brain from "../src/pages/brain/BrainPage";
 import { ErrorProvider } from "./contexts/ErrorContext";
 import { TaskProvider } from "./contexts/TaskContext";
 import { TaskTypeProvider } from "./contexts/TaskTypeContext";
+import { TaskTypeProvider } from "./contexts/TaskTypeContext";
 import { NotesProvider } from "./contexts/NotesContext";
 import { PostProvider } from "./contexts/PostsContext";
 import { SongsProvider } from "./contexts/SongsContext";
@@ -55,6 +56,7 @@ function App() {
     <ErrorProvider>
       <TaskProvider>
         <TaskTypeProvider>
+        <TaskTypeProvider>
         <NotesProvider>
           <PostProvider>
               <FlashcardProvider>
@@ -64,6 +66,7 @@ function App() {
               </FlashcardProvider>
           </PostProvider>
         </NotesProvider>
+        </TaskTypeProvider>
         </TaskTypeProvider>
       </TaskProvider>
     </ErrorProvider>

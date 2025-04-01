@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { createTodo, getTodos, toggleTodoCompletion, updateTodo, deleteTodo } from "../api/todo.api";
+import { createContext, useContext, useState, useEffect } from "react";
+import { createTodo, getTodos, toggleTodoCompletion, updateTodo, deleteTodo } from "../api/todo.api";
 
 const TaskContext = createContext();
 
@@ -69,6 +71,7 @@ export const TaskProvider = ({ children }) => {
     };
 
     return (
+        <TaskContext.Provider value={{ tasks, addTask, toggleTaskCompletion, editTask, removeTask, openTaskKey, setOpenTaskKey }}>
         <TaskContext.Provider value={{ tasks, addTask, toggleTaskCompletion, editTask, removeTask, openTaskKey, setOpenTaskKey }}>
             {children}
         </TaskContext.Provider>

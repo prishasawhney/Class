@@ -5,7 +5,11 @@ const TaskTypeContext = createContext();
 
 export const TaskTypeProvider = ({ children }) => {
     const [taskTypes, setTaskTypes] = useState([]);
+<<<<<<< HEAD
     const username = ""; // Replace with actual logged-in user
+=======
+    const username = "Ikjot"; // Replace with actual logged-in user
+>>>>>>> 551c548ca7de978af87a462893c9c525f70c2ddd
 
     // Fetch task types when component mounts
     useEffect(() => {
