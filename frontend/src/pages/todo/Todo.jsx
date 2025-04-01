@@ -5,13 +5,23 @@ import Task from "./Task";
 import AddTaskPanel from "./AddTaskPanel";
 import Calendar from "./Calendar";
 import { useError } from "../../contexts/ErrorContext";
-import { useTasks } from "../../contexts/TaskContext"; 
+import { useTasks } from "../../contexts/TaskContext";
+import { useTaskTypes } from "../../contexts/TaskTypeContext";
 
 const ToDoPage = () => {
     const { showError } = useError();
-    const { tasks, setTasks, deleteTask, toggleTaskCompletion,setOpenTaskKey, openTaskKey } = useTasks();
+    const { tasks, setTasks, removeTask, toggleTaskCompletion, setOpenTaskKey, openTaskKey } = useTasks();
+    const { taskTypes, addTaskType, removeTaskType } = useTaskTypes();
 
     const [searchQuery, setSearchQuery] = useState("");
+    const [taskPanel, setTaskPanel] = useState(false);
+    const [editingTask, setEditingTask] = useState(null);
+
+    const today = new Date().toISOString().split("T")[0];
+    const overdueTasks = tasks.filter(task => task.dueDate < today);
+    const upcomingTasks = tasks.filter(task => task.dueDate >= today);
+    const completedTasks = tasks.filter(task => task.isCompleted);
+    const isWeekend = [0, 6].includes(new Date().getDay());
 
     const greetings = {
         overdueFew: "You've got a few overdue tasks! Let's catch up.",
@@ -19,58 +29,12 @@ const ToDoPage = () => {
         noTasksToday: "No tasks for today! Enjoy your free time.",
         allDone: "Great job! All tasks are completed.",
         upcomingTasks: "You have some upcoming tasks. Stay ahead!",
-        newTasksAdded: "New tasks added! Let's get started.",
         weekendMode: "It's the weekend! Time to relax or catch up.",
     };
 
-    const [taskTypes, setTaskTypes] = useState([
-        { taskTypeKey: 1, taskTypeName: "Work", taskColor: "#4682b4" },
-        { taskTypeKey: 2, taskTypeName: "Personal", taskColor: "#ffa500" },
-        { taskTypeKey: 3, taskTypeName: "Shopping", taskColor: "#ff6347" }
-    ]);
-
-    const sortTasksByDate = (tasks) => {
-        return tasks.slice().sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-    };
-
-    const [taskPanel, setTaskPanel] = useState(false);
-    const [editingTask, setEditingTask] = useState(null);
-
-    const addTaskType = (taskTypeName, taskTypeColor) => {
-        if (!taskTypeName.trim()) return;
-
-        const newTaskType = {
-            taskTypeKey: taskTypes.length + 1,
-            taskTypeName: taskTypeName,
-            taskColor: taskTypeColor
-        };
-
-        setTaskTypes([...taskTypes, newTaskType]);
-    };
-
-    const deleteTaskType = (taskTypeKey) => {
-        const taskType = taskTypes.find(tt => tt.taskTypeKey === taskTypeKey);
-        const hasTasks = tasks.some(task => task.taskType === taskType.taskTypeName);
-
-        if (hasTasks) {
-            showError("Cannot delete this task type! There are tasks associated with it.");
-            return;
-        }
-
-        setTaskTypes(taskTypes.filter(tt => tt.taskTypeKey !== taskTypeKey));
-    };
-
-    const today = new Date().toISOString().split("T")[0];
-
-    const overdueTasks = tasks.filter(task => task.dueDate < today);
-    const upcomingTasks = tasks.filter(task => task.dueDate >= today);
-
-    const completedTasks = tasks.filter(task => task.isCompleted);
-    const isWeekend = [0, 6].includes(new Date().getDay());
-
     let greetingMessage = greetings.upcomingTasks;
     if (overdueTasks.filter(task => !task.isCompleted).length > 0) {
-        greetingMessage = overdueTasks.filter(task => !task.isCompleted).length >2 ? greetings.overdueMany : greetings.overdueFew;
+        greetingMessage = overdueTasks.length > 2 ? greetings.overdueMany : greetings.overdueFew;
     } else if (tasks.length === completedTasks.length) {
         greetingMessage = greetings.allDone;
     } else if (upcomingTasks.length === 0) {
@@ -79,8 +43,12 @@ const ToDoPage = () => {
         greetingMessage = greetings.weekendMode;
     }
 
+    const sortTasksByDate = (tasks) => {
+        return tasks.slice().sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    };
+
     const countTasksByType = (taskTypeName) => {
-        return tasks.filter(task => task.taskType === taskTypeName).length;
+        return tasks.filter(task => task.taskType === taskTypeName && task.isCompleted === false).length;
     };
 
     const filteredOverdueTasks = sortTasksByDate(overdueTasks).filter(task =>
@@ -92,7 +60,6 @@ const ToDoPage = () => {
         task.taskName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         task.taskDescription.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
 
     return (
         <div id="todoPage">
@@ -107,9 +74,9 @@ const ToDoPage = () => {
                             key={taskType.taskTypeKey}
                             taskKey={taskType.taskTypeKey}
                             taskName={taskType.taskTypeName}
-                            taskColor={taskType.taskColor}
+                            taskColor={taskType.taskTypeColor}
                             setTaskPanel={setTaskPanel}
-                            deleteTaskType={() => deleteTaskType(taskType.taskTypeKey)}
+                            removeTaskType={() => removeTaskType(taskType.taskTypeKey, tasks)}
                             taskCount={countTasksByType(taskType.taskTypeName)}
                         />
                     ))}
@@ -123,7 +90,7 @@ const ToDoPage = () => {
                             type="text"
                             placeholder="Search Anything..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)} // 🔍 Search input update
+                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
                     <button className="button" onClick={() => { setEditingTask(null); setTaskPanel(true) }}>
@@ -132,41 +99,41 @@ const ToDoPage = () => {
                         </svg>
                     </button>
                 </div>
-                {/* OVERDUE TASKS */}
+                {/* Overdue Tasks */}
                 {filteredOverdueTasks.length > 0 && (
                     <div className="taskSection">
                         <div className="taskSectionTitle" style={{display:"flex", alignItems:"center", gap:"5px"}}>
                             <img src="/overdue.gif" style={{height:'45px'}}></img>
-                            <h3>Overdue Tasks</h3>
+                        <h3>Overdue Tasks</h3>
                         </div>
                         {filteredOverdueTasks.map((task) => (
                             <Task
                                 key={task.taskKey}
                                 task={task}
-                                setEditingTask={setEditingTask}
-                                deleteTask={() => deleteTask(task.taskKey)}
-                                toggleTaskCompletion={() => toggleTaskCompletion(task)}
                                 setTaskPanel={setTaskPanel}
+                                setEditingTask={setEditingTask}
+                                removeTask={() => removeTask(task.taskKey)}
+                                toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
                                 setOpenTaskKey={setOpenTaskKey}
                                 openTaskKey={openTaskKey}
                             />
                         ))}
                     </div>
                 )}
-                {/* UPCOMING & PENDING TASKS */}
+                {/* Upcoming Tasks */}
                 {filteredUpcomingTasks.length > 0 && (
                     <div className="taskSection">
                         <div className="taskSectionTitle" style={{display:"flex", alignItems:"center", gap:"5px"}}> 
                             <img src="/upcoming.gif" style={{height:'45px'}}></img>
-                            <h3>Upcoming Tasks</h3>
+                        <h3>Upcoming Tasks</h3>
                         </div>
                         {filteredUpcomingTasks.map((task) => (
                             <Task
                                 key={task.taskKey}
                                 task={task}
                                 setEditingTask={setEditingTask}
-                                deleteTask={() => deleteTask(task.taskKey)}
-                                toggleTaskCompletion={() => toggleTaskCompletion(task)}
+                                removeTask={() => removeTask(task.taskKey)}
+                                toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
                                 setOpenTaskKey={setOpenTaskKey}
                                 openTaskKey={openTaskKey}
                             />

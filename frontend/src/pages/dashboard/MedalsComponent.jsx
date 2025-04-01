@@ -69,7 +69,7 @@ const MedalsComponent = () => {
                             <div className="medal-title">{medal.title}</div>
                             {medal.levels.map((level) => (
                                 <div className={`medal-level ${level.name.toLowerCase()} ${
-                                    level.isCompleted ? "completed" : "not-completed"
+                                    level.isCompleted ? "level-completed" : "not-completed"
                                 }`} key={level.name}>
                                     <span>{level.tasks}</span>
                                     <div className={level.name}>

@@ -14,8 +14,7 @@ const NoteWriter = ({
   handleSubmit,
   discardNote,
   closeNoteWriter,
-  editingNoteKey,
-  username,
+  isEditingNote
 }) => {
   const [error, setError] = useState(""); // State to store error message
   const [loading, setLoading] = useState(false); // State to show loading
@@ -42,7 +41,6 @@ const NoteWriter = ({
       setError("Both heading and note text are required.");
       return;
     }
-
     setError(""); // Clear any previous error
     handleSubmit(e); // Pass the event to handleSubmit
   };
@@ -134,7 +132,7 @@ const NoteWriter = ({
             >
               <box-icon name="save" color="#999"></box-icon>
             </button>
-            {!editingNoteKey && (
+            {!isEditingNote && (
               <box-icon
                 name="reset"
                 color="#999"

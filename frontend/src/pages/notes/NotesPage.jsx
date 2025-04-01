@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./NotesPage.css";
 import "boxicons";
@@ -6,32 +6,23 @@ import NoteSticker from "./NoteSticker";
 import NoteWriter from "./NoteWriter.jsx";
 import NoteViewer from "./NoteViewer.jsx";
 import SidePanel from "./SidePanel.jsx";
-// import { readTodos, readTaskType } from "../../API/todo.api.js";
-// import { createNote, readNotes, deleteNoteByKey, updateNote } from "../../API/note.api.js";
 import Lottie from 'react-lottie';
 import NotesAnimation from '../../assets/notes.json';
 import ImageAnimation from '../../assets/Image Solver.json';
 import VideoAnimation from '../../assets/Interview Prep.json';
-import { NotesContext } from "../../contexts/NotesContext";  
+import { useNotes } from "../../contexts/NotesContext";
 
-const NotesPage = ({
-  username,
-}) => {
+const NotesPage = () => {
   const colors = ["#BAE1FF", "#f5ee89"];
-  const [editingNoteKey, setEditingNoteKey] = useState(false);
-  // const [notes, setNotes] = useState([]);
+  const [isEditingNote, setIsEditingNote] = useState(false);
+  const [editingNoteKey, setEditingNoteKey] = useState("");
   const [noteText, setNoteText] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
   const [viewingNote, setViewingNote] = useState(false);
   const [isNoteWriterVisible, setIsNoteWriterVisible] = useState(false);
   const [isNoteViewerVisible, setIsNoteViewerVisible] = useState(false);
   const [isGlassEffectVisible, setIsGlassEffectVisible] = useState(false);
-  const { notes, setNotes, addNote, searchQuery,setSearchQuery, loadNotes} = useContext(NotesContext);
-  // const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    loadNotes(username);
-  }, []);
+  const { notes, setNotes, addNote, editNote, searchQuery, setSearchQuery } = useNotes();
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -43,15 +34,16 @@ const NotesPage = ({
     setIsGlassEffectVisible(true);
     setNoteTitle("");
     setNoteText("");
-    setEditingNoteKey(false);
+    setIsEditingNote(false);
   };
 
   const editNoteFunction = (noteKey) => {
     const noteToEdit = notes.find((note) => note.noteKey === noteKey);
+    setEditingNoteKey(noteKey);
     if (noteToEdit) {
       setNoteTitle(noteToEdit.noteTitle);
       setNoteText(noteToEdit.noteText);
-      setEditingNoteKey(noteKey); 
+      setIsEditingNote(noteKey);
     }
     setIsNoteWriterVisible(true);
     setIsNoteViewerVisible(false);
@@ -67,52 +59,36 @@ const NotesPage = ({
   const closeNoteViewer = () => {
     setIsNoteViewerVisible(!isNoteViewerVisible);
     setIsGlassEffectVisible(!isGlassEffectVisible);
-    setEditingNoteKey(false);
+    setIsEditingNote(false);
     setViewingNote(false);
   };
 
   const closeNoteWriter = () => {
     setIsNoteWriterVisible(!isNoteWriterVisible);
     setIsGlassEffectVisible(!isGlassEffectVisible);
-    setEditingNoteKey(false);
-  };
-
-  const getCurrentDate = () => {
-    const date = new Date();
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    setIsEditingNote(false);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (noteTitle === "" || noteText === "") return;
 
-    const noteData = {
-      username: username,
+    let noteData = {
       noteTitle: noteTitle,
-      noteText: noteText,
-      noteKey: editingNoteKey || undefined,
+      noteText: noteText
     };
 
     try {
-      if (editingNoteKey) {
-        // Update existing note
-        // await updateNote(noteData);
-        setNotes(prevNotes =>
-          prevNotes.map(note =>
-            note.noteKey === editingNoteKey
-              ? { ...note, noteTitle: noteTitle, noteText: noteText }
-              : note
-          )
-        );
+      if (isEditingNote) {
+        // Update existing note using context
+        noteData = {
+          ...noteData,
+          noteKey: editingNoteKey, // Add noteKey only in this block
+      };
+        await editNote(noteData); // Updating note through context function
       } else {
-        // Create a new note
-        delete noteData.noteKey;
-        noteData.creationDate = getCurrentDate();
-        // const response = await createNote(noteData);
-        const response = "hello";
-        noteData.noteKey = response.noteKey; // Get the noteKey from the response
-        delete noteData.username;
-        addNote(noteData);
+        // Create a new note using context
+        addNote(noteData); // Adding note through context function
       }
 
       // Reset form and close note writer
@@ -120,12 +96,11 @@ const NotesPage = ({
       setNoteText("");
       setIsGlassEffectVisible(false);
       setIsNoteWriterVisible(false);
-      setEditingNoteKey(false);
+      setIsEditingNote(false);
     } catch (error) {
       console.error("Error saving note:", error);
     }
   };
-
 
   const discardNote = () => {
     setNoteTitle("");
@@ -169,8 +144,7 @@ const NotesPage = ({
           handleSubmit={handleSubmit}
           discardNote={discardNote}
           closeNoteWriter={closeNoteWriter}
-          editingNoteKey={editingNoteKey}
-          username={username}
+          isEditingNote={isEditingNote}
         />
       )}
       {isNoteViewerVisible && (
@@ -179,7 +153,6 @@ const NotesPage = ({
           ViewingNoteKey={viewingNote}
           closeNoteViewer={closeNoteViewer}
           editNote={editNoteFunction}
-          setEditingNoteKey={setEditingNoteKey}
         />
       )}
 
