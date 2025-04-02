@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import LoginSignupPage from "../src/pages/loginSignupPage/LoginSignup";
+import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
+import LandingPage from "../src/pages/landingpage/LandingPage";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -33,6 +34,7 @@ function AppContent() {
       <Alert />
       <div className="content-container">
         <Routes>
+          <Route path="/" element={<LandingPage />}/>
           <Route path="/login-signup" element={<LoginSignupPage />} />
           <Route path="/todo" element={<ToDoPage />} />
           <Route path="/community" element={<CommunityPage username={username} />} />
