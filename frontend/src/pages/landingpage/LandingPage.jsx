@@ -23,7 +23,7 @@ return (
         <a href="/" >
         <img src={litLabDay} alt="Logo" className="logo"/>
         {/* <img src={litLabNight2} alt="Logo" className="logo"/> */}
-        Litt Labs.
+        C.L.A.S.S<br />Cognitive Learning with AI for Skill & Success
         </a>
 
         <nav className="navbar"> 
