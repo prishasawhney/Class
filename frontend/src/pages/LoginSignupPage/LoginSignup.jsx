@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginSignup.css";
 import "boxicons";
-// import axios from "axios";
+import axios from "axios";
+import { useError } from "../../contexts/ErrorContext";
 
-const LoginSignup = ({ setError, error}) => {
+const LoginSignup = () => {
+  const { error, showError } = useError();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
@@ -25,37 +27,35 @@ const LoginSignup = ({ setError, error}) => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      // const response = await axios.post("https://playwright-backend-m02j.onrender.com/login", {
-        // email: loginEmail,
-      //   password: loginPassword,
-      // });
-      const response="hello";
-      console.log("Login successful:", response.data.username);
+      const response = await axios.post("http://localhost:8000/login", {
+        email: loginEmail,
+        password: loginPassword,
+      });
+      // const response="hello";
       document.cookie = `username=${response.data.username}; path=/`;
       navigate("/dashboard");
       // Handle successful login, e.g., store token, redirect, etc.
     } catch (err) {
       console.error("Login failed:", err);
-      setError("Invalid credentials"); // Update error state
+      showError("Invalid credentials"); // Update error state
     }
   };
 
   const handleSignup = async (event) => {
     event.preventDefault();
     if (signupPassword !== signupPassword2) {
-        setError("Passwords do not match");
+        showError("Passwords do not match");
         return;
     }
     try {
         const userData = { email: signupEmail, username: signupUsername, password: signupPassword };
-        // const response = await axios.post('https://playwright-backend-m02j.onrender.com/signup', userData);
-        const response="hello";
+        const response = await axios.post('http://localhost:8000/signup', userData);
         console.log('Signup successful:', response.data);
         document.cookie = `username=${response.data.username}; path=/`;
         navigate("/dashboard");
     } catch (err) {
         console.error('Signup failed:', err.response?.data?.detail || err.message);
-        setError(err.response?.data?.detail || 'Failed to create an account. Please try again.');
+        showError(err.response?.data?.detail || 'Failed to create an account. Please try again.');
     }
 };
 
