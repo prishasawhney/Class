@@ -6,7 +6,7 @@ import { defineElement } from "@lordicon/element";
 import { useTasks } from "../../contexts/TaskContext";
 import MusicPlayer from "../musicPlayer/MusicPlayer";
 import { useSongs } from '../../contexts/SongsContext';
-defineElement(lottie.loadAnimation);
+defineElement(lottie.loadAnimation); 
 
 const NavBar = () => {
     const [uncompletedTasksCount, setUncompletedTasksCount] = useState(0);
@@ -61,7 +61,7 @@ const NavBar = () => {
     };
 
     return (
-        <div id="menu" style={{ flex: isNavbarOpen ? 0.7 : 0.1, cursor: "pointer" }}>
+        <div id="menu" style={{ flex: isNavbarOpen ? 0.7 : 0.1, cursor: "pointer" }} className= {isNavbarOpen ? "":"closed"}>
             <div id="openClose" onClick={toggleNavbar}>
                 <box-icon name='menu'></box-icon>
                 <span style={{ display: isNavbarOpen ? "block" : "none" }}>Menu</span>
@@ -75,7 +75,7 @@ const NavBar = () => {
 
             <div id="tasks">
                 <ul>
-                    <div className="tasks" style={{ marginTop: "20px", display: !isNavbarOpen ? "block" : "none" }}><box-icon name='music' type='solid'></box-icon></div>
+                    {hasPlayedOnce && (<div className="tasks" style={{ marginTop: "20px", display: !isNavbarOpen ? "block" : "none" }}><box-icon name='music' type='solid'></box-icon></div>)}
                     <NavLink to="/dashboard" className="nav-link" activeClassName="active">
                         <div className="tasks">
                             <box-icon name="dashboard" type="solid"></box-icon>
@@ -199,7 +199,7 @@ const NavBar = () => {
             </div>
 
             {/* Logout Button */}
-            <div id="logoutButton" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
+            <div id="logoutButton" style={{ display: "flex", alignItems: "center", justifyContent: isNavbarOpen ? "space-between" : "center", marginTop: "auto" }}>
                 <div id="userprofile" style={{ display: "flex", alignItems: "center" }}>
                     <div
                         id="profileLogo"
@@ -219,14 +219,14 @@ const NavBar = () => {
                     >
                         {username?.charAt(0)}
                     </div>
-                    <div
+                    {isNavbarOpen && (<div
                         id="username"
                         style={{
-                            display: isNavbarOpen ? "flex" : "none",
+                            display: "flex",
                         }}
                     >
                         {username}
-                    </div>
+                    </div>)}
                 </div>
                 {isNavbarOpen && (<div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
                     <box-icon name="power-off" color="#aaa" size="20px"></box-icon>

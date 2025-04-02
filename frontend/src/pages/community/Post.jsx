@@ -55,8 +55,8 @@ const Post = ({ key, post, setComments, username}) => {
     const [newComment, addNewComment] = useState('');
     const [postComments, setPostComments] = useState([post.postComments]);
 
-    // const firstCharacter = post.postCreatedBy.charAt(0).toUpperCase();
-    const firstCharacter = username.charAt(0).toUpperCase();
+    const firstCharacter = post.postCreatedBy.charAt(0).toUpperCase();
+    // const firstCharacter = username.charAt(0).toUpperCase();
 
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
