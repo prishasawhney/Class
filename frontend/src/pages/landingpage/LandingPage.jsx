@@ -23,7 +23,7 @@ return (
         <a href="/" >
         <img src={litLabDay} alt="Logo" className="logo"/>
         {/* <img src={litLabNight2} alt="Logo" className="logo"/> */}
-        C.L.A.S.S<br />Cognitive Learning with AI for Skill & Success
+        C.L.A.S.S
         </a>
 
         <nav className="navbar"> 
@@ -34,8 +34,8 @@ return (
     </header>
     <div className="content">
         <div className="textBox">
-            <h2>It's not just learning<br/>It's <span>Littlabs’ brilliance</span></h2>
-            <p>Unlock your learning potential with our comprehensive platform designed to support you throughout your educational journey. With our Interview Preparation Analyzer, you’ll gain valuable insights into your interview skills. Create personalized flashcards with ease and solve image-based queries effortlessly. Stay organized and effectively manage your tasks with our Deadline Manager and other organizational tools, including a To-Do List, Notes, and Calendar. Join us at LittLabs and elevate your education today!</p>
+            <h2>Where <span> C</span>ognitive <span>L</span>earning meets<span> A</span>I for<span> S</span>kill & <span>S</span>uccess!"</h2>
+            <p>Unlock your learning potential with our comprehensive platform designed to support you throughout your educational journey. With our Interview Preparation Analyzer, you’ll gain valuable insights into your interview skills. Create personalized flashcards with ease and solve image-based queries effortlessly. Stay organized and effectively manage your tasks with our Deadline Manager and other organizational tools, including a To-Do List, Notes, and Calendar. Join us at CLASS and elevate your education today!</p>
             <a href="/learn-more">Learn More</a>
         </div>
         <div className="imgBox">

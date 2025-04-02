@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
+import ForgotPassword from "../src/pages/LoginSignupPage/ForgotPass";
 import LandingPage from "../src/pages/landingpage/LandingPage";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
@@ -25,7 +26,7 @@ function AppContent() {
   const location = useLocation();
   const username = "NewUser";
 
-  const shouldShowSideNav = !['/', '/login-signup'].includes(location.pathname);
+  const shouldShowSideNav = !['/','/forgotpass', '/login-signup'].includes(location.pathname);
   const noChatbotPaths = !['/', '/login-signup'].includes(location.pathname);
 
   return (
@@ -35,7 +36,8 @@ function AppContent() {
       <div className="content-container">
         <Routes>
           <Route path="/" element={<LandingPage />}/>
-          <Route path="/login-signup" element={<LoginSignupPage />} />
+          <Route path="/forgotpass" element={<ForgotPassword/>}/>
+          <Route path="/login-signup" element={<LoginSignupPage />} />   
           <Route path="/todo" element={<ToDoPage />} />
           <Route path="/community" element={<CommunityPage username={username} />} />
           <Route path="/resume" element={<ResumeScorer />} />
