@@ -8,7 +8,6 @@ import { usePosts } from "../../contexts/PostsContext";
 import { ComboBox, Option } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
 import "@salt-ds/theme/index.css";
-import "@fontsource/open-sans/300.css";
 
 // import { createPost, readPosts, readComments, like_unlike } from "../../API/community.api";
 
@@ -85,7 +84,7 @@ const CommunityPage = ({ username }) => {
     <>
       {glasseffect && (<div id="glasseffect"></div>)}
       {addNewpost && (<AddNewPost setAddNewpost={setAddNewpost} setglasseffect={setglasseffect} handleNewPost={handleNewPost} posts={posts} username={username} />)}
-      <div id="pageOuter">
+      <div id="pageOuter" className='salt-theme'>
         <div id="interactionPageMain">
           <div id="pageTopBar">
             <div id="pageSearchBar">
