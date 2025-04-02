@@ -597,7 +597,6 @@ async def process_video(file: UploadFile = File(...)):
         print(response.text)
     return json.loads(response.text)
 
-
 @app.post("/scorer")
 async def generate_resumeReview(file: UploadFile = File(None), jobDescription: str = Form(...)):
     print(f"Received file: {file.filename if file else 'No file'}")

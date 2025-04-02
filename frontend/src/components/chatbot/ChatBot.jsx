@@ -16,7 +16,6 @@ const Chatbot = ({ username }) => {
 
   const generateChatbotResponse = async (question) => {
     const query = { question: question, username: username };
-    console.log(query);
     // const response = await chatWithGemini(query);
     const response="hello";
     return response.data.response; 

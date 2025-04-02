@@ -70,7 +70,6 @@ const Post = ({ key, post, setComments, username}) => {
     useEffect(()=>{
         let matchFound = false;
         if (post.likedByUsers){
-            // console.log(post.likedByUsers);
             for (const usernames of post.likedByUsers) {
                 if (usernames === username) {
                 matchFound = true;
@@ -146,7 +145,7 @@ const Post = ({ key, post, setComments, username}) => {
                 </div>
                 {post.postCreatedBy}
             </div>
-            <div id="timestamp" onClick={(e)=>console.log(postComments)}>{formatTimestamp(post.postCreatedOn)}</div>
+            <div id="timestamp">{formatTimestamp(post.postCreatedOn)}</div>
             <div id="postMessage">
                 <ReactMarkdown
                     children={post.postDescription}

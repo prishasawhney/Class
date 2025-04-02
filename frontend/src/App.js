@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
@@ -19,13 +24,14 @@ import { PostProvider } from "./contexts/PostsContext";
 import { FlashcardProvider } from "./contexts/FlashcardContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
+import { useAuth } from "./contexts/AuthContext";
 
 function AppContent() {
   const location = useLocation();
-  const username = "";
+  const { username } = useAuth();
 
-  const shouldShowSideNav = !['/', '/login-signup'].includes(location.pathname);
-  const noChatbotPaths = !['/', '/login-signup'].includes(location.pathname);
+  const shouldShowSideNav = !["/", "/login-signup"].includes(location.pathname);
+  const noChatbotPaths = !["/", "/login-signup"].includes(location.pathname);
 
   return (
     <div className="app-container">
@@ -35,13 +41,19 @@ function AppContent() {
         <Routes>
           <Route path="/login-signup" element={<LoginSignupPage />} />
           <Route path="/todo" element={<ToDoPage />} />
-          <Route path="/community" element={<CommunityPage username={username} />} />
+          <Route
+            path="/community"
+            element={<CommunityPage username={username} />}
+          />
           <Route path="/resume" element={<ResumeScorer />} />
           <Route path="/interview" element={<InterviewAnalyzer />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/chat" element={<ChatPage />} />
-          <Route path="/dashboard" element={<Dashboard username={username}/>} />
-          <Route path="/brain" element={<Brain/>} />
+          <Route
+            path="/dashboard"
+            element={<Dashboard username={username} />}
+          />
+          <Route path="/brain" element={<Brain />} />
         </Routes>
         {noChatbotPaths && <ChatBot />}
       </div>
@@ -54,17 +66,17 @@ function App() {
     <ErrorProvider>
       <TaskProvider>
         <TaskTypeProvider>
-        <TaskTypeProvider>
-        <NotesProvider>
-          <PostProvider>
-              <FlashcardProvider>
-              <Router>
-                <AppContent />
-              </Router>
-              </FlashcardProvider>
-          </PostProvider>
-        </NotesProvider>
-        </TaskTypeProvider>
+          <TaskTypeProvider>
+            <NotesProvider>
+              <PostProvider>
+                <FlashcardProvider>
+                  <Router>
+                    <AppContent />
+                  </Router>
+                </FlashcardProvider>
+              </PostProvider>
+            </NotesProvider>
+          </TaskTypeProvider>
         </TaskTypeProvider>
       </TaskProvider>
     </ErrorProvider>

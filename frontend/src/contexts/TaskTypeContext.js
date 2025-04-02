@@ -1,14 +1,16 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { createTaskType, getTaskTypes, deleteTaskType } from "../api/tasktype.api";
+import { useAuth } from "./AuthContext";
 
 const TaskTypeContext = createContext();
 
 export const TaskTypeProvider = ({ children }) => {
     const [taskTypes, setTaskTypes] = useState([]);
-    const username = ""; // Replace with actual logged-in user
+    const { username } = useAuth(); // Get username from AuthContext
 
     // Fetch task types when component mounts
     useEffect(() => {
+        if (!username) return; // Ensure username is available
         const fetchTaskTypes = async () => {
             try {
                 const data = await getTaskTypes(username);
@@ -18,7 +20,7 @@ export const TaskTypeProvider = ({ children }) => {
             }
         };
         fetchTaskTypes();
-    }, []);
+    }, [username]);
 
     // Add a new task type
     const addTaskType = async (taskTypeName, taskTypeColor) => {

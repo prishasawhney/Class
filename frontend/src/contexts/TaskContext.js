@@ -1,15 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { createTodo, getTodos, toggleTodoCompletion, updateTodo, deleteTodo } from "../api/todo.api";
+import { useAuth } from "./AuthContext";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
     const [openTaskKey, setOpenTaskKey] = useState(null);
-    const username = ""; // Replace with actual logged-in user
+    const { username } = useAuth();
 
     // Fetch tasks when component mounts
     useEffect(() => {
+        if(!username) return; // Ensure username is available
         const fetchTodos = async () => {
             try {
                 const todos = await getTodos(username);
@@ -19,7 +21,7 @@ export const TaskProvider = ({ children }) => {
             }
         };
         fetchTodos();
-    }, []);
+    }, [username]);
 
     // Add a new task
     const addTask = async (newTask) => {

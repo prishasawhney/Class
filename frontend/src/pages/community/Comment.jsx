@@ -33,7 +33,6 @@ const Comment = ({ comment, comments, setComments, getColorByUsername, username,
                 }
             }   
         }
-        console.log(postComments);
         setIsUpvoted(matchFoundUpvote);
         setIsDownvoted(matchFoundDownvote);
     },[]);
@@ -50,7 +49,6 @@ const Comment = ({ comment, comments, setComments, getColorByUsername, username,
     const handleUpvote = async() => {
         let newUpvotes = upvoteCount;
         let newDownvotes = downvoteCount;
-        console.log(comment.commentDescription);
 
         if (isUpvoted) {
             newUpvotes -= 1;

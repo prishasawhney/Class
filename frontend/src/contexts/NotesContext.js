@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { createNote, readNotes, deleteNoteByKey, updateNote } from "../api/notes.api";
+import { useAuth } from "./AuthContext";
 
 const NotesContext = createContext();
 
 export const NotesProvider = ({ children }) => {
     const [notes, setNotes] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const username = "";
+    const { username } = useAuth();
 
     useEffect(() => {
         if (username) {
@@ -26,7 +27,7 @@ export const NotesProvider = ({ children }) => {
             };
             fetchNotes();
             
-        }
+        } else return;
     }, [username]);
 
     const addNote = async (note) => {

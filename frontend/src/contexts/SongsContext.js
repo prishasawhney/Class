@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import { useAuth } from "./AuthContext";
 
 const SongsContext = createContext();
 const audioRef = new Audio(); // ✅ Persistent audio instance across components
@@ -7,6 +8,7 @@ export const SongsProvider = ({ children }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrack, setCurrentTrack] = useState(0);
     const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
+    const { username } = useAuth(); // Get username from AuthContext
 
     const tracks = [
         {

@@ -61,6 +61,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
     min-height: 100%;
+    position: relative;
+    top: -80px;
 }
 
 #listItem{

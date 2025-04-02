@@ -17,9 +17,15 @@ const ToDoPage = () => {
     const [taskPanel, setTaskPanel] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
 
+    const convertToISOFormat = (dateStr) => {
+        const parts = dateStr.split("-"); // Split by "-"
+        if (parts.length !== 3) return null; // Ensure valid format
+        return `${parts[2]}-${parts[1]}-${parts[0]}`; // Rearrange to yyyy-mm-dd
+    }
+
     const today = new Date().toISOString().split("T")[0];
-    const overdueTasks = tasks.filter(task => task.dueDate < today);
-    const upcomingTasks = tasks.filter(task => task.dueDate >= today);
+    const overdueTasks = tasks.filter(task => convertToISOFormat(task.dueDate) < today);
+    const upcomingTasks = tasks.filter(task => convertToISOFormat(task.dueDate) >= today);
     const completedTasks = tasks.filter(task => task.isCompleted);
     const isWeekend = [0, 6].includes(new Date().getDay());
 
@@ -44,7 +50,7 @@ const ToDoPage = () => {
     }
 
     const sortTasksByDate = (tasks) => {
-        return tasks.slice().sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+        return tasks.slice().sort((a, b) => new Date(convertToISOFormat(a.dueDate)) - new Date(convertToISOFormat(b.dueDate)));
     };
 
     const countTasksByType = (taskTypeName) => {
@@ -82,7 +88,7 @@ const ToDoPage = () => {
                     ))}
                 </div>
             )}
-            <div id="todoList" style={{ gridColumnEnd: !taskPanel ? "4" : "5" }}>
+            <div id="todoList">
                 <div id="toDoHeader">
                     <div id="todopageSearchBar">
                         <box-icon name="search" color="#aaaa"></box-icon>

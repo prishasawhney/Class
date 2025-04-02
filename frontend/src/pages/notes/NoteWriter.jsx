@@ -60,7 +60,6 @@ const NoteWriter = ({
       //   noteText,
       // });
       const response="hello";
-      console.log(response);
       setNoteText(response.content);
       setNoteTitle(response.title);
     } catch (error) {

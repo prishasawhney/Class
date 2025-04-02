@@ -5,13 +5,17 @@ import "./ResumeScorer.css";
 import Uploader from "./Uploader";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import { useError } from "../../contexts/ErrorContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 import { ThreeDots } from "react-loader-spinner";
-// import { generateResumeScoreWithGemini } from "../../API/resume.api";
+import { generateResumeScoreWithGemini } from "../../api/resume.api";
 
 const workerUrl = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
-const ResumeScorer = ({ username }) => {
+const ResumeScorer = () => {
+  const { username } = useAuth();
+  const { showError } = useError();
   const [step, setStep] = useState(1); // 1 for Uploader, 2 for JobDesc, 3 for Analyzer
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [pdfUrl, setPdfUrl] = useState(null); 
@@ -42,7 +46,6 @@ const ResumeScorer = ({ username }) => {
   };
 
   const goToAnalyzer = () => {
-    console.log(resumeResponse);
     setStep(3); // Move to Analyzer
   };
 
@@ -57,16 +60,13 @@ const ResumeScorer = ({ username }) => {
       formData.append("file", acceptedFiles[0]);
     }
     formData.append("jobDescription", jobDesc);
-    console.log("FormData being sent:", formData.get("file"), formData.get("jobDescription"));
     try {
-      // const response = await generateResumeScoreWithGemini(formData);
-      // console.log(response);
-      // console.log(typeof (response));
-      // setResponse(response);
+      const response = await generateResumeScoreWithGemini(formData);
+      setResponse(response);
     } catch (error) {
       console.error("Error generating flashcards:", error);
       setLoading(false);
-      // setShowError(error);
+      showError("An error occurred while generating the analysis. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -6,7 +6,6 @@ const BASE_URL = "http://localhost:8000"; // Replace with your backend URL if di
 // Create a new note
 export const createNote = async (note) => {
     try {
-        console.log("Creating note:", note);
         const response = await axios.post(`${BASE_URL}/notes/create`, note);
         return response.data;
     } catch (error) {

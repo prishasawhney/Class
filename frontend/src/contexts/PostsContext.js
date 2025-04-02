@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 // import { readPosts, createPost, like_unlike } from "../../API/community.api"; // Uncomment when API is ready
 
 const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
+    const { username } = useAuth();
 
     // Function to fetch posts (Mock API call) 
     useEffect(() => {

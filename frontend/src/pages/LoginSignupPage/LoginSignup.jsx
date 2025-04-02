@@ -4,9 +4,11 @@ import "./LoginSignup.css";
 import "boxicons";
 import axios from "axios";
 import { useError } from "../../contexts/ErrorContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LoginSignup = () => {
   const { error, showError } = useError();
+  const { loginUser } = useAuth();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
@@ -31,8 +33,7 @@ const LoginSignup = () => {
         email: loginEmail,
         password: loginPassword,
       });
-      // const response="hello";
-      document.cookie = `username=${response.data.username}; path=/`;
+      loginUser(response.data.username); // Update username in context
       navigate("/dashboard");
       // Handle successful login, e.g., store token, redirect, etc.
     } catch (err) {
@@ -50,8 +51,7 @@ const LoginSignup = () => {
     try {
         const userData = { email: signupEmail, username: signupUsername, password: signupPassword };
         const response = await axios.post('http://localhost:8000/signup', userData);
-        console.log('Signup successful:', response.data);
-        document.cookie = `username=${response.data.username}; path=/`;
+        loginUser(response.data.username);
         navigate("/dashboard");
     } catch (err) {
         console.error('Signup failed:', err.response?.data?.detail || err.message);
@@ -159,7 +159,6 @@ const LoginSignup = () => {
                   Sign In
                 </button>
                 <a href="/forgotpass" id="forgot-password">Forgot your password?</a>
-                <p id="error">{error}</p>
               </form>
             </div>
           </div>
@@ -235,7 +234,6 @@ const LoginSignup = () => {
                   />
                 </div>
                 <button type="submit" className={`signup-signin-button ${shake ? "shake" : ""}`}>Sign Up</button>
-                <p id="error">{error}</p>
               </form>
             </div>
           </div>
