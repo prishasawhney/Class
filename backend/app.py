@@ -23,6 +23,7 @@ from passlib.hash import bcrypt
 import google.generativeai as genai
 from google.ai.generativelanguage_v1beta.types import content
 from scraper import *
+from pass_utils import *
 load_dotenv()
 
 # MongoDB Configuration
@@ -125,6 +126,93 @@ async def create_access_token(user_data: LoginSchema):
         raise HTTPException(status_code=400, detail="Invalid Credentials")
 
     return JSONResponse(content={"username": user['username']}, status_code=200)
+
+
+@app.post("/forgot-password/request-otp")
+async def request_otp(email: str):
+    """Request an OTP for password reset"""
+    user = db.Users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    otp = generate_otp()
+    generation_time = datetime.now()
+    
+    # Save OTP and generation time in the database
+    db.Users.update_one(
+        {"email": email},
+        {"$set": {"otp": otp, "otpGenerationTime": generation_time}}
+    )
+    
+    # Send OTP email
+    success, message = send_otp_email(email, otp)
+    if not success:
+        raise HTTPException(status_code=500, detail=message)
+    
+    return {"message": "OTP sent successfully"}
+
+@app.post("/forgot-password/verify-otp")
+async def verify_otp_api(email: str, otp: str):
+    """
+    Verify the OTP entered by the user.
+    """
+    user = db.Users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    stored_otp = user.get("otp")
+    generation_time = user.get("otpGenerationTime")
+    
+    if not stored_otp or not generation_time:
+        raise HTTPException(status_code=400, detail="No OTP found. Please request a new one.")
+    
+    # Check time difference
+    current_time = datetime.now()
+    time_difference = current_time - generation_time
+    if time_difference > timedelta(minutes=2):
+        # Clear OTP and generation time
+        db.Users.update_one(
+            {"email": email},
+            {"$unset": {"otp": "", "otpGenerationTime": ""}}
+        )
+        raise HTTPException(status_code=400, detail="OTP expired. Please request a new one.")
+    
+    # Verify OTP
+    if otp != stored_otp:
+        raise HTTPException(status_code=400, detail="Incorrect OTP. Please try again.")
+    
+    # Clear OTP and generation time after successful verification
+    db.Users.update_one(
+        {"email": email},
+        {"$unset": {"otp": "", "otpGenerationTime": ""}}
+    )
+    
+    return {"message": "OTP verified successfully", "status": True}
+
+
+@app.post("/forgot-password/reset-password")
+async def reset_password_api(email: str, new_password: str, confirm_password: str):
+    """
+    Reset the user's password after OTP verification.
+    """
+    if new_password != confirm_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match.")
+    
+    user = db.Users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Hash the new password
+    hashed_password = bcrypt.hash(new_password)
+    
+    # Update the password in the database
+    db.Users.update_one(
+        {"email": email},
+        {"$set": {"password": hashed_password}}
+    )
+    
+    return {"message": "Password reset successfully"}
+
 
 @app.post("/notes/create")
 async def create_note(note: NoteSchema):
@@ -702,7 +790,6 @@ async def generate_summary(noteKey: str = Form(None), username: str = Form(None)
     except Exception as e:
         print("Error occurred: ",e)
         raise HTTPException(status_code=500, detail=f"Error during summarization: {str(e)}")
-
 
 
 @app.post('/chat')
