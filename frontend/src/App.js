@@ -6,7 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import "./App.css";
-import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
+// import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -39,7 +39,7 @@ function AppContent() {
       <Alert />
       <div className="content-container">
         <Routes>
-          <Route path="/login-signup" element={<LoginSignupPage />} />
+          {/* <Route path="/login-signup" element={<LoginSignupPage />} /> */}
           <Route path="/todo" element={<ToDoPage />} />
           <Route
             path="/community"

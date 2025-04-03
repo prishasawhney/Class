@@ -20,7 +20,8 @@ const NewPost = ({ setAddNewpost, setglasseffect, handleNewPost, posts, username
                 postCreatedBy: username,
                 postDescription: newPostText,
                 postCreatedOn: new Date().toLocaleString(),
-                postLikesCount: 0
+                postLikesCount: 0,
+                likedByUsers:[]
             };
             handleNewPost(newPost);
         }
