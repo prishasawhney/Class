@@ -9,8 +9,8 @@ import Comment from './Comment';
 import { usePosts } from "../../contexts/PostsContext";
 // import { createComment } from '../../API/community.api'; 
 
-const Post = ({ key, post, setComments, username}) => {
-    const {handleLikeToggle} = usePosts();
+const Post = ({ post, username }) => {
+    const { handleLikeToggle, comments, handleNewComment } = usePosts();
 
     const letterColors = [
         { "letter": "A", "color": "#D3C047" },
@@ -49,14 +49,13 @@ const Post = ({ key, post, setComments, username}) => {
         const letterColor = letterColors.find((item) => item.letter === firstLetter);
         return letterColor ? letterColor.color : null;
     }
-    
+
     const [isLiked, setIsLiked] = useState(false);
     const [commentBox, openCommentBox] = useState(false);
     const [newComment, addNewComment] = useState('');
-    const [postComments, setPostComments] = useState([post.postComments]);
+    const [postComments, setPostComments] = useState(comments.filter(comment => comment.commentPostKey === post.postKey));
 
-    // const firstCharacter = post.postCreatedBy.charAt(0).toUpperCase();
-    const firstCharacter = username.charAt(0).toUpperCase();
+    const firstCharacter = post.postCreatedBy.charAt(0).toUpperCase();
 
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
@@ -67,46 +66,44 @@ const Post = ({ key, post, setComments, username}) => {
         openCommentBox(!commentBox);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         let matchFound = false;
-        if (post.likedByUsers){
+        if (post.likedByUsers) {
             for (const usernames of post.likedByUsers) {
                 if (usernames === username) {
-                matchFound = true;
-                break;
+                    matchFound = true;
+                    break;
                 }
-            }   
+            }
         }
         setIsLiked(matchFound);
-    },[]);
+    }, []);
+    
 
-    useEffect(()=>{
-        const filteredComments = post.comments.filter(comment => comment.commentPostKey === post.postKey);
+    useEffect(() => {
+        const filteredComments = comments.filter(comment => comment.commentPostKey === post.postKey);
         setPostComments(filteredComments);
-    },[post.comments, post]);
+    }, [comments, post.postKey]);
+    
 
     const handleCommentSubmit = async (event) => {
         event.preventDefault();
         if (newComment.trim()) {
             const comment = {
-                commentPostKey: post.postKey, 
-                commentCreatedBy: username,
                 commentDescription: newComment,
+                commentCreatedBy: username,
+                commentPostKey: post.postKey, 
                 commentUpvotes: 0,
-                commentDownvotes: 0
+                commentDownvotes: 0,
+                upvotedByUsers: [],
+                downVotedByUsers: []
             };
-
-            try {
-                // const response = await createComment(comment); 
-                // comment.commentKey = response.message
-                setPostComments([...postComments, comment]);   // Update the state with the saved comment
-                setComments([...post.comments, comment]);           // Update the global comments state if needed
-                addNewComment('');                                  // Clear the input field
-            } catch (error) {
-                console.error("Error creating comment:", error);
-            }
+            handleNewComment(comment);
+            addNewComment("");
         }
     };
+    
+    
 
     const handleInputChange = (event) => {
         addNewComment(event.target.value);
@@ -133,14 +130,14 @@ const Post = ({ key, post, setComments, username}) => {
                 day: "2-digit",
                 month: "short",
                 year: "2-digit",
-              });
+            });
         }
-    }; 
+    };
 
     return (
         <div id="post">
             <div id="useid">
-                <div id="userProfilePic" style={{background: getColorByUsername(post.postCreatedBy), color:'white', width:'25px', height:'25px', borderRadius:'50%',display:'flex', justifyContent:'center', alignItems:'center'}} >
+                <div id="userProfilePic" style={{ background: getColorByUsername(post.postCreatedBy), color: 'white', width: '25px', height: '25px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
                     {firstCharacter}
                 </div>
                 {post.postCreatedBy}
@@ -197,17 +194,13 @@ const Post = ({ key, post, setComments, username}) => {
                 <div id="commentBox">
                     <div id="prevComments">
                         {postComments
-                            .sort((a, b) => b.upvotes - a.upvotes) // Sorting comments by upvotes in descending order
+                            .sort((a, b) => b.upvotes - a.upvotes)
                             .map((comment, index) => (
                                 <Comment
                                     key={index}
                                     comment={comment}
-                                    postid={comment.commentPostKey}
-                                    comments={post.comments}
-                                    setComments={setComments}
                                     getColorByUsername={getColorByUsername}
                                     username={username}
-                                    postComments={postComments}
                                 />
                             ))
                         }

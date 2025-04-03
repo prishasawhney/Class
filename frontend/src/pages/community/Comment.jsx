@@ -5,91 +5,74 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { usePosts } from "../../contexts/PostsContext";
 // import { commentUpvote, commentDownvote } from '../../API/community.api';
 
-const Comment = ({ comment, comments, setComments, getColorByUsername, username, postComments }) => {
+const Comment = ({ key, comment, getColorByUsername, username }) => {
+    const { comments, setComments } = usePosts();
     const [isUpvoted, setIsUpvoted] = useState(false);
     const [isDownVoted, setIsDownvoted] = useState(false);
-    const [upvoteCount, setUpvoteCount] = useState(comment.commentUpvotes);
-    const [downvoteCount, setDownvoteCount] = useState(comment.commentDownvotes);
     const firstCharacter = comment.commentCreatedBy.charAt(0).toUpperCase();
 
-    useEffect(()=>{
-        let matchFoundUpvote = false;
-        let matchFoundDownvote = false;
-        if (comments.upvotedByUsers){
-            for (const usernames of comments.upvotedByUsers) {
-                if (usernames === username) {
-                matchFoundUpvote = true;
-                break;
-                }
-            }   
-        }
-        if (comments.downvotedByUsers){
-            for (const usernames of comments.downvotedByUsers) {
-                if (usernames === username) {
-                matchFoundDownvote = true;
-                break;
-                }
-            }   
-        }
-        setIsUpvoted(matchFoundUpvote);
-        setIsDownvoted(matchFoundDownvote);
-    },[]);
+    useEffect(() => {
+        setIsUpvoted(Array.isArray(comment.upvotedByUsers) && comment.upvotedByUsers.includes(username));
+        setIsDownvoted(Array.isArray(comment.downvotedByUsers) && comment.downvotedByUsers.includes(username));
+    }, [comment.upvotedByUsers, comment.downvotedByUsers, username]);
+    
 
-    const updateComments = (newUpvotes, newDownvotes) => {
+    const updateCommentVotes = (commentKey, newUpvotes, newDownvotes, upvotedUsers, downvotedUsers) => {
         const updatedComments = comments.map(c =>
-            c.commentKey === comment.commentKey
-                ? { ...c, commentUpvotes: newUpvotes, commentDownvotes: newDownvotes }
+            c.commentKey === commentKey
+                ? { ...c, commentUpvotes: newUpvotes, commentDownvotes: newDownvotes, upvotedByUsers: upvotedUsers, downvotedByUsers: downvotedUsers }
                 : c
         );
         setComments(updatedComments);
     };
 
-    const handleUpvote = async() => {
-        let newUpvotes = upvoteCount;
-        let newDownvotes = downvoteCount;
+    const handleUpvote = () => {
+        let newUpvotes = comment.commentUpvotes;
+        let newDownvotes = comment.commentDownvotes;
+        let updatedUpvotedUsers = [...(comment.upvotedByUsers || [])];
+        let updatedDownvotedUsers = [...(comment.downvotedByUsers || [])];
 
         if (isUpvoted) {
             newUpvotes -= 1;
-            setIsUpvoted(false);
+            updatedUpvotedUsers = updatedUpvotedUsers.filter(user => user !== username);
         } else {
+            newUpvotes += 1;
+            updatedUpvotedUsers.push(username);
             if (isDownVoted) {
                 newDownvotes -= 1;
-                setIsDownvoted(false);
+                updatedDownvotedUsers = updatedDownvotedUsers.filter(user => user !== username);
             }
-            newUpvotes += 1;
-            setIsUpvoted(true);
         }
 
-        setUpvoteCount(newUpvotes);
-        setDownvoteCount(newDownvotes);
-        updateComments(newUpvotes, newDownvotes);
-        const vote = {commentKey: comment.commentKey, username:username};
-        // const response = await commentUpvote(vote);
+        setIsUpvoted(!isUpvoted);
+        setIsDownvoted(false);
+        updateCommentVotes(comment.commentKey, newUpvotes, newDownvotes, updatedUpvotedUsers, updatedDownvotedUsers);
     };
 
-    const handleDownvote = async() => {
-        let newUpvotes = upvoteCount;
-        let newDownvotes = downvoteCount;
+    const handleDownvote = () => {
+        let newUpvotes = comment.commentUpvotes;
+        let newDownvotes = comment.commentDownvotes;
+        let updatedUpvotedUsers = [...(comment.upvotedByUsers || [])];
+    let updatedDownvotedUsers = [...(comment.downvotedByUsers || [])];
 
         if (isDownVoted) {
             newDownvotes -= 1;
-            setIsDownvoted(false);
+            updatedDownvotedUsers = updatedDownvotedUsers.filter(user => user !== username);
         } else {
+            newDownvotes += 1;
+            updatedDownvotedUsers.push(username);
             if (isUpvoted) {
                 newUpvotes -= 1;
-                setIsUpvoted(false);
+                updatedUpvotedUsers = updatedUpvotedUsers.filter(user => user !== username);
             }
-            newDownvotes += 1;
-            setIsDownvoted(true);
         }
 
-        setUpvoteCount(newUpvotes);
-        setDownvoteCount(newDownvotes);
-        updateComments(newUpvotes, newDownvotes);
-        const vote = {commentKey: comment.commentKey, username:username};
-        // const response = await commentDownvote(vote);
+        setIsDownvoted(!isDownVoted);
+        setIsUpvoted(false);
+        updateCommentVotes(comment.commentKey, newUpvotes, newDownvotes, updatedUpvotedUsers, updatedDownvotedUsers);
     };
 
 
@@ -97,7 +80,7 @@ const Comment = ({ comment, comments, setComments, getColorByUsername, username,
         <li id="commentContainer" key={comment.commentKey}>
             <div id="singleComment">
                 <div id="userComment">
-                    <div style={{ background: getColorByUsername(comment.commentCreatedBy), color: 'white', width:'20px', height:'20px', borderRadius:'50%', display:'flex', justifyContent:'center', alignItems:'center' }}>{firstCharacter}</div>
+                    <div style={{ background: getColorByUsername(comment.commentCreatedBy), color: 'white', width: '20px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{firstCharacter}</div>
                     <span>{comment.commentCreatedBy}</span>
                 </div>
                 <div id="commentText">
