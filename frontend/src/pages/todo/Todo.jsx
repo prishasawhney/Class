@@ -6,7 +6,7 @@ import AddTaskPanel from "./AddTaskPanel";
 import Calendar from "./Calendar";
 import { useError } from "../../contexts/ErrorContext";
 import { useTasks } from "../../contexts/TaskContext";
-import { useTaskTypes } from "../../contexts/TaskTypeContext";
+import { useTaskTypes } from "../../contexts/TaskTypeContext"; 
 
 const ToDoPage = () => {
     const { showError } = useError();
@@ -69,10 +69,10 @@ const ToDoPage = () => {
 
     return (
         <div id="todoPage">
-            <div id="greeting">
+            <div id= {taskPanel ? "shortGreeting":"greeting"}>
                 <h1>{greetingMessage}</h1>
             </div>
-            <div id="calendar">{!taskPanel && (<Calendar />)}</div>
+            {!taskPanel && (<div id="calendar"><Calendar /></div>)}
             {!taskPanel && (
                 <div id="taskTypeList">
                     {taskTypes.map((taskType) => (

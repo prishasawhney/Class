@@ -4,11 +4,13 @@ import SummarizedNote from "./SummarizedNote";
 import FlashcardContainer from "./FlashcardContainer";
 import Lottie from "lottie-react";
 import animationData from "../../assets/comingsoon.json";
+import { useBrain } from "../../contexts/BrainContext";
 
 function Fluid({ showFluid }) {
   const [activeComponent, setActiveComponent] = useState("Component1");
   const [activeButton, setActiveButton] = useState("button1");
   const [activeIndex, setActiveIndex] = useState(0);
+  const { summary, flashcard } = useBrain(); // Importing flashcard from context
 
   const handleButtonClick = (component, buttonId) => {
     setActiveComponent(component);
@@ -56,6 +58,8 @@ function Fluid({ showFluid }) {
               onClick={() => {
                 setActiveIndex(index);
                 icon.component();
+                console.log("Summary:", summary);
+                console.log("Flashcards:", flashcard);
               }}
             >
               <span href="#"  className="nav-link"  onClick={(e) => e.preventDefault()}>

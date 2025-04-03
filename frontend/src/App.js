@@ -21,7 +21,8 @@ import { TaskProvider } from "./contexts/TaskContext";
 import { TaskTypeProvider } from "./contexts/TaskTypeContext";
 import { NotesProvider } from "./contexts/NotesContext";
 import { PostProvider } from "./contexts/PostsContext";
-import { FlashcardProvider } from "./contexts/FlashcardContext";
+import { CommentProvider } from "./contexts/CommentsContext";
+import { BrainProvider } from "./contexts/BrainContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 import { useAuth } from "./contexts/AuthContext";
@@ -69,11 +70,13 @@ function App() {
           <TaskTypeProvider>
             <NotesProvider>
               <PostProvider>
-                <FlashcardProvider>
-                  <Router>
-                    <AppContent />
-                  </Router>
-                </FlashcardProvider>
+                <CommentProvider>
+                  <BrainProvider>
+                    <Router>
+                      <AppContent />
+                    </Router>
+                  </BrainProvider>
+                </CommentProvider>
               </PostProvider>
             </NotesProvider>
           </TaskTypeProvider>

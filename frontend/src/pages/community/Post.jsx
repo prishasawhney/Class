@@ -7,10 +7,13 @@ import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import "./CommunityPage.css";
 import Comment from './Comment';
 import { usePosts } from "../../contexts/PostsContext";
-// import { createComment } from '../../API/community.api'; 
+import { useAuth } from '../../contexts/AuthContext';
+import { useComments } from "../../contexts/CommentsContext";
 
-const Post = ({ post, username }) => {
-    const { handleLikeToggle, comments, handleNewComment } = usePosts();
+const Post = ({ post }) => {
+    const { username } = useAuth();
+    const { comments, handleNewComment } = useComments();
+    const { handleLikeToggle } = usePosts();
 
     const letterColors = [
         { "letter": "A", "color": "#D3C047" },
@@ -59,7 +62,7 @@ const Post = ({ post, username }) => {
 
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
-        handleLikeToggle(post.postKey, !isLiked);
+        handleLikeToggle(post.postKey, username, !isLiked);
     };
 
     const handleCommentClick = () => {

@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { usePosts } from '../../contexts/PostsContext';
+import { useAuth } from '../../contexts/AuthContext';
 import "boxicons";
 import "./CommunityPage.css";
 
-const NewPost = ({ setAddNewpost, setglasseffect, handleNewPost, posts, username }) => {
+const NewPost = ({ setAddNewpost, setglasseffect}) => {
+    const { username } = useAuth();
+    const { handleNewPost } = usePosts();
     const [newPostText, setNewPostText] = useState('');
     const handleInputChange = (event) => {
         setNewPostText(event.target.value); 

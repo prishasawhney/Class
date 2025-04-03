@@ -5,6 +5,7 @@ import DisplayCard from "./DisplayCard";
 import Post from "./Post";
 import AddNewPost from "./NewPost"; 
 import { usePosts } from "../../contexts/PostsContext";
+import { useComments } from "../../contexts/CommentsContext";
 // import { createPost, readPosts, readComments, like_unlike } from "../../API/community.api";
 
 const CommunityPage = ({ username }) => {
@@ -12,7 +13,7 @@ const CommunityPage = ({ username }) => {
   const [query, setQuery]=useState('');
   const [glasseffect, setglasseffect] = useState(false);
   const [addNewpost, setAddNewpost] = useState(false);
-  const { posts, handleNewPost} = usePosts();
+  const { posts, handleNewPost, handleLikeToggle } = usePosts();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,7 +31,7 @@ const CommunityPage = ({ username }) => {
   return (
     <>
       {glasseffect && (<div id="glasseffect"></div>)}
-      {addNewpost && (<AddNewPost setAddNewpost={setAddNewpost} setglasseffect={setglasseffect} handleNewPost={handleNewPost} posts={posts} username={username} />)}
+      {addNewpost && (<AddNewPost setAddNewpost={setAddNewpost} setglasseffect={setglasseffect}posts={posts} username={username} />)}
       <div id="pageOuter">
         <div id="interactionPageMain">
           <div id="pageTopBar">

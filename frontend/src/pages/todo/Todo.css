@@ -9,12 +9,29 @@
     transition: grid-template-columns 0.4s ease-in-out;
     background: white;
     border: 2px solid #ddd;
-    margin-top: 0.4%;
+    margin-top: 0.4%; 
 }
 
 #greeting{
     grid-column-start: 1;
     grid-column-end: 5;
+    grid-row-start:1;
+    grid-row-end:2;
+    background: #bbb;
+    border-radius: 5px;
+    background-image: url("../../../public/LoginBG.png");
+    background-position-y: 47%;
+    background-position-x: 49%;
+    padding:10px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    color:white;
+}
+
+#shortGreeting{
+    grid-column-start: 1;
+    grid-column-end: 4;
     grid-row-start:1;
     grid-row-end:2;
     background: #bbb;
@@ -61,8 +78,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
     min-height: 100%;
-    position: relative;
-    top: -80px;
+    /* position: relative;
+    top: -80px; */
 }
 
 #listItem{
@@ -374,8 +391,8 @@
 }
 
 #taskPanel.show {
-    grid-column-start: 5; 
-    grid-column-end: 8;
+    grid-column-start: 4; 
+    grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 6;
     transform: translateX(0); 

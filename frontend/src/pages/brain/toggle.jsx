@@ -3,20 +3,31 @@ import "./BrainPage.css";
 import Uploader from "./Uploader";
 import Lottie from "lottie-react";
 import NotesAnimation from "../../assets/notes.json"; 
-import { useNotes } from "../../contexts/NotesContext";  
-import { useFlashcard } from "../../contexts/FlashcardContext";  
+import { useNotes } from "../../contexts/NotesContext"; 
+import { useBrain } from "../../contexts/BrainContext";
+import { useAuth } from "../../contexts/AuthContext"; // Import Auth context
+
 const Toggler = ({ setShowFluid }) => {
+    const { username } = useAuth(); // Get username from Auth context
     const [errorMsg, setErrorMsg] = useState("");
     const {notes} = useNotes();
-    const { selectedNote, setSelectedNote} = useFlashcard();
+    const [selectedNote, setSelectedNote]=useState("");
+    const { NotesBrain } = useBrain(); // Fetch summary function from context
 
-    const handleNextWrapper = () => {
+    const handleNextWrapper = async () => {
         if (!selectedNote) {
-            setErrorMsg("Please upload a file before proceeding."); 
+            setErrorMsg("Please upload a file before proceeding.");
             return;
         }
-        handleNext();
+    
+        try {
+            await NotesBrain(selectedNote, username); // Replace with dynamic username
+            setShowFluid(true);
+        } catch (error) {
+            setErrorMsg("Failed to fetch summary. Please try again.");
+        }
     };
+
     const handleNext = () => {
         setShowFluid(true);
     };
