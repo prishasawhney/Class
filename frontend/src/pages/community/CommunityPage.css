@@ -540,3 +540,8 @@
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(78, 75, 75, 0.1);
 }
+
+.salt-theme {
+  font-family: inherit !important;
+  font-size: inherit !important;
+}

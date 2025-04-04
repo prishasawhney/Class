@@ -58,8 +58,6 @@ function Fluid({ showFluid }) {
               onClick={() => {
                 setActiveIndex(index);
                 icon.component();
-                console.log("Summary:", summary);
-                console.log("Flashcards:", flashcard);
               }}
             >
               <span href="#"  className="nav-link"  onClick={(e) => e.preventDefault()}>

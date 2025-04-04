@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
@@ -23,6 +18,8 @@ import { NotesProvider } from "./contexts/NotesContext";
 import { PostProvider } from "./contexts/PostsContext";
 import { CommentProvider } from "./contexts/CommentsContext";
 import { BrainProvider } from "./contexts/BrainContext";
+import { SongsProvider } from "./contexts/SongsContext";
+import { FlashcardProvider } from "./contexts/FlashcardContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 import { useAuth } from "./contexts/AuthContext";
