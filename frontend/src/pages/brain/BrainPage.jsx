@@ -5,7 +5,7 @@ import Toggler from "./toggle";
 
 const BrainPage = () => {
 
-    const [showFluid, setShowFluid] = useState(false);
+    const [showFluid, setShowFluid] = useState(false); 
     useEffect(() => {
         const pdfButton = document.getElementById("pdf");
         const noteButton = document.getElementById("note");

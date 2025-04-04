@@ -5,7 +5,7 @@ import { fetchFlashcardForNote, fetchFlashcardForPDF } from "../api/flashcard.ap
 export const BrainContext = createContext();
 
 export const BrainProvider = ({ children }) => {
-    const [summary, setSummary] = useState("");
+    const [summary, setSummary] = useState();
     const [uploadedFile, setUploadedFile] = useState(null);
     const [flashcard, setFlashcard] = useState([]);
 

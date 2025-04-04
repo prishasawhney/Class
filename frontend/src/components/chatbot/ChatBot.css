@@ -14,7 +14,7 @@
   overflow: hidden;
 }
 
-.containerchat.expanded {
+.containerchat.expanded { 
   width: 400px;
   height: 80vh;
   border-radius: 8px;

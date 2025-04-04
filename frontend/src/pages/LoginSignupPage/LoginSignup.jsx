@@ -4,7 +4,7 @@ import "./LoginSignup.css";
 import "boxicons";
 import axios from "axios";
 import { useError } from "../../contexts/ErrorContext";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext"; 
 
 const LoginSignup = () => {
   const { error, showError } = useError();

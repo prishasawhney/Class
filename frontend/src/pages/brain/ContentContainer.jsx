@@ -6,7 +6,7 @@ import Lottie from "lottie-react";
 import animationData from "../../assets/comingsoon.json";
 import { useBrain } from "../../contexts/BrainContext";
 
-function Fluid({ showFluid }) {
+function Fluid({ showFluid }) { 
   const [activeComponent, setActiveComponent] = useState("Component1");
   const [activeButton, setActiveButton] = useState("button1");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -21,7 +21,7 @@ function Fluid({ showFluid }) {
   const Component2 = () => <FlashcardContainer/>;
   const Component3 = () => (
     <div id="animation-card">
-      <Lottie animationData={animationData} loop={true} />
+      <Lottie animationData={animationData} loop={true} style={{ height: "250px", width: "auto" }}/>
     </div>
   );
 
