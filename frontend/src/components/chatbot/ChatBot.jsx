@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import "boxicons";
 import "./ChatBot.css";
 import ChatBubble from "./ChatBubble";
-import { ThreeDots } from 'react-loader-spinner';
-
 import { chatWithGemini } from "../../api/minichatbot.api";
 import { ThreeDots } from "react-loader-spinner";
 import { useAuth } from "../../contexts/AuthContext";
