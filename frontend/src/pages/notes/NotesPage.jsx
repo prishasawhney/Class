@@ -10,7 +10,7 @@ import Lottie from 'react-lottie';
 import NotesAnimation from '../../assets/notes.json';
 import ImageAnimation from '../../assets/Image Solver.json';
 import VideoAnimation from '../../assets/Interview Prep.json';
-import { useNotes } from "../../contexts/NotesContext";
+import { useNotes } from "../../contexts/NotesContext"; 
 
 const NotesPage = () => {
   const colors = ["#BAE1FF", "#f5ee89"];
@@ -183,7 +183,7 @@ const NotesPage = () => {
                   </div>
                 </button>
               </Link>
-              <Link to="/imagechat" id="withdrawingid" className="nav-link">
+              <Link to="/chat" id="withdrawingid" className="nav-link">
                 <button id="withdrawing" className="thisButton">
                   <Lottie
                     options={ImageSolverButtonAnimationOptions}
@@ -195,7 +195,7 @@ const NotesPage = () => {
                   </div>
                 </button>
               </Link>
-              <Link to="/interview-prep" id="withimageid" className="nav-link">
+              <Link to="/interview" id="withimageid" className="nav-link">
                 <button id="withimage" className="thisButton">
                   <Lottie
                     options={InterviewPrepButtonAnimationOptions}

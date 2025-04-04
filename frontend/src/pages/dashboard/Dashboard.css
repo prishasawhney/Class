@@ -134,7 +134,7 @@
 
 #medalsComponent{
     /* background: linear-gradient(to right,#031f68,#0840ce); */
-    height:250px;
+    height:34vh;
     width:59%;
     display:flex;
     gap:20px;

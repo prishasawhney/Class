@@ -891,14 +891,28 @@ async def chat(userPrompt: ChatSchema):
             db.Users.update_one({"username": userPrompt.username}, {"$push": {"roadmap": task}})
         
         if not found:
-            db.Users.update_one({"username": userPrompt.username}, {"$addToSet": {"taskTypes": {"taskTypeName": "Roadmap", "taskTypeColor": color, "taskTypeKey": str(uuid.uuid4())}}})
+            new_task_type = {
+                "taskTypeName": "Roadmap",
+                "taskTypeColor": color,
+                "taskTypeKey": str(uuid.uuid4())
+            }
+            db.Users.update_one({"username": userPrompt.username}, {"$addToSet": {"taskTypes": new_task_type}})
         
         if roadmap_tasks:
             first_task = roadmap_tasks[0]
             db.Users.update_one({"username": userPrompt.username}, {
                 "$push": {"todos": first_task}, "$pull": {"roadmap": {"taskKey": first_task["taskKey"]}}
             })
-            return {"response": "Roadmap created successfully!", "task": first_task}
+            response_payload = {
+                "response": "Roadmap created successfully!",
+                "task": first_task,
+                "found": found
+            }
+    
+            if not found:
+                response_payload["taskType"] = new_task_type
+    
+            return response_payload
     
     else:
         print("in else")
@@ -945,4 +959,4 @@ async def make_it_litt(note: LittNoteSchema):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=True, port=8000, host="0.0.0.0")
+    uvicorn.run("app:app", reload=False, port=8000, host="0.0.0.0")

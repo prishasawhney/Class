@@ -27,7 +27,7 @@ export default function TaskCardContainer(){
             position: 'absolute',
             top: '10px',
             right: '0',
-            height: '90%',
+            height: '88%',
             width: '35%',
             borderRadius: '10px',
             background:'#5680e9',

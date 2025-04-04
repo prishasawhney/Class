@@ -6,6 +6,7 @@ import { chatWithGemini } from "../../api/minichatbot.api";
 import { ThreeDots } from "react-loader-spinner";
 import { useAuth } from "../../contexts/AuthContext";
 import { useTasks } from "../../contexts/TaskContext";
+import { useTaskTypes } from "../../contexts/TaskTypeContext";
 
 const slashCommands = [
   { command: "/manage my deadlines", description: "Structures your tasks for smooth and timely completion.", requiresInput: false },
@@ -16,6 +17,7 @@ const slashCommands = [
 const Chatbot = () => {
   const { username } = useAuth();
   const { tasks, setTasks } = useTasks();
+  const { taskTypes, setTaskTypes } = useTaskTypes();
   const [userQuestion, setUserQuestion] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -32,8 +34,9 @@ const Chatbot = () => {
     const response = await chatWithGemini(query);
     if (question.toLowerCase().includes("/roadmap")) {
       setTasks([...tasks, response.task]);
-      if (response.taskTypeColorFound == 0) {
-        
+      if (response.found === false && response.taskType) {
+        // ✅ Add new task type to frontend state
+        setTaskTypes([...taskTypes, response.taskType]);
       }
     }
     return response.response;

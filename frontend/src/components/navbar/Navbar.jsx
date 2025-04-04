@@ -6,11 +6,12 @@ import { defineElement } from "@lordicon/element";
 import { useTasks } from "../../contexts/TaskContext";
 import MusicPlayer from "../musicPlayer/MusicPlayer";
 import { useSongs } from '../../contexts/SongsContext';
+import { useAuth } from "../../contexts/AuthContext";
 defineElement(lottie.loadAnimation); 
 
 const NavBar = () => {
     const [uncompletedTasksCount, setUncompletedTasksCount] = useState(0);
-    const username = "NewUser";
+    const { username } = useAuth();
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
     const { tasks } = useTasks();
     const { hasPlayedOnce } = useSongs();
