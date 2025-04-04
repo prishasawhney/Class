@@ -23,7 +23,7 @@ from passlib.hash import bcrypt
 import google.generativeai as genai
 from google.ai.generativelanguage_v1beta.types import content
 from scraper import *
-from pass_utils import *
+from utils import *
 load_dotenv()
 
 # MongoDB Configuration
@@ -65,7 +65,7 @@ def extract_keywords_from_text(text):
 async def create_an_account(user_data: SignUpSchema):
     email = user_data.email
     password = user_data.password
-    username = user_data.username
+    username = user_data.usernameimage
 
     # Check if user already exists
     existing_user = db.Users.find_one({"username": username})
@@ -692,32 +692,58 @@ async def generate_resumeReview(file: UploadFile = File(None), jobDescription: s
     
     return json.loads(response.text)
 
+
 @app.post("/imagesolver/")
-async def generate_response(userPrompt:str = Form(default=""),file: UploadFile = File(None)):
-    # Create a temporary directory
+async def generate_response(userPrompt: str = Form(default=""), file: UploadFile = File(None), username: str = Form(...)):
+    
+    user = db.Users.find_one({"username": username})
+    chat_history = user.get("chatHistory", []) if user else []
+    
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+    
     if file:
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            # Save the uploaded file
-            file_location = os.path.join(tmpdirname, file.filename)
-            with open(file_location, "wb") as f:
-                shutil.copyfileobj(file.file, f)
+        file_extension = file.filename.split(".")[-1].lower()
+        
+        if file_extension in ["pdf", "txt", "docx"]:
+            file_text = extract_text_from_file(file)
+            prompt = f"Context: {file_text}\n\nUser's Question: {userPrompt}"
             
-            # Upload the image file to Google Generative AI
-            sample_file = genai.upload_file(path=file_location, display_name=file.filename)
-            if userPrompt=="":
-                prompt = "Solve the questions in the image."
-            # Generate content using the uploaded image and a prompt
-            else:
-                prompt = userPrompt
-            print(prompt)
-            response = model.generate_content([sample_file, prompt])
+            chat = model.start_chat(history=[])
+            response = chat.send_message(prompt)
+            
+            chat_history.append({"role": "user", "parts": {"text": prompt}})
+            
+        elif file_extension in ["jpg", "jpeg", "png"]:  # Image handling (existing logic)
+            
+            with tempfile.TemporaryDirectory() as tmpdirname:
+                file_location = os.path.join(tmpdirname, file.filename)
+                with open(file_location, "wb") as f:
+                    shutil.copyfileobj(file.file, f)
+                
+                sample_file = genai.upload_file(path=file_location, display_name=file.filename)
+                response = model.generate_content([sample_file, userPrompt])
+                
+                # Encode image to base64 and store in chat history
+                image_base64 = encode_file_to_base64(file)
+                chat_history.append({"role": "user", "parts": {"text": userPrompt, "image": image_base64}})
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported file type: {file_extension}. Supported types: pdf, txt, docx, images (jpg, jpeg, png, bmp, gif).")
     else:
         chat = model.start_chat(history=[])
+        
         response = chat.send_message(userPrompt)
+        chat_history.append({"role": "user", "parts": userPrompt})
+        
+    chat_history.append({"role": "model", "parts": response.text})
+    db.Users.update_one(
+        {"username": username},
+        {"$set": {"chatHistory": chat_history}},
+        upsert=True
+    )
 
-        # Return the generated response as JSON
+    
     return JSONResponse(content={"response": response.text})
+
 
 @app.post("/summarizer")
 async def generate_summary(noteKey: str = Form(None), username: str = Form(None), file: UploadFile = File(None)):

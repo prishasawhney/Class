@@ -167,3 +167,51 @@ def verify_otp(user_input, generated_otp, generation_time):
         return True, "OTP verified successfully"
     else:
         return False, "Invalid OTP"
+
+
+from fastapi import UploadFile
+
+import os
+import shutil
+import tempfile
+import base64
+from langchain_community.document_loaders import PyPDFLoader
+from langchain.document_loaders import UnstructuredWordDocumentLoader, TextLoader
+from langchain_community.document_loaders.csv_loader import CSVLoader
+def extract_text_from_file(file: UploadFile) -> str:
+    """Extracts text from PDF, TXT, and DOCX files using LangChain's document loaders where available."""
+    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(file.filename)[1]) as temp_file:
+        shutil.copyfileobj(file.file, temp_file)
+        temp_file_path = temp_file.name
+    
+    text = ""
+    file_extension = file.filename.split(".")[-1].lower()
+    
+    try:
+        if file_extension == "pdf":
+            loader = PyPDFLoader(temp_file_path)
+            text = "\n".join([doc.page_content for doc in loader.load()])
+        elif file_extension == "txt":
+            loader = TextLoader(temp_file_path)
+            text = "\n".join([doc.page_content for doc in loader.load()])
+        elif file_extension == "docx":
+            loader = UnstructuredWordDocumentLoader(temp_file_path)
+            text = "\n".join([doc.page_content for doc in loader.load()])
+        
+    except Exception:
+        
+        if file_extension == "txt":
+            with open(temp_file_path, "r", encoding="utf-8") as f:
+                text = f.read()
+        elif file_extension == "docx":
+            import docx
+            doc = docx.Document(temp_file_path)
+            text = "\n".join([para.text for para in doc.paragraphs])
+    
+    os.remove(temp_file_path)
+    return text
+
+def encode_file_to_base64(file: UploadFile) -> str:
+    """Encodes the uploaded image file to base64."""
+    file.file.seek(0)
+    return base64.b64encode(file.file.read()).decode('utf-8')
