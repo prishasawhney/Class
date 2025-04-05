@@ -1,19 +1,47 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './ResetPassword.css';
+import { useNavigate } from "react-router-dom";
+import { useError } from '../../contexts/ErrorContext';
 
-const ResetPassword = ({email}) => {
+const ResetPassword = ({ email }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  
-  const handleSubmit = (e) => {
+  const [success, setSuccess] = useState('');
+  const { showError } = useError(); // Use the error context to show errors
+  const navigate=useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (newPassword !== confirmPassword) {
       setError('Passwords do not match');
+      setSuccess('');
       return;
     }
-    setError('');
-    console.log('Password reset successfully for:', email);
+
+    try {
+      const response = await axios.post('http://localhost:8000/forgot-password/reset-password', {
+        email,
+        new_password: newPassword,
+        confirm_password: confirmPassword,
+      });
+
+      if (response.data.status) {
+        setSuccess('Password reset successfully!');
+        showError('Password reset successfully! Please Login Again using new password.'); 
+        setError('');
+        navigate('/login-signup'); // Redirect to login page after successful reset
+      }
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data.detail || 'Error resetting password');
+      } else {
+        setError('Server unreachable');
+      }
+      setSuccess('');
+    }
   };
 
   return (
@@ -29,16 +57,16 @@ const ResetPassword = ({email}) => {
             {error}
           </p>
         )}
+        {success && (
+          <p className="success-message" style={{ color: 'green', fontSize: '0.9rem', paddingBottom: '5px' }}>
+            {success}
+          </p>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="inputclass">
             <box-icon name="envelope" type="solid" color="#bbb"></box-icon>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              required
-            />
+            <input type="email" placeholder="Email" value={email} disabled />
           </div>
 
           <div className="inputclass">

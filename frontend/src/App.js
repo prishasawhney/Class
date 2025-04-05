@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import LoginSignup from "./pages/LoginSignupPage/LoginSignup";
-import ForgotPassword from "../src/pages/LoginSignupPage/ForgotPass";
+import LoginSignup from "./pages/loginsignup/LoginSignup";
+import ForgotPassword from "../src/pages/loginsignup/ForgotPass";
 import LandingPage from "../src/pages/landingpage/LandingPage";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
@@ -29,7 +29,7 @@ function AppContent() {
   const { username } = useAuth();
 
   const shouldShowSideNav = !['/','/forgotpass', '/login-signup'].includes(location.pathname);
-  const noChatbotPaths = !['/', '/login-signup'].includes(location.pathname);
+  const noChatbotPaths = !['/', '/login-signup','/chat'].includes(location.pathname);
 
   return (
     <div className="app-container">
