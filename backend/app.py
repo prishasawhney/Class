@@ -978,4 +978,4 @@ async def make_it_litt(note: LittNoteSchema):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=True, port=8000, host="0.0.0.0")
+    uvicorn.run("app:app", reload=False, port=8000, host="0.0.0.0")
