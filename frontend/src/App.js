@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import LoginSignupPage from "../src/pages/loginSignupPage/LoginSignup";
+import LoginSignup from "./pages/LoginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -18,8 +18,6 @@ import { NotesProvider } from "./contexts/NotesContext";
 import { PostProvider } from "./contexts/PostsContext";
 import { CommentProvider } from "./contexts/CommentsContext";
 import { BrainProvider } from "./contexts/BrainContext";
-import { SongsProvider } from "./contexts/SongsContext";
-import { FlashcardProvider } from "./contexts/FlashcardContext";
 import Alert from "./components/alert/Alert";
 import Navbar from "./components/navbar/Navbar";
 import { useAuth } from "./contexts/AuthContext";
@@ -37,7 +35,7 @@ function AppContent() {
       <Alert />
       <div className="content-container">
         <Routes>
-          <Route path="/login-signup" element={<LoginSignupPage />} />
+          <Route path="/login-signup" element={<LoginSignup />} />
           <Route path="/todo" element={<ToDoPage />} />
           <Route
             path="/community"
