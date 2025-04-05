@@ -38,7 +38,7 @@ const OtpForm = ({ setStep, setError, emailId }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/forgot-password/verify-otp', {
+      const response = await axios.post('https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/forgot-password/verify-otp', {
         email: emailId,
         otp: enteredOtp,
       });

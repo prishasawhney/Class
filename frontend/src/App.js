@@ -29,7 +29,7 @@ function AppContent() {
   const { username } = useAuth();
 
   const shouldShowSideNav = !['/','/forgotpass', '/login-signup'].includes(location.pathname);
-  const noChatbotPaths = !['/', '/login-signup','/chat'].includes(location.pathname);
+  const noChatbotPaths = !['/', '/login-signup','/chat', '/todo'].includes(location.pathname);
 
   return (
     <div className="app-container">

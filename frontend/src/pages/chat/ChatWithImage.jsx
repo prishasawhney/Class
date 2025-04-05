@@ -30,12 +30,12 @@ const ChatWithImage = () => {
     }
 
     try {
-      // const response= await generateChatResponse(
-      //   textMessage,
-      //   imageMessage,
-      //   username
-      // );
-      const response = "hello world"; // Placeholder for the actual response
+      const response= await generateChatResponse(
+        textMessage,
+        imageMessage,
+        username
+      );
+      // const response = "hello world"; 
 
       return response;
     } catch (error) {

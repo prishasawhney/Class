@@ -37,11 +37,10 @@ export const TaskProvider = ({ children }) => {
     const toggleTaskCompletion = async (taskKey) => {
         try {
             const updatedStatus = !(tasks.find(t => t.taskKey === taskKey)?.isCompleted);
-            const response = await toggleTodoCompletion({ username, taskKey, isCompleted: updatedStatus });
-    
             setTasks(tasks.map(t =>
                 t.taskKey === taskKey ? { ...t, isCompleted: updatedStatus } : t
             ));
+            const response = await toggleTodoCompletion({ username, taskKey, isCompleted: updatedStatus });
             if (response && response.nextTask) {
                 const nextTask = response.nextTask;
         

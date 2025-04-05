@@ -29,7 +29,7 @@ const LoginSignup = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/login", {
+      const response = await axios.post("https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/login", {
         email: loginEmail,
         password: loginPassword,
       });
@@ -50,7 +50,7 @@ const LoginSignup = () => {
     }
     try {
         const userData = { email: signupEmail, username: signupUsername, password: signupPassword };
-        const response = await axios.post('http://localhost:8000/signup', userData);
+        const response = await axios.post('https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/signup', userData);
         loginUser(response.data.username);
         navigate("/dashboard");
     } catch (err) {
