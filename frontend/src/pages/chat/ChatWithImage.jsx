@@ -2,9 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import "boxicons";
 import "./ChatWithImage.css";
 import MessageBubble from "./ChatBubble";
-import { ThreeDots } from "react-loader-spinner"; 
+import { ThreeDots } from "react-loader-spinner";
+import { useAuth } from "../../contexts/AuthContext";
+import { generateChatResponse } from "../../api/chat.api";
 
-const ChatWithImage = ({username}) => {
+const ChatWithImage = () => {
+  const { username } = useAuth();
   const [messageHistory, setMessageHistory] = useState([]);
   const [textMessage, setTextMessage] = useState("");
   const [imageMessage, setImageMessage] = useState(null); 
@@ -25,19 +28,13 @@ const ChatWithImage = ({username}) => {
     }
 
     try {
-      // const response = await axios.post(
-      //   "https://playwright-backend-m02j.onrender.com/imagesolver",
-      //   formData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }
-      // );
+      const response= await generateChatResponse(
+        textMessage,
+        imageMessage,
+        username
+      );
 
-      const response="hello";
-
-      return response.data.response;
+      return response;
     } catch (error) {
       console.error("Error generating chatbot response:", error);
       return "Sorry, there was an error processing your request.";

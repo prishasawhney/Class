@@ -92,7 +92,7 @@
     flex-wrap: wrap;
     width: 100%;
     /* gap: 5px; */
-    height: 580px;
+    height: 594px;
     overflow-y: auto;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -231,7 +231,7 @@
     /* width: 200px; */
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    height:70%;
+    height:594px;
     width:100%;
     border: 1px solid #765bee84;
   }
