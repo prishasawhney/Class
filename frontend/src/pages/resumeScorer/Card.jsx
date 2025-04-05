@@ -3,8 +3,8 @@ import "./PerfCard.css";
 import { pink } from "@mui/material/colors";
 
 
-const PerfCard=({name,score})=>{
-    const renderParagraph = (score) => {
+const PerfCard=({name,score})=>{ 
+    const renderParagraph = (score) => { 
         if (score >= 90) {
             return <p className="score-label excellent">Excellent</p>;
         } else if (score >= 80) {
@@ -19,12 +19,11 @@ const PerfCard=({name,score})=>{
     };
     return(
         <div className="myCard">
-           <h4>{name}</h4> 
+           <span>{name}</span> 
            <div id="score_id">
            <h3>{score}</h3><h5>/100</h5>
            </div>
            {renderParagraph(score)}
-
         </div>
     )
     

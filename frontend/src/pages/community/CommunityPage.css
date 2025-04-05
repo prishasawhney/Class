@@ -9,7 +9,7 @@
 }
 
 #like,
-#comment {
+#comment { 
   display: flex;
   flex-direction: column; 
   align-items: center; 
@@ -51,7 +51,7 @@
 #pageSidePanel {
   height: 93%;
   flex: 1;
-  border-left: 2px solid #ccc;
+  /* border-left: 2px solid #ccc; */
   border-radius: 0px 10px 10px 0px;
   padding: 20px;
   overflow: hidden;

@@ -6,7 +6,7 @@ import AddTaskPanel from "./AddTaskPanel";
 import Calendar from "./Calendar";
 import { useError } from "../../contexts/ErrorContext";
 import { useTasks } from "../../contexts/TaskContext";
-import { useTaskTypes } from "../../contexts/TaskTypeContext"; 
+import { useTaskTypes } from "../../contexts/TaskTypeContext";
 
 const ToDoPage = () => {
     const { showError } = useError();
@@ -69,23 +69,25 @@ const ToDoPage = () => {
 
     return (
         <div id="todoPage">
-            <div id= {taskPanel ? "shortGreeting":"greeting"}>
+            <div id={taskPanel ? "shortGreeting" : "greeting"}>
                 <h1>{greetingMessage}</h1>
             </div>
             {!taskPanel && (<div id="calendar"><Calendar /></div>)}
-            {!taskPanel && (
+            {!taskPanel && ( 
                 <div id="taskTypeList">
-                    {taskTypes.map((taskType) => (
-                        <TaskType
-                            key={taskType.taskTypeKey}
-                            taskKey={taskType.taskTypeKey}
-                            taskName={taskType.taskTypeName}
-                            taskColor={taskType.taskTypeColor}
-                            setTaskPanel={setTaskPanel}
-                            removeTaskType={() => removeTaskType(taskType.taskTypeKey, tasks)}
-                            taskCount={countTasksByType(taskType.taskTypeName)}
-                        />
-                    ))}
+                    <div style={{ height: "100%", overflowY: "scroll", overflowX: "hidden" }}>
+                        {taskTypes.map((taskType) => (
+                            <TaskType
+                                key={taskType.taskTypeKey}
+                                taskKey={taskType.taskTypeKey}
+                                taskName={taskType.taskTypeName}
+                                taskColor={taskType.taskTypeColor}
+                                setTaskPanel={setTaskPanel}
+                                removeTaskType={() => removeTaskType(taskType.taskTypeKey, tasks)}
+                                taskCount={countTasksByType(taskType.taskTypeName)}
+                            />
+                        ))}
+                    </div>
                 </div>
             )}
             <div id="todoList">
@@ -105,47 +107,49 @@ const ToDoPage = () => {
                         </svg>
                     </button>
                 </div>
-                {/* Overdue Tasks */}
-                {filteredOverdueTasks.length > 0 && (
-                    <div className="taskSection">
-                        <div className="taskSectionTitle" style={{display:"flex", alignItems:"center", gap:"5px"}}>
-                            <img src="/overdue.gif" style={{height:'45px'}}></img>
+                {filteredOverdueTasks.length > 0 && (<>
+                    <div className="taskSectionTitle" style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <img src="/overdue.gif" style={{ height: '45px' }}></img>
                         <h3>Overdue Tasks</h3>
-                        </div>
-                        {filteredOverdueTasks.map((task) => (
-                            <Task
-                                key={task.taskKey}
-                                task={task}
-                                setTaskPanel={setTaskPanel}
-                                setEditingTask={setEditingTask}
-                                removeTask={() => removeTask(task.taskKey)}
-                                toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
-                                setOpenTaskKey={setOpenTaskKey}
-                                openTaskKey={openTaskKey}
-                            />
-                        ))}
                     </div>
-                )}
-                {/* Upcoming Tasks */}
-                {filteredUpcomingTasks.length > 0 && (
-                    <div className="taskSection">
-                        <div className="taskSectionTitle" style={{display:"flex", alignItems:"center", gap:"5px"}}> 
-                            <img src="/upcoming.gif" style={{height:'45px'}}></img>
+                        {/* Overdue Tasks */}
+                        <div className="taskSection" style={{ overflowY: 'scroll',height:'auto', maxHeight:'27vh'}}>
+                            {filteredOverdueTasks.map((task) => (
+                                <Task
+                                    key={task.taskKey}
+                                    task={task}
+                                    setTaskPanel={setTaskPanel}
+                                    setEditingTask={setEditingTask}
+                                    removeTask={() => removeTask(task.taskKey)}
+                                    toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
+                                    setOpenTaskKey={setOpenTaskKey}
+                                    openTaskKey={openTaskKey}
+                                />
+                            ))}
+                    </div></>)}
+                {filteredUpcomingTasks.length > 0 && (<>
+                    <div className="taskSectionTitle" style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <img src="/upcoming.gif" style={{ height: '45px' }}></img>
                         <h3>Upcoming Tasks</h3>
-                        </div>
-                        {filteredUpcomingTasks.map((task) => (
-                            <Task
-                                key={task.taskKey}
-                                task={task}
-                                setEditingTask={setEditingTask}
-                                removeTask={() => removeTask(task.taskKey)}
-                                setTaskPanel={setTaskPanel}
-                                toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
-                                setOpenTaskKey={setOpenTaskKey}
-                                openTaskKey={openTaskKey}
-                            />
-                        ))}
                     </div>
+                    <div style={{ height: '100%', overflowY: 'scroll' }}>
+                        {/* Upcoming Tasks */}
+                        <div className="taskSection">
+                            {filteredUpcomingTasks.map((task) => (
+                                <Task
+                                    key={task.taskKey}
+                                    task={task}
+                                    setEditingTask={setEditingTask}
+                                    removeTask={() => removeTask(task.taskKey)}
+                                    setTaskPanel={setTaskPanel}
+                                    toggleTaskCompletion={() => toggleTaskCompletion(task.taskKey)}
+                                    setOpenTaskKey={setOpenTaskKey}
+                                    openTaskKey={openTaskKey}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </>
                 )}
             </div>
             <AddTaskPanel

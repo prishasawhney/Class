@@ -15,7 +15,7 @@ const Analyzer = ({ username, overallScore, impactScore, brevityScore, styleScor
     const settings = {
         width: 90,
         height: 90,
-        value: overallScore,
+        value: overallScore, 
     };
 
     const [overall, setOverall] = useState(overallScore);
@@ -72,12 +72,15 @@ const Analyzer = ({ username, overallScore, impactScore, brevityScore, styleScor
 
     return (
         <div className="fullScreen">
-            <div className="topbar" style={{ padding: '10px', borderRadius: '10px 10px 0 0' }}>
-                <p>Resume scorer</p>
+            <div className="topbar" style={{ paddingLeft: '10px', borderRadius: '10px 10px 0 0' }}>
+                <div className="greetings">
+                    <h2>{greeting}</h2>
+                    <p>
+                        Welcome to your resume review.
+                    </p>
+                </div>
             </div>
             <div id="cards" style={{ borderRadius: '0 0 10px 10px' }}>
-
-
                 {cards.length > 0 ? (
                     cards.map((card, index) => (
                         <PerfCard className="setCard"
@@ -89,27 +92,14 @@ const Analyzer = ({ username, overallScore, impactScore, brevityScore, styleScor
                 ) : (
                     <p>No scores available.</p>
                 )}
-
-
             </div>
-
-            <div className="greetings">
-                <h2>{greeting}</h2>
-                <p>
-                    Welcome to your resume review.
-                </p>
-            </div>
-
             <div className="result" style={{ padding: '10px' }}>
                 <p>Your resume scored {overall} out of 100</p>
                 <GradientSlider overallScore={overall} />
-
-
             </div>
-
             <div className="recommend">
                 <h4>Recommendations</h4>
-                <p style={{width:'90%'}}><ReactMarkdown
+                <p style={{ width: '90%' }}><ReactMarkdown
                     children={recommend}
                     rehypePlugins={[rehypeRaw]}
                     components={{

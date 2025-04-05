@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API base URL (adjust this as needed)
-const BASE_URL = "http://localhost:8000"; // Replace with your backend URL if different
+const BASE_URL = "https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com"; // Replace with your backend URL if different
 
 // Create a new note
 export const createNote = async (note) => {

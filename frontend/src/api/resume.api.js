@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000"; // Update if deployed on a different server
+const API_BASE_URL = "https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com"; // Update if deployed on a different server
 
 export const generateResumeScoreWithGemini = async (formData) => {
   try {

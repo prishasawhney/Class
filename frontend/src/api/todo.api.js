@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000"; // Change if hosted elsewhere
+const API_BASE_URL = "https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com"; // Change if hosted elsewhere
 
 // Create a new todo
 export const createTodo = async (todoData) => {
