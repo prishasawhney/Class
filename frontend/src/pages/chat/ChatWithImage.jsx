@@ -28,11 +28,12 @@ const ChatWithImage = () => {
     }
 
     try {
-      const response= await generateChatResponse(
-        textMessage,
-        imageMessage,
-        username
-      );
+      // const response= await generateChatResponse(
+      //   textMessage,
+      //   imageMessage,
+      //   username
+      // );
+      const response = "hello world"; // Placeholder for the actual response
 
       return response;
     } catch (error) {
@@ -135,7 +136,7 @@ const ChatWithImage = () => {
             </div>
             <label htmlFor="fileUploader" style={{ cursor: "pointer" }}>
               {!imageMessage && (
-                <box-icon name="image-add" size="25px"></box-icon>
+                <box-icon name="paperclip" size="25px"></box-icon>
               )}
             </label>
             <input
