@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import LoginSignup from "./pages/LoginSignupPage/LoginSignup";
+import ForgotPassword from "../src/pages/LoginSignupPage/ForgotPass";
+import LandingPage from "../src/pages/landingpage/LandingPage";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -26,8 +28,8 @@ function AppContent() {
   const location = useLocation();
   const { username } = useAuth();
 
-  const shouldShowSideNav = !["/", "/login-signup"].includes(location.pathname);
-  const noChatbotPaths = !["/", "/login-signup"].includes(location.pathname);
+  const shouldShowSideNav = !['/','/forgotpass', '/login-signup'].includes(location.pathname);
+  const noChatbotPaths = !['/', '/login-signup'].includes(location.pathname);
 
   return (
     <div className="app-container">
@@ -35,7 +37,9 @@ function AppContent() {
       <Alert />
       <div className="content-container">
         <Routes>
-          <Route path="/login-signup" element={<LoginSignup />} />
+          <Route path="/" element={<LandingPage />}/>
+          <Route path="/forgotpass" element={<ForgotPassword/>}/>
+          <Route path="/login-signup" element={<LoginSignup />} />   
           <Route path="/todo" element={<ToDoPage />} />
           <Route
             path="/community"
