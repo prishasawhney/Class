@@ -1,0 +1,65 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 2200" width="800" height="800">
+	<title>bronze_coin</title>
+	<defs>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,785.428,-785.428,0,1498.767,317.567)">
+			<stop offset="0" stop-color="#e3a010"/>
+			<stop offset="1" stop-color="#f4cd27"/>
+		</linearGradient>
+		<linearGradient id="g2" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,773.934,-773.934,0,1492.932,323.201)">
+			<stop offset="0" stop-color="#f4cd27"/>
+			<stop offset="1" stop-color="#e3a010"/>
+		</linearGradient>
+		<linearGradient id="g3" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,766.272,-766.272,0,1489.041,326.957)">
+			<stop offset="0" stop-color="#f4cd27"/>
+			<stop offset="1" stop-color="#e3a010"/>
+		</linearGradient>
+		<linearGradient id="g4" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,587.532,-587.532,0,1398.294,414.57)">
+			<stop offset="0" stop-color="#e3a010"/>
+			<stop offset="1" stop-color="#f4cd27"/>
+		</linearGradient>
+		<linearGradient id="g5" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,567.041,-567.041,0,1387.891,424.614)">
+			<stop offset="0" stop-color="#c97e0e"/>
+			<stop offset="1" stop-color="#e3a010"/>
+		</linearGradient>
+		<linearGradient id="g6" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,554.589,-554.589,0,1381.569,430.718)">
+			<stop offset="0" stop-color="#f4cd27"/>
+			<stop offset="1" stop-color="#e3a010"/>
+		</linearGradient>
+		<linearGradient id="g7" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,349.127,-332.04,0,1268.579,531.67)">
+			<stop offset="0" stop-color="#e3a010"/>
+			<stop offset="1" stop-color="#c97e0e"/>
+		</linearGradient>
+		<linearGradient id="g8" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,349.127,-332.04,0,1268.579,520.972)">
+			<stop offset="0" stop-color="#f4de38"/>
+			<stop offset="1" stop-color="#edae27"/>
+		</linearGradient>
+		<linearGradient id="g9" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(355.151,565.951,-464.049,291.205,1244.158,297.894)">
+			<stop offset="0" stop-color="#ffffff"/>
+			<stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+		</linearGradient>
+	</defs>
+	<style>
+		.s0 { fill: url(#g1) } 
+		.s1 { fill: url(#g2) } 
+		.s2 { fill: url(#g3) } 
+		.s3 { fill: url(#g4) } 
+		.s4 { fill: url(#g5) } 
+		.s5 { fill: url(#g6) } 
+		.s6 { fill: url(#g7) } 
+		.s7 { fill: url(#g8) } 
+		.s8 { opacity: .17;fill: url(#g9) } 
+	</style>
+	<g id="objects">
+		<g id="&lt;Group&gt;">
+			<path id="&lt;Path&gt;" class="s0" d="m1498.8 702.6c0 220.2-178.6 398.7-398.8 398.7-220.2 0-398.8-178.5-398.8-398.7 0-220.3 178.6-398.8 398.8-398.8 220.2 0 398.8 178.5 398.8 398.8z"/>
+			<path id="&lt;Path&gt;" class="s1" d="m1492.9 702.6c0 217-175.9 392.9-392.9 392.9-217 0-392.9-175.9-392.9-392.9 0-217 175.9-393 392.9-393 217 0 392.9 176 392.9 393z"/>
+			<path id="&lt;Path&gt;" class="s2" d="m1489 702.6c0 214.8-174.1 389-389 389-214.9 0-389-174.2-389-389 0-214.9 174.1-389.1 389-389.1 214.9 0 389 174.2 389 389.1z"/>
+			<path id="&lt;Path&gt;" class="s3" d="m1398.3 702.6c0 164.7-133.6 298.3-298.3 298.3-164.7 0-298.3-133.6-298.3-298.3 0-164.8 133.6-298.3 298.3-298.3 164.7 0 298.3 133.5 298.3 298.3z"/>
+			<path id="&lt;Path&gt;" class="s4" d="m1387.9 702.6c0 159-128.9 287.9-287.9 287.9-159 0-287.9-128.9-287.9-287.9 0-159 128.9-287.9 287.9-287.9 159 0 287.9 128.9 287.9 287.9z"/>
+			<path id="&lt;Path&gt;" class="s5" d="m1381.6 702.6c0 155.5-126.1 281.5-281.6 281.5-155.5 0-281.6-126-281.6-281.5 0-155.5 126.1-281.6 281.6-281.6 155.5 0 281.6 126.1 281.6 281.6z"/>
+			<path id="&lt;Path&gt;" class="s6" d="m1100 525.5l57.6 116.7 128.8 8.1v10.7l-93.2 90.8 22 117.6v10.7l-115.2-60.6-115.2 60.6v-10.7l22-117.6-93.2-90.8v-10.7l128.8-8.1z"/>
+			<path id="&lt;Path&gt;" class="s7" d="m1100 514.9l57.6 116.6 128.8 18.8-93.2 90.8 22 128.3-115.2-60.6-115.2 60.6 22-128.3-93.2-90.8 128.8-18.8z"/>
+			<path id="&lt;Path&gt;" class="s8" d="m1360.4 413.5c-102.2 406-449.5 440.6-622.6 431.3-17.3-44.1-26.8-92-26.8-142.2 0-214.9 174.1-389.1 389-389.1 100.1 0 191.4 37.8 260.4 100z"/>
+		</g>
+	</g>
+</svg>

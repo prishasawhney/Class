@@ -23,6 +23,7 @@ from passlib.hash import bcrypt
 import google.generativeai as genai
 from google.ai.generativelanguage_v1beta.types import content
 from scraper import *
+from utils import *
 load_dotenv()
 
 # MongoDB Configuration
@@ -64,7 +65,7 @@ def extract_keywords_from_text(text):
 async def create_an_account(user_data: SignUpSchema):
     email = user_data.email
     password = user_data.password
-    username = user_data.username
+    username = user_data.usernameimage
 
     # Check if user already exists
     existing_user = db.Users.find_one({"username": username})
@@ -125,6 +126,86 @@ async def create_access_token(user_data: LoginSchema):
         raise HTTPException(status_code=400, detail="Invalid Credentials")
 
     return JSONResponse(content={"username": user['username']}, status_code=200)
+
+
+@app.post("/forgot-password/request-otp")
+async def request_otp(payload: EmailRequest):
+    """Request an OTP for password reset"""
+    email = payload.email
+    print("Email:", email)
+    user = db.Users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    print("User found")
+    otp = generate_otp()
+    generation_time = datetime.now()
+    print("OTP:", otp)
+    
+    db.Users.update_one(
+        {"email": email},
+        {"$set": {"otp": otp, "otpGenerationTime": generation_time}}
+    )
+    print("OTP stored in DB")
+    
+    success, message = send_otp_email(email, otp)
+    print("Email sent")
+    if not success:
+        raise HTTPException(status_code=500, detail=message)
+    print("Email sent successfully")
+    return {"message": "OTP sent successfully"}
+
+@app.post("/forgot-password/verify-otp")
+async def verify_otp_api(verify_otp: VerifyOtpSchema):
+    print("Verifying OTP for email:", verify_otp.email)
+    print("Received OTP:", verify_otp.otp)
+    user = db.Users.find_one({"email": verify_otp.email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    stored_otp = user.get("otp")
+    generation_time = user.get("otpGenerationTime")
+
+    if not stored_otp or not generation_time:
+        raise HTTPException(status_code=400, detail="No OTP found. Please request a new one.")
+
+    if datetime.now() - generation_time > timedelta(minutes=10):
+        db.Users.update_one(
+            {"email": verify_otp.email},
+            {"$unset": {"otp": "", "otpGenerationTime": ""}}
+        )
+        raise HTTPException(status_code=400, detail="OTP expired. Please request a new one.")
+
+    if verify_otp.otp != stored_otp:
+        raise HTTPException(status_code=400, detail="Incorrect OTP. Please try again.")
+
+    db.Users.update_one(
+        {"email": verify_otp.email},
+        {"$unset": {"otp": "", "otpGenerationTime": ""}}
+    )
+
+    return {"message": "OTP verified successfully", "status": True}
+
+
+@app.post("/forgot-password/reset-password")
+async def reset_password_api(payload: ResetPasswordSchema):
+    if payload.new_password != payload.confirm_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match.")
+    
+    user = db.Users.find_one({"email": payload.email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Hash the new password
+    hashed_password = bcrypt.hash(payload.new_password)
+    
+    # Update in DB
+    db.Users.update_one(
+        {"email": payload.email},
+        {"$set": {"password": hashed_password}}
+    )
+    
+    return {"message": "Password reset successfully", "status": True}
+
 
 @app.post("/notes/create")
 async def create_note(note: NoteSchema):
@@ -252,6 +333,42 @@ async def update_todo_completed(todo: CompleteTodoSchema):
             }
 
     return {"message": "Todo updated successfully"}
+
+
+@app.put("/todo/update")
+async def update_todo(todo: UpdateTodoSchema):
+    username = todo.username
+    task_key = todo.taskKey  # Ensure the request includes taskKey
+
+    # Find the user
+    user = db.Users.find_one({"username": username})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Find the task in user's todos
+    task = next((t for t in user.get("todos", []) if t["taskKey"] == task_key), None)
+    if not task:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    # Update task fields while keeping the same taskKey
+    updated_task = {
+        "taskKey": task_key,  # Keep the original taskKey
+        "taskName": todo.taskName,
+        "taskDescription": todo.taskDescription,
+        "dueDate": todo.dueDate,
+        "taskType": todo.taskType,
+        "taskColor": todo.taskColor,
+        "isCompleted": task["isCompleted"]  # Retain completion status
+    }
+
+    # Update the specific todo in the database
+    db.Users.update_one(
+        {"username": username, "todos.taskKey": task_key},
+        {"$set": {"todos.$": updated_task}}
+    )
+
+    return {"message": "Todo updated successfully"}
+
 
 @app.delete("/todo/delete")
 async def delete_todo(todo: DeleteTodoSchema):
@@ -561,7 +678,6 @@ async def process_video(file: UploadFile = File(...)):
         print(response.text)
     return json.loads(response.text)
 
-
 @app.post("/scorer")
 async def generate_resumeReview(file: UploadFile = File(None), jobDescription: str = Form(...)):
     print(f"Received file: {file.filename if file else 'No file'}")
@@ -604,32 +720,58 @@ async def generate_resumeReview(file: UploadFile = File(None), jobDescription: s
     
     return json.loads(response.text)
 
+
 @app.post("/imagesolver/")
-async def generate_response(userPrompt:str = Form(default=""),file: UploadFile = File(None)):
-    # Create a temporary directory
+async def generate_response(userPrompt: str = Form(default=""), file: UploadFile = File(None), username: str = Form(...)):
+    
+    user = db.Users.find_one({"username": username})
+    chat_history = user.get("chatHistory", []) if user else []
+    
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+    
     if file:
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            # Save the uploaded file
-            file_location = os.path.join(tmpdirname, file.filename)
-            with open(file_location, "wb") as f:
-                shutil.copyfileobj(file.file, f)
+        file_extension = file.filename.split(".")[-1].lower()
+        
+        if file_extension in ["pdf", "txt", "docx"]:
+            file_text = extract_text_from_file(file)
+            prompt = f"Context: {file_text}\n\nUser's Question: {userPrompt}"
             
-            # Upload the image file to Google Generative AI
-            sample_file = genai.upload_file(path=file_location, display_name=file.filename)
-            if userPrompt=="":
-                prompt = "Solve the questions in the image."
-            # Generate content using the uploaded image and a prompt
-            else:
-                prompt = userPrompt
-            print(prompt)
-            response = model.generate_content([sample_file, prompt])
+            chat = model.start_chat(history=[])
+            response = chat.send_message(prompt)
+            
+            chat_history.append({"role": "user", "parts": {"text": prompt}})
+            
+        elif file_extension in ["jpg", "jpeg", "png"]:  # Image handling (existing logic)
+            
+            with tempfile.TemporaryDirectory() as tmpdirname:
+                file_location = os.path.join(tmpdirname, file.filename)
+                with open(file_location, "wb") as f:
+                    shutil.copyfileobj(file.file, f)
+                
+                sample_file = genai.upload_file(path=file_location, display_name=file.filename)
+                response = model.generate_content([sample_file, userPrompt])
+                
+                # Encode image to base64 and store in chat history
+                image_base64 = encode_file_to_base64(file)
+                chat_history.append({"role": "user", "parts": {"text": userPrompt, "image": image_base64}})
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported file type: {file_extension}. Supported types: pdf, txt, docx, images (jpg, jpeg, png, bmp, gif).")
     else:
         chat = model.start_chat(history=[])
+        
         response = chat.send_message(userPrompt)
+        chat_history.append({"role": "user", "parts": userPrompt})
+        
+    chat_history.append({"role": "model", "parts": response.text})
+    db.Users.update_one(
+        {"username": username},
+        {"$set": {"chatHistory": chat_history}},
+        upsert=True
+    )
 
-        # Return the generated response as JSON
+    
     return JSONResponse(content={"response": response.text})
+
 
 @app.post("/summarizer")
 async def generate_summary(noteKey: str = Form(None), username: str = Form(None), file: UploadFile = File(None)):
@@ -704,7 +846,6 @@ async def generate_summary(noteKey: str = Form(None), username: str = Form(None)
         raise HTTPException(status_code=500, detail=f"Error during summarization: {str(e)}")
 
 
-
 @app.post('/chat')
 async def chat(userPrompt: ChatSchema):
     """
@@ -769,14 +910,28 @@ async def chat(userPrompt: ChatSchema):
             db.Users.update_one({"username": userPrompt.username}, {"$push": {"roadmap": task}})
         
         if not found:
-            db.Users.update_one({"username": userPrompt.username}, {"$addToSet": {"taskTypes": {"taskTypeName": "Roadmap", "taskTypeColor": color, "taskTypeKey": str(uuid.uuid4())}}})
+            new_task_type = {
+                "taskTypeName": "Roadmap",
+                "taskTypeColor": color,
+                "taskTypeKey": str(uuid.uuid4())
+            }
+            db.Users.update_one({"username": userPrompt.username}, {"$addToSet": {"taskTypes": new_task_type}})
         
         if roadmap_tasks:
             first_task = roadmap_tasks[0]
             db.Users.update_one({"username": userPrompt.username}, {
                 "$push": {"todos": first_task}, "$pull": {"roadmap": {"taskKey": first_task["taskKey"]}}
             })
-            return {"response": "Roadmap created successfully!", "task": first_task}
+            response_payload = {
+                "response": "Roadmap created successfully!",
+                "task": first_task,
+                "found": found
+            }
+    
+            if not found:
+                response_payload["taskType"] = new_task_type
+    
+            return response_payload
     
     else:
         print("in else")
@@ -823,4 +978,4 @@ async def make_it_litt(note: LittNoteSchema):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=False, port=8000, host="0.0.0.0")
+    uvicorn.run("app:app", reload=True, port=8000, host="0.0.0.0")

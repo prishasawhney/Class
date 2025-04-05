@@ -1,0 +1,351 @@
+#dashBoardMain{
+    display:flex;
+    gap:5px;
+    flex-direction: column;
+    padding:5px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    width:98.5%;
+    margin-top: 0.4%;
+    height:96.5%; 
+}
+
+#navibar{
+    background: black; 
+    flex:1;
+}
+
+#welcomeCard{
+    height:25vh;
+    width:100%;
+    background: linear-gradient(to right,#184ccf,#6183d9);
+    border-radius: 5px;
+    overflow: hidden;
+    position:relative;
+}
+
+#Welcomeuser{
+    color:white;
+    font-size: 3vw;
+    padding-left: 5%;
+    padding-top: 2%;
+}
+
+#Quote{
+    width:55%;
+    color:white;
+    margin-left: 5%;
+    margin-top: 1%;
+}
+
+#streak{
+    height:50px;
+    width:50px;
+    border-radius: 10px;
+    /* box-shadow: 4px 4px 15px rgba(3, 32, 104, 0.382); */
+    /* margin-bottom: 20px; */
+    display:flex;
+    justify-content: center;
+    position:relative;
+}
+
+#streak img{
+    height:100%;
+    position:relative;
+    border-radius: 10px;
+}
+
+#streak span{
+    font-size: 20px;
+    font-weight: 700;
+    color: #FD8F01;
+    text-shadow: 
+        -2px -2px 0.5px #052A75,  
+         2px -2px 0.5px #052A75,  
+        -2px  2px 0.5px #052A75,  
+         2px  2px 0.5px #052A75; 
+    position: absolute;
+    z-index: 2;
+    top:45%;
+}
+
+
+.owlImage{
+    height: 140%;
+    top:-10%;
+    position:absolute;
+    right: 5%;
+    filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.2));
+    transform: scaleX(-1);
+
+}
+
+#bottom{
+    height: 70vh;
+    width:100%;
+    position: relative;
+    top: 3%;
+}
+
+#Cards{
+    height: 30vh;
+    width:59%;
+    position:absolute;
+    bottom:10px;
+    left:0;
+    display: flex;
+    gap:20px;
+    justify-content: center;
+}
+
+#Card1, #Card2{
+    height:25vh;
+    width:50%;
+    background: #c2cdeb;
+    border-radius:20px ;
+    transition: 0.2s ease;
+    overflow: hidden;
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 2px;
+    text-align: center;
+}
+
+#Card1 button, #Card2 button{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    padding:5px;
+    border:none;
+    background: #184ccf;
+    color:white;
+    cursor: pointer;
+}
+
+#Card1:hover, #Card2:hover{ 
+    transform: scale(1.01);
+}
+
+
+#medalsComponent{
+    /* background: linear-gradient(to right,#031f68,#0840ce); */
+    height:34vh;
+    width:59%;
+    display:flex;
+    gap:20px;
+    border-radius: 10px;
+    padding:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
+}
+
+.medal {
+    /* background: white; */
+    height: 60px;
+    width:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    overflow: hidden;
+    position:relative;
+    border-radius: 5px;
+}
+
+.medalgold img, .medalsilver img, .medalbronze img {
+    height: 70%;
+    transform: scale(2);
+
+}
+
+.medalgold img{
+    position: absolute; 
+    left:65%;
+}
+
+.medalbronze img{
+    position: absolute; 
+    right:65%;
+}
+
+.number-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    /* font-weight: bold; */
+    border-radius: 10px;
+    color:rgba(6, 35, 110, 0.958);
+    box-shadow: 0px 4px 10px rgba(5, 7, 77, 0.2);
+    text-align: center;
+    padding:7px;
+    /* background: #eee; */
+}
+
+#medalTasks{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    /* background: yellow; */
+    gap:5px;
+    padding:5px 0 0 5px;
+}
+
+.medalTask{
+    background: #eee;
+    border-radius: 5px;
+    
+}
+
+.Gold, .Silver, .Bronze{
+    height:30px;
+    width:30px;
+    position:relative;
+    overflow: hidden;
+}
+
+.Gold img{
+    height:100%;
+    transform: scale(2);
+    position: absolute;
+    top:35%;
+}
+
+.Silver img{
+    height:100%;
+    transform: scale(2);
+    position: absolute;
+    bottom:35%;
+    left:50%;
+}
+
+.Bronze img{
+    height:100%;
+    transform: scale(2);
+    position: absolute;
+    bottom:35%;
+    right:45%;
+}
+
+/* medal Container */
+.medal-container {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+}
+
+/* medal Title */
+.medal-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0056b3; /* Deep blue */
+    margin-bottom: 8px;
+}
+
+/* medal Levels */
+.medal-level {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f3f8; /* Light gray */
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    gap:10px;
+    width:250px;
+    cursor:pointer;
+}
+
+.medal-level span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* medal Colors */
+.bronze {
+    color: #cd7f32; /* Bronze */
+}
+
+.silver {
+    color: #c0c0c0; /* Silver */
+}
+
+.gold {
+    color: #ffd700; /* Gold */
+}
+
+.level-completed {
+    background: #c9cfdc;
+    color: white;
+    text-decoration: line-through;
+}
+
+.medal-level:hover {
+    transform: scale(1.02);
+    transition: 0.2s ease-in-out;
+}
+
+#streakGraph{
+    height:90%;
+    width:28%;
+    border-radius: 10px;
+    background: white;
+    padding:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+
+#learningStreak{
+    height:100%;
+    width:30%;
+    background: white;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                4px 0 8px rgba(0, 0, 0, 0.05), 
+                -4px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.streak-container {
+    border-radius: 8px;
+    text-align: center;
+    height:100%;
+}
+
+.streak-info {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.streak-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.streak-btn:hover {
+    background: #0056b3;
+}

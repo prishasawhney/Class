@@ -1,0 +1,779 @@
+
+/* flashcard */
+.flip-card {
+    background-color: transparent; 
+    width: 190px;
+    height: 250px;
+    font-family: 'Poppins', sans-serif;
+    align-items: center;
+    margin: 10px; 
+  }
+  
+  .flip-card-inner { 
+    position: relative; 
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg) scale(1);
+    height: 100%;
+  }
+  .flip-card-front,
+.flip-card-back {
+
+  
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: all 2s ease-in-out;
+}
+.flip-card-front p {
+    margin: 10px;
+   
+  }
+
+  .flip-card-front {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    align-items: center;
+    justify-content: center;
+    font-size: 1 rem;
+
+    /* padding-bottom:10%; */
+  }
+ 
+  .flip-card-back {
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+  }
+  /*title is used at flipcard back*/
+  .title {
+    font-size: 1.5em;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+  }
+  #cheatsheet {
+    z-index: 1000;
+    position: absolute;
+    background: white;
+    height: 50%;
+    width: 100%;
+    bottom: -40%;
+    transition: bottom 0.4s ease-in-out;
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .flip-card-front:hover #cheatsheet{
+    bottom:0;
+  }
+
+  #flashcard-container {
+    background: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    /* gap: 5px; */
+    height: 594px;
+    overflow-y: auto;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    justify-items: flex-start;
+    align-items: flex-start;  
+    /* border: 2px solid #ddd; */
+    border: 2px solid #765bee84;
+    border-radius: 0 10px 10px 10px;
+  }
+  
+  /* brainpage */
+  .flashcard-summary-container{ 
+    height:98%;
+    width:99.5%;
+    overflow:hidden; 
+    display: flex;
+    flex-direction: column;  
+    background: white;
+    border-radius: 10px;
+    /* border: 2px solid #ddd; */
+    border: 1px solid #765bee84;
+    margin-top: 0.5%;
+    
+  }
+
+  #contentcontainer{
+    display:flex;
+    justify-content: center;
+    width:90%;
+  }
+  #headingg {
+    margin: 20px auto;
+    margin-bottom: 0px;
+    width: 90%;
+    align-items: center;
+    text-align: center;
+}
+#head_para {
+  text-align: center; /* Ensure paragraph text is centered */
+  width: 900px; 
+  height: fit-content;
+  margin: 0 auto; /* Center the paragraph within its container */
+}
+#headingg h1 {
+    margin: 0;
+    font-size: 36px; /* Larger font size for emphasis */
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for text */
+}
+
+#headingg p {
+    font-size: 18px; /* Slightly smaller than the heading */
+    color: #555;
+    margin-top: 15px;
+    line-height: 1.5;
+    width: 900px;
+    text-align: center;
+}
+
+#slider{
+  width:100%;
+}
+
+#animation-card{
+  height:600px;
+  width:100%;
+  border-radius: 0 10px 10px 10px;
+}
+
+/* Center the container */
+.fluid-container {
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: stretch; */ 
+    width: 100%;
+    height:100vh;
+    border-radius: 10px;
+    margin-top: 5px;
+    background: white;
+  }
+  
+  /* Style for the button group */
+  .button-group{
+    display: flex;
+    gap: 5px;
+  }
+  
+  /* Liquid animation for buttons */
+  .liquid-button {
+    position: relative;
+    background-color: #000000; /* Default color */
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 20px;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease-in-out;
+    
+  }
+  
+  /* Active button colors (Warm Palette) */
+  .liquid-button.active {
+    background-color: #ffffff; /* Warm Orange */
+    color: #000000;
+  }
+  .content-area {
+    flex-grow: 1;
+    height: 100%;
+    width: 97%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+    margin-left: 5px;
+  }
+  
+  
+  /* MINDMAPS Animation Card */
+  #animation-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: #ecadc0; */
+    /* width: 200px; */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height:594px;
+    width:100%;
+    border: 1px solid #765bee84;
+  }
+  
+  :root {
+    --clr: white;
+  }
+  
+  .navigation {
+    width: 463px;
+    height: 41px;
+    background: #765bee84;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    top:2px;
+    left:5px;
+    z-index: 2;
+  }
+  
+  .navigation ul {
+    position: relative;
+    display: flex;
+    width: 500px;
+    padding-left: 0px;
+    bottom: 5px;
+  }
+  
+  .navigation ul li {
+    position: relative;
+    list-style: none;
+    width: 150px;
+    height: 60px;
+    z-index: 1;
+  }
+  
+  .navigation ul li div {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .navigation ul li div .icon {
+    position: relative;
+    display: block;
+    font-size: 1.5em;
+    color: #fff;
+    line-height: 70px;
+    opacity: 0.75;
+    transition: 0.5s;
+  }
+  
+  .navigation ul li.active1 div .icon {
+    opacity: 1;
+    color: #765bee84;
+    transform: translateY(-8px);
+  }
+  
+  .indicator {
+    position: absolute;
+    left:1px;
+    top: 16px;
+    width: 150px;
+    height: 28px;
+    background: var(--clr);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 6px solid var(--clr);
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  
+  /* .indicator::before,
+  .indicator::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    width: 22px;
+    height: 20px;
+    background: transparent;
+  } */
+  
+  .indicator::before {
+    left: -23.75px;
+    border-top-right-radius: 13px;
+    box-shadow: 4px -6px 0 2px var(--clr);
+    transform: rotate(90deg);
+  }
+  
+  .indicator::after {
+    right: -23.75px;
+    border-top-left-radius: 15px;
+    box-shadow: -4px -6px 0 2px var(--clr);
+    transform: rotate(-90deg);
+  }
+  
+  .indicator span {
+    position: absolute;
+    top:-5px;
+    left: -2px;
+    width: 145px;
+    height: 25px;
+    /* border: 4px solid #765bee84; */
+    border-radius: 5px;
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); */
+    transform: scale(0.85);
+  }
+  
+  @media (max-width: 480px) {
+    .navigation {
+      zoom: 0.8;
+    }
+  }
+  
+  @media (max-width: 330px) {
+    .navigation {
+      zoom: 0.7;
+    }
+  }
+  
+  .active12{
+    color:#765BEE;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .nonActive{
+    color:white;
+  }
+
+  #SummarizedNoteContent {
+    background: white;
+    height: 580px;
+    overflow-y:auto ;
+    overflow-x: hidden;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    border-top-right-radius:10px ;
+    border-bottom-right-radius:10px ;
+    /* border-width: 0px 2px 2px 2px; */
+    /* border-color: #ddd; */
+    /* border-style: solid; */
+    border: 1px solid #765bee84;
+    padding:10px;
+    border-radius: 0 10px 10px 10px;
+}
+
+#SummarizedNoteContent pre code{
+   width:80%;
+}
+
+#slide-box { 
+    position: relative;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    overflow: hidden;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* height: max(100%, 70vh); */
+    background: white;
+}
+
+  #overlayS {
+    left: 0;
+    width: 50%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+
+  #addNote {
+    transform: translateX(0);
+    transition-duration: 1s;
+    height: 100%;
+  }
+
+  #uploadDoc {
+    transform: translateX(20%);
+    transition-duration: 1s;
+    height: 100%;
+  }
+
+
+  .overlayS-moveHalfRight #uploadDoc {
+    transform: translateX(0);
+    transition-duration: 1s;
+  }
+  
+  .overlayS-moveHalfRight {
+    animation-name: move-slide-right-brain;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+  }
+
+
+
+  @keyframes move-slide-right-brain {
+    0% {
+      left: 0;
+    }
+    50% {
+      width: 50%;
+    }
+    100% {
+      left: 50%;
+      background-position: 100%;
+    }
+  }
+  
+  .overlayInnerS-moveHalfLeft #addNote {
+    transform: translateX(-20%);
+    transition-duration: 1s;
+  }
+  
+  .overlayS-moveHalfLeft {
+    animation-name: move-slide-back-right-brain;
+    animation-fill-mode: forwards;
+    animation-duration: 1s; 
+  }
+
+  @keyframes move-slide-back-right-brain {
+    0% {
+      left: 50%;
+      background-position: right;
+    }
+    50% {
+      width: 50%;
+    }
+    100% {
+      left: 0;
+      background-position: left;
+    }
+  }
+  
+  #overlayInnerS {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    display:flex;
+    justify-content: center;
+  }
+  
+  .overlayInnerS-moveHalfLeft {
+    animation-name: move-slide-left;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+  }
+  
+  @keyframes move-slide-left {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -100%;
+      background-position: left;
+    }
+  }
+  
+  .overlayInnerS-moveHalfRight {
+    animation-name: move-slide-back-left;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+  }
+
+  @keyframes move-slide-back-left {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 0;
+      background-position: left;
+    }
+  }
+  
+  #overlayInnerS > div { 
+    flex: 1;
+  }
+
+  #overlayS {
+    /* background: linear-gradient(135deg, rgb(215, 235, 235), rgb(244, 175, 233), rgb(157, 126, 243)); */
+    border: none;
+    background: linear-gradient( #765BEE, #FF9EB5);
+
+  }
+  
+  #uploadDoc,
+  #addNote {
+    text-align: center;
+    padding: 140px 40px;
+    color: #fff;
+  }
+  #uploadDoc button,
+  #addNote button {
+    margin-top: 20px;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: transparent;
+    border-radius: 20px;
+    border: 1px solid rgb(255, 255, 255);
+    padding: 10px 40px;
+    cursor: pointer;
+  }
+
+
+  #content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -100;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #content > div {
+    flex: 1;
+  }
+
+  #pdfContent,
+#noteContent {
+    width: 50%;
+  overflow: hidden;
+}
+#pdfContent .holderS {
+  transform: translateX(0);
+  transition-duration: 1s;
+  display:flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+#pdfContent.leftSideContent .holderS {
+  transition-duration: 1s;
+}
+#noteContent .holderS {
+  transition-duration: 1s;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #ffffff;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+#noteContent,
+#pdfContent {
+  text-align: center;
+}
+#noteContent h1,
+#pdfContent h1 {
+  margin-top: 4.5rem;
+
+  
+}
+
+#content > div {
+    background-color: #fff;
+  }
+
+
+ 
+
+
+
+  /* Select dropdown */
+#selectnotesbutton {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Button */
+#submitnote {
+    width: 70%;
+    padding: 12px;
+    font-size: 16px;
+    background-color:linear-gradient(to right, #964992, #fa86b6, #f85479);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+#submitnote:hover {
+    background-color:linear-gradient(to right, #964992, #fa86b6, #f85479);
+}
+
+#animation-card1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: #ecadc0; */
+    /* height: 50%; */
+    width: 60px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    
+  }
+  
+
+  #pdfdropbox1 {
+    width: 100%; 
+    padding: 15px; 
+    border-radius: 10px;
+    /* background: #004080; */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease; 
+    height:100%;
+    padding:20px; 
+  }
+  
+  #droppdf1:hover {
+    transform: translateY(-5px);
+    /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25); */
+  }
+  
+  #droppdf1 {
+    width: 70%;
+    height: 80%; /* Further increased height */
+    border: 4px dashed #007bff; /* Thicker border for visibility */
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:0.5s ease;
+    cursor:pointer;
+  }
+  
+  #droppdf1:hover {
+    border-color: #0056b3;
+    background: #5ba0eb29;
+  }
+  
+  .file-label p {
+    margin: 0;
+    font-size: 20px; /* Larger text for clarity */
+    color: #333;
+  }
+  
+  .pdf-info {
+    margin-top: 20px;
+    padding: 10px 0px;
+    background-color: #e6f7ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+  }
+  .pdf-info p{
+    margin-left: 15px;
+  }
+  .file-details p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .remove-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pdf-info .remove-button:hover {
+    background-color: #dddd;
+  }
+  
+  #next_button {
+    margin-top: 30px;
+    width: 160px; /* Slightly wider for a more balanced look */
+    height: 50px;
+    background-image: linear-gradient(to right, #007bff, #00c6ff); /* Gradient background */
+    color: white;
+    border: none;
+    border-radius: 30px; /* More rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Light shadow for a lifting effect */
+  }
+  
+  #next_button:hover {
+    background-image: linear-gradient(to right, #0056b3, #0099cc); /* Darker gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3); /* Increase shadow on hover */
+    transform: translateY(-3px); /* Slight upward movement */
+  }
+  
+  #next_button:active {
+    background-image: linear-gradient(to right, #004080, #0073e6); /* Even darker gradient */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Smaller shadow on click */
+    transform: translateY(1px); /* Slight downward movement */
+  }
+  
+  #next_button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4); /* Add a focus ring with blue glow */
+  }
+  
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  #content-container{
+    background: white !important;
+    height:100%;
+  }
