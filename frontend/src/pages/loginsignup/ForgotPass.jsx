@@ -20,7 +20,7 @@ const ForgotPassword = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:8000/forgot-password/request-otp', {
+            const response = await axios.post('https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/forgot-password/request-otp', {
                 email: emailId
             });
             setError('');

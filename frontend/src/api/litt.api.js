@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com";
 
 export const makeItLitt = async (note) => {
   try {

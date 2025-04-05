@@ -16,7 +16,7 @@ const slashCommands = [
 
 const Chatbot = () => {
   const { username } = useAuth();
-  const { tasks, setTasks } = useTasks();
+  const { tasks, setTasks } = useTasks(); 
   const { taskTypes, setTaskTypes } = useTaskTypes();
   const [userQuestion, setUserQuestion] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
@@ -108,14 +108,17 @@ const Chatbot = () => {
   const handleCommandSelection = (command) => {
     setShowCommands(false);
     if (command.requiresInput) {
-      const updatedQuestion = `${command.command} <>`;
+      const placeholder = "skill you want to learn";
+      const updatedQuestion = `${command.command}: ${placeholder}`;
       setUserQuestion(updatedQuestion);
       setRequiresInput(true);
+  
       setTimeout(() => {
         const input = document.querySelector(".send-input");
         if (input) {
-          const pos = updatedQuestion.indexOf("<>");
-          input.setSelectionRange(pos + 1, pos + 1);
+          const start = updatedQuestion.indexOf(placeholder);
+          const end = start + placeholder.length;
+          input.setSelectionRange(start, end); // select the placeholder
           input.focus();
         }
       }, 10);
@@ -123,7 +126,7 @@ const Chatbot = () => {
       setUserQuestion(command.command);
       setRequiresInput(false);
     }
-  };
+  };  
 
   const handleKeyDown = (e) => {
     if (showCommands) {

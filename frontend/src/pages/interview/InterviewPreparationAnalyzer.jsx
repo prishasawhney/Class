@@ -61,7 +61,7 @@ const InterviewPrepAnalyzer = () => {
     formData.append("file", videoFile);
 
     try {
-      const { data } = await axios.post("http://localhost:8000/upload-video", formData, {
+      const { data } = await axios.post("https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/upload-video", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       

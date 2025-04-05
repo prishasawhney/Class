@@ -22,7 +22,7 @@ const ResetPassword = ({ email }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/forgot-password/reset-password', {
+      const response = await axios.post('https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/forgot-password/reset-password', {
         email,
         new_password: newPassword,
         confirm_password: confirmPassword,

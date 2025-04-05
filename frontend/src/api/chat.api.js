@@ -13,7 +13,7 @@ export const generateChatResponse = async (textMessage, imageMessage, username) 
 
   try {
     const response = await axios.post(
-      "http://localhost:8000/imagesolver/",
+      "https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com/imagesolver/",
       formData,
       {
         headers: {

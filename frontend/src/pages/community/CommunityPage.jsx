@@ -8,7 +8,7 @@ import { usePosts } from "../../contexts/PostsContext";
 import { useComments } from "../../contexts/CommentsContext";
 import { ComboBox, Option } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
-import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/index.css"; 
 
 // import { createPost, readPosts, readComments, like_unlike } from "../../API/community.api";
 
@@ -76,6 +76,7 @@ const CommunityPage = ({ username }) => {
 
           </div>
         </div>
+        <div id="gradientLine"></div>
         <div id="pageSidePanel">
           <form onSubmit={handleSubmit} style={{ height: "fitContent", width: "100%", display: "flex", justifyContent: "center" }}>
             <SaltProvider>

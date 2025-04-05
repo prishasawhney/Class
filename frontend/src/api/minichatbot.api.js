@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000"; // Change this to match your backend URL
+const API_BASE_URL = "https://c-l-a-s-s-cognitive-learning-with-ai-for.onrender.com"; // Change this to match your backend URL
 
 export const chatWithGemini = async (query) => {
   try {

@@ -4,7 +4,7 @@ import Analyzer from "./Analyzer";
 import "./ResumeScorer.css";
 import Uploader from "./Uploader";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
-import "@react-pdf-viewer/core/lib/styles/index.css";
+import '@react-pdf-viewer/core/lib/styles/index.css';
 import { useError } from "../../contexts/ErrorContext";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -18,7 +18,7 @@ const ResumeScorer = () => {
   const { showError } = useError();
   const [step, setStep] = useState(1); // 1 for Uploader, 2 for JobDesc, 3 for Analyzer
   const [acceptedFiles, setAcceptedFiles] = useState([]);
-  const [pdfUrl, setPdfUrl] = useState(null); 
+  const [pdfUrl, setPdfUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pdfName, setPdfName] = useState('');
   const [jobDesc, setJobDesc] = useState('');
@@ -95,7 +95,7 @@ const ResumeScorer = () => {
       {step === 3 && (
         <>
           {loading ? (
-            <div className="loader-container" style={{height:'100%', width:'100%',display:'flex',alignItems:'center',justifyContent:'center',}}>
+            <div className="loader-container" style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
               <ThreeDots
                 height="80"
                 width="80"
@@ -107,30 +107,31 @@ const ResumeScorer = () => {
             </div>
           ) : (
             <>
-            <div className="Analyze">
-              <Analyzer
-                username={username}
-                overallScore={resumeResponse.overallAlignmentScore}
-                impactScore={resumeResponse.impactOfAchievements}
-                brevityScore={resumeResponse.keywordTerminologyMatching}
-                styleScore={resumeResponse.formatAndReadability}
-                skillsScore={resumeResponse.skillsRelevancyScore}
-                roleAlignmentScore={resumeResponse.roleAlignmentScore}
-                recommendations={resumeResponse.recommendations}
-              />
-            </div>
-            <div id="displayResume">
-            {pdfUrl && (
-              <div style={{ height: "100vh" }}>
-                <Worker workerUrl={workerUrl}>
-                  <Viewer fileUrl={pdfUrl} />
-                </Worker>
+              <div className="Analyze">
+                <Analyzer
+                  username={username}
+                  overallScore={resumeResponse.overallAlignmentScore}
+                  impactScore={resumeResponse.impactOfAchievements}
+                  brevityScore={resumeResponse.keywordTerminologyMatching}
+                  styleScore={resumeResponse.formatAndReadability}
+                  skillsScore={resumeResponse.skillsRelevancyScore}
+                  roleAlignmentScore={resumeResponse.roleAlignmentScore}
+                  recommendations={resumeResponse.recommendations}
+                />
               </div>
-            )}
-          </div>
-          </>
+              <div id="gradientLine"></div>
+              <div id="displayResume">
+                {pdfUrl && (
+                  <div style={{ height: "100vh" }}>
+                    <Worker workerUrl={workerUrl}>
+                      <Viewer fileUrl={pdfUrl} />
+                    </Worker>
+                  </div>
+                )}
+              </div>
+            </>
           )}
-          
+
         </>
       )}
     </div>
