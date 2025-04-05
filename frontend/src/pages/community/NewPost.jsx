@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { usePosts } from '../../contexts/PostsContext';
+import { useAuth } from '../../contexts/AuthContext';
 import "boxicons";
 import "./CommunityPage.css";
 
-const NewPost = ({ setAddNewpost, setglasseffect, handleNewPost, posts, username }) => {
+const NewPost = ({ setAddNewpost, setglasseffect}) => {
+    const { username } = useAuth();
+    const { handleNewPost } = usePosts();
     const [newPostText, setNewPostText] = useState('');
     const handleInputChange = (event) => {
         setNewPostText(event.target.value); 
@@ -20,12 +24,10 @@ const NewPost = ({ setAddNewpost, setglasseffect, handleNewPost, posts, username
                 postCreatedBy: username,
                 postDescription: newPostText,
                 postCreatedOn: new Date().toLocaleString(),
-                postLikesCount: 0
+                postLikesCount: 0,
+                likedByUsers:[]
             };
-            console.log(newPost);
-            // console.log(posts);
             handleNewPost(newPost);
-            // console.log(posts);
         }
         setNewPostText('');
         handleClose();

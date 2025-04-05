@@ -34,7 +34,7 @@
   flex-direction: column;
   border-right: none;
   gap: 15px;
-  /* background: white; */
+  background: white;
 }
 
 #pagePosts {
@@ -305,10 +305,10 @@
   transition-duration: .3s;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
 }
 
-.text {
+.Btn .text {
   position: absolute;
   right: 0%;
   width: 0%;

@@ -1,15 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import "boxicons";
 import "./ChatBot.css";
 import ChatBubble from "./ChatBubble";
-import { ThreeDots } from 'react-loader-spinner';
+import { chatWithGemini } from "../../api/minichatbot.api";
+import { ThreeDots } from "react-loader-spinner";
+import { useAuth } from "../../contexts/AuthContext";
+import { useTasks } from "../../contexts/TaskContext";
+import { useTaskTypes } from "../../contexts/TaskTypeContext";
 
 const slashCommands = [
   { command: "/manage my deadlines", description: "Structures your tasks for smooth and timely completion.", requiresInput: false },
   { command: "/roadmap", description: "Creates a step-by-step plan to master any topic.", requiresInput: true },
 ];
 
-const Chatbot = ({ username }) => {
+
+const Chatbot = () => {
+  const { username } = useAuth();
+  const { tasks, setTasks } = useTasks();
+  const { taskTypes, setTaskTypes } = useTaskTypes();
   const [userQuestion, setUserQuestion] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -23,11 +31,16 @@ const Chatbot = ({ username }) => {
 
   const generateChatbotResponse = async (question) => {
     const query = { question: question, username: username };
-    console.log(query);
-    // const response = await chatWithGemini(query);
-    const response="hello";
-    return response.data.response; 
-  }
+    const response = await chatWithGemini(query);
+    if (question.toLowerCase().includes("/roadmap")) {
+      setTasks([...tasks, response.task]);
+      if (response.found === false && response.taskType) {
+        // ✅ Add new task type to frontend state
+        setTaskTypes([...taskTypes, response.taskType]);
+      }
+    }
+    return response.response;
+  };
 
   useEffect(() => {
     // Initial bot message introducing itself
@@ -45,7 +58,10 @@ const Chatbot = ({ username }) => {
     event.preventDefault();
     if (userQuestion.trim() === "") return;
 
-    const newUserChatHistory = [...chatHistory, { sender: "user", message: userQuestion }];
+    const newUserChatHistory = [
+      ...chatHistory,
+      { sender: "user", message: userQuestion },
+    ];
     setChatHistory(newUserChatHistory);
 
     try {
@@ -53,18 +69,25 @@ const Chatbot = ({ username }) => {
       const question = userQuestion;
       setUserQuestion("");
       const chatbotResponse = await generateChatbotResponse(question);
-      const newBotChatHistory = [...newUserChatHistory, { sender: "chatbot", message: chatbotResponse }];
+      const newBotChatHistory = [
+        ...newUserChatHistory,
+        { sender: "chatbot", message: chatbotResponse },
+      ];
       setChatHistory(newBotChatHistory);
     } catch (error) {
-      const chatbotResponse = "Failed to get chatbot response. Please try again later.";
-      const newBotChatHistory = [...newUserChatHistory, { sender: "chatbot", message: chatbotResponse }];
+      const chatbotResponse =
+        "Failed to get chatbot response. Please try again later.";
+      const newBotChatHistory = [
+        ...newUserChatHistory,
+        { sender: "chatbot", message: chatbotResponse },
+      ];
       setChatHistory(newBotChatHistory);
       setUserQuestion("");
       console.error("Failed to get chatbot response:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false); // End loading
     }
-  }
+  };
 
   const handleChatboxToggle = () => setIsExpanded(!isExpanded);
 

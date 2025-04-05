@@ -6,11 +6,12 @@ import { defineElement } from "@lordicon/element";
 import { useTasks } from "../../contexts/TaskContext";
 import MusicPlayer from "../musicPlayer/MusicPlayer";
 import { useSongs } from '../../contexts/SongsContext';
+import { useAuth } from "../../contexts/AuthContext";
 defineElement(lottie.loadAnimation); 
 
 const NavBar = () => {
     const [uncompletedTasksCount, setUncompletedTasksCount] = useState(0);
-    const username = "NewUser";
+    const { username } = useAuth();
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
     const { tasks } = useTasks();
     const { hasPlayedOnce } = useSongs();
@@ -143,9 +144,10 @@ const NavBar = () => {
                     </NavLink>
                     <NavLink to="/chat" className="nav-link" activeClassName="active">
                         <div className="tasks">
-                            <box-icon name="image-add"></box-icon>
+                            {/* <box-icon name="image-add"></box-icon> */}
+                            <box-icon name='scan'></box-icon>
                             <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                                SnapSolver
+                                SolveX
                             </li>
                         </div>
                     </NavLink>
@@ -181,9 +183,9 @@ const NavBar = () => {
                     {/* <ul> */}
                     <NavLink to="/interview" className="nav-link" activeClassName="active">
                         <div className="tasks">
-                            <box-icon name="laptop"></box-icon>
+                            <box-icon name='equalizer'></box-icon>
                             <li style={{ display: isNavbarOpen ? "block" : "none" }}>
-                                Interview Preparation
+                                OratoPrism
                             </li>
                         </div>
                     </NavLink>

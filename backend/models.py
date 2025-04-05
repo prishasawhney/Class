@@ -12,6 +12,18 @@ class LoginSchema(BaseModel):
     email: str
     password: str
 
+class EmailRequest(BaseModel):
+    email: str
+
+class VerifyOtpSchema(BaseModel):
+    email: str
+    otp: str
+
+class ResetPasswordSchema(BaseModel):
+    email: str
+    new_password: str
+    confirm_password: str
+
 # Task Type Schemas
 class TaskTypeSchema(BaseModel):
     username: str
@@ -25,6 +37,15 @@ class DeleteTaskTypeSchema(BaseModel):
 # Todo Schemas
 class TodoSchema(BaseModel):
     username: str
+    taskName: str
+    taskDescription: str
+    dueDate: str
+    taskType: str
+    taskColor: str
+
+class UpdateTodoSchema(BaseModel):
+    username: str
+    taskKey: str
     taskName: str
     taskDescription: str
     dueDate: str

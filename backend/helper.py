@@ -121,17 +121,17 @@ Expected Output Format (Markdown Example):
 
 def chatbot_default_prompt(user_query):
   prompt = f"""
-  You are an AI assistant for Litt Labs, an AI-powered digital learning platform designed to enhance productivity, study efficiency, and career preparation. Your role is twofold:
-  1)Help users navigate Litt Labs by providing accurate information about its features and guiding them to the appropriate sections.
-  2)Answer general knowledge queries unrelated to Litt Labs, such as definitions, formulas, and educational concepts.
+  You are an AI assistant for C.L.A.S.S., an AI-powered digital learning platform designed to enhance productivity, study efficiency, and career preparation. Your role is twofold:
+  1)Help users navigate C.L.A.S.S. by providing accurate information about its features and guiding them to the appropriate sections.
+  2)Answer general knowledge queries unrelated to C.L.A.S.S., such as definitions, formulas, and educational concepts.
 
-  ### Litt Labs Features & Their Locations:
+  ### C.L.A.S.S. Features & Their Locations:
   - **Dashboard**: The homepage where users get an overview of their tasks, deadlines, and recent activity.
   - **To-Do List & Calendar**: Users can manage their tasks and deadlines in one place. The calendar is now integrated into the To-Do page. Accessible under ‘Tasks.’
   - **Community Forum**: A space for discussions, questions, and collaborations. Located in the ‘Community’ tab.
   - **Notes**: Users can take and edit notes using tools similar to word processors. Located in the ‘Notes’ section.
-    - **AI-fy Notes Feature**: A button in the Notes section that enhances content with AI-generated insights, images, and GIFs. Available while creating or editing a note.
-  - **Snapsolver**: Allows users to upload PDFs, TXT files, DOCX files, and images to extract and solve questions. Available in the ‘AI Tools’ section.
+    - **Make it Litt Feature**: A button in the Notes section that enhances content with AI-generated insights, scours through the internet to retrieve relevant images, and GIFs for better visual understanding. Available while creating or editing a note.
+  - **Snapsolver**: Allows users to upload PDFs, TXT files, DOCX files, and images to extract and solve questions.
   - **B.R.A.I.N (AI Tools Page)**: A dedicated AI tools page containing:
     - **Flashcard Generator**: Creates memory cards for study.
     - **Summarizer**: Condenses large text into key points.
@@ -146,11 +146,11 @@ def chatbot_default_prompt(user_query):
   - If a user asks, "Where can I upload my resume for scoring?" → "You can use the Resume Scorer tool under the 'Career Tools' section."
   - If a user asks, "How can I solve questions from a DOCX file?" → "You can upload PDFs, TXT files, DOCX files, or images using the Snapsolver tool in the 'AI Tools' section."
   - If a user asks, "Where do I manage my deadlines?" → "You can use the Smart Deadline Manager by typing **'/manage my deadlines'** in this chat."
-  - If a user asks, "How can I enhance my notes with AI?" → "Click the 'AI-fy Notes' button while creating or editing a note in the 'Notes' section."
+  - If a user asks, "How can I enhance my notes with AI?" → "Click the 'Make it Litt' button while creating or editing a note in the 'Notes' section."
   - If a user asks, "How can I get a roadmap to learn Python?" → "Type **'/roadmap: Python'** to get a structured set of tasks for learning Python."
 
   ### Handling General Queries:
-  If a user asks a general question unrelated to Litt Labs, such as:
+  If a user asks a general question unrelated to C.L.A.S.S., such as:
   - "What is onomatopoeia?" → Provide a brief definition and examples.
   - "What is the formula to calculate the surface area of a cuboid?" → Provide the formula and a short explanation.
 
@@ -304,10 +304,10 @@ def parse_due_date(due_date_str):
 
 def FirstNote():
     return """<p>We’re thrilled to have you on board! 🚀  </p>
-<p>Litt Labs is your ultimate companion for learning and productivity. Whether you&#39;re here to manage tasks, organize notes, or unlock your full potential with our AI-powered tools, we’re here to support you every step of the way.  </p>
+<p>C.L.A.S.S. is your ultimate companion for learning and productivity. Whether you&#39;re here to manage tasks, organize notes, or unlock your full potential with our AI-powered tools, we’re here to support you every step of the way.  </p>
 <p>Dive into your personalized dashboard, explore the exciting features we’ve crafted just for you, and start turning your goals into achievements.  </p>
 <p>Let’s make learning and productivity <em>Litt</em>! 🔥  </p>
-<p><strong>Welcome to the future. Welcome to Litt Labs.</strong>  </p>"""
+<p><strong>Welcome to the future. Welcome to C.L.A.S.S..</strong>  </p>"""
 
 def resumeScorerPrompt(docs, jobDescription):
     return f""" You are a highly specialized resume evaluator tasked with providing *strict, job-specific feedback* based on the *exact* job description provided. Your evaluation must emphasize precise alignment with the job description, penalizing mismatches and offering *detailed recommendations* on how to improve any deficiencies. The scoring should reflect how well the resume meets the requirements, and your feedback must provide clear, actionable suggestions for improvement.

@@ -2,12 +2,17 @@ import React, { useEffect, useState, useRef } from "react";
 import "boxicons";
 import "./ChatWithImage.css";
 import MessageBubble from "./ChatBubble";
-import { ThreeDots } from "react-loader-spinner"; 
+import { ThreeDots } from "react-loader-spinner";
+import { useAuth } from "../../contexts/AuthContext";
+import { generateChatResponse } from "../../api/chat.api";
+import folderIcon from "../../assets/folder.json";
+import Lottie from "lottie-react";
 
 const ChatWithImage = () => {
+  const { username } = useAuth();
   const [messageHistory, setMessageHistory] = useState([]);
   const [textMessage, setTextMessage] = useState("");
-  const [imageMessage, setImageMessage] = useState(null); 
+  const [imageMessage, setImageMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -25,19 +30,14 @@ const ChatWithImage = () => {
     }
 
     try {
-      // const response = await axios.post(
-      //   "https://playwright-backend-m02j.onrender.com/imagesolver",
-      //   formData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }
+      // const response= await generateChatResponse(
+      //   textMessage,
+      //   imageMessage,
+      //   username
       // );
+      const response = "hello world"; // Placeholder for the actual response
 
-      const response="hello";
-
-      return response.data.response;
+      return response;
     } catch (error) {
       console.error("Error generating chatbot response:", error);
       return "Sorry, there was an error processing your request.";
@@ -80,7 +80,6 @@ const ChatWithImage = () => {
       { sender: "chatbot", text: chatbotResponse, image: null },
     ];
     setMessageHistory(newBotChatHistory);
-
   };
 
   const handleFileChange = (event) => {
@@ -93,84 +92,96 @@ const ChatWithImage = () => {
   };
 
   return (
-      <div id="pageMain">
-        <div id="pageNavBar">
-          <span id="nav-bar-text">StudyMate</span>
-        </div>
-        <div id="pageMessagingArea">
-          <div id="Messages">
-            {messageHistory.map((msg, index) => (
-              <MessageBubble
-                key={index}
-                sender={msg.sender}
-                text={msg.text}
-                image={msg.image}
+    <div id="pageMain">
+      <div id="pageNavBar">
+        <span id="nav-bar-text">SolveX</span>
+      </div>
+      <div id="pageMessagingArea">
+        <div id="Messages">
+          {messageHistory.map((msg, index) => (
+            <MessageBubble
+              key={index}
+              sender={msg.sender}
+              text={msg.text}
+              image={msg.image}
+              username={username}
+            />
+          ))}
+          {loading && (
+            <div className="loader">
+              <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#4F29F0"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
               />
-            ))}
-            {loading && (
-              <div className="loader">
-                <ThreeDots
-                  height="80"
-                  width="80"
-                  radius="9"
-                  color="#4F29F0"
-                  ariaLabel="three-dots-loading"
-                  wrapperStyle={{}}
-                  wrapperClassName=""
-                  visible={true}
-                />
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
         </div>
-        <div id="pageInputArea">
-          <form onSubmit={handleSubmit} method="POST">
-            <div id="uploadedImage">
-              {imageMessage && (
+      </div>
+      <div id="pageInputArea">
+        <div id="uploaded"></div>
+        <form onSubmit={handleSubmit} method="POST">
+          <div id="uploadedImage">
+            {imageMessage &&
+              (imageMessage.name.toLowerCase().endsWith(".png") ||
+              imageMessage.name.toLowerCase().endsWith(".jpg") ||
+              imageMessage.name.toLowerCase().endsWith(".jpeg") ? (
                 <img
                   id="imageininput"
                   src={URL.createObjectURL(imageMessage)}
                   alt="uploaded"
                 />
-              )}
-            </div>
-            <label htmlFor="fileUploader" style={{ cursor: "pointer" }}>
-              {!imageMessage && (
-                <box-icon name="image-add" size="25px"></box-icon>
-              )}
-            </label>
-            <input
-              id="fileUploader"
-              name="imageMessage"
-              onChange={handleFileChange}
-              type="file"
-            />
-            <input
-              id="textMessage"
-              name="textMessage"
-              value={textMessage}
-              onChange={(event) => setTextMessage(event.target.value)}
-              type="text"
-              placeholder="Send a Message..."
-            />
-            <button className="btn-gemini" type="submit">
-              <svg
-                height="24"
-                width="24"
-                fill="#FFFFFF"
-                viewBox="0 0 24 24"
-                data-name="Layer 1"
-                id="Layer_1"
-                className="sparkle"
-              >
-                <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z"></path>
-              </svg>
-              <span className="text">Generate</span>
-            </button>
-          </form>
-        </div>
+              ) : (
+                <div className="file-preview">
+                  <Lottie
+                    animationData={folderIcon}
+                    className='folder-icon'
+                  />
+                </div>
+              ))}
+          </div>
+          <label htmlFor="fileUploader" style={{ cursor: "pointer" }}>
+            {!imageMessage && (
+              <box-icon name="paperclip" size="25px"></box-icon>
+            )}
+          </label>
+          <input
+            id="fileUploader"
+            name="imageMessage"
+            onChange={handleFileChange}
+            type="file"
+          />
+          <input
+            id="textMessage"
+            name="textMessage"
+            value={textMessage}
+            onChange={(event) => setTextMessage(event.target.value)}
+            type="text"
+            placeholder="Send a Message..."
+          />
+          <button className="btn-gemini" type="submit">
+            <svg
+              height="24"
+              width="24"
+              fill="#FFFFFF"
+              viewBox="0 0 24 24"
+              data-name="Layer 1"
+              id="Layer_1"
+              className="sparkle"
+            >
+              <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z"></path>
+            </svg>
+            <span className="chattext">Generate</span>
+          </button>
+        </form>
       </div>
+    </div>
   );
 };
 

@@ -129,89 +129,82 @@ async def create_access_token(user_data: LoginSchema):
 
 
 @app.post("/forgot-password/request-otp")
-async def request_otp(email: str):
+async def request_otp(payload: EmailRequest):
     """Request an OTP for password reset"""
+    email = payload.email
+    print("Email:", email)
     user = db.Users.find_one({"email": email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    
+    print("User found")
     otp = generate_otp()
     generation_time = datetime.now()
+    print("OTP:", otp)
     
-    # Save OTP and generation time in the database
     db.Users.update_one(
         {"email": email},
         {"$set": {"otp": otp, "otpGenerationTime": generation_time}}
     )
+    print("OTP stored in DB")
     
-    # Send OTP email
     success, message = send_otp_email(email, otp)
+    print("Email sent")
     if not success:
         raise HTTPException(status_code=500, detail=message)
-    
+    print("Email sent successfully")
     return {"message": "OTP sent successfully"}
 
 @app.post("/forgot-password/verify-otp")
-async def verify_otp_api(email: str, otp: str):
-    """
-    Verify the OTP entered by the user.
-    """
-    user = db.Users.find_one({"email": email})
+async def verify_otp_api(verify_otp: VerifyOtpSchema):
+    print("Verifying OTP for email:", verify_otp.email)
+    print("Received OTP:", verify_otp.otp)
+    user = db.Users.find_one({"email": verify_otp.email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    
+
     stored_otp = user.get("otp")
     generation_time = user.get("otpGenerationTime")
-    
+
     if not stored_otp or not generation_time:
         raise HTTPException(status_code=400, detail="No OTP found. Please request a new one.")
-    
-    # Check time difference
-    current_time = datetime.now()
-    time_difference = current_time - generation_time
-    if time_difference > timedelta(minutes=2):
-        # Clear OTP and generation time
+
+    if datetime.now() - generation_time > timedelta(minutes=10):
         db.Users.update_one(
-            {"email": email},
+            {"email": verify_otp.email},
             {"$unset": {"otp": "", "otpGenerationTime": ""}}
         )
         raise HTTPException(status_code=400, detail="OTP expired. Please request a new one.")
-    
-    # Verify OTP
-    if otp != stored_otp:
+
+    if verify_otp.otp != stored_otp:
         raise HTTPException(status_code=400, detail="Incorrect OTP. Please try again.")
-    
-    # Clear OTP and generation time after successful verification
+
     db.Users.update_one(
-        {"email": email},
+        {"email": verify_otp.email},
         {"$unset": {"otp": "", "otpGenerationTime": ""}}
     )
-    
+
     return {"message": "OTP verified successfully", "status": True}
 
 
 @app.post("/forgot-password/reset-password")
-async def reset_password_api(email: str, new_password: str, confirm_password: str):
-    """
-    Reset the user's password after OTP verification.
-    """
-    if new_password != confirm_password:
+async def reset_password_api(payload: ResetPasswordSchema):
+    if payload.new_password != payload.confirm_password:
         raise HTTPException(status_code=400, detail="Passwords do not match.")
     
-    user = db.Users.find_one({"email": email})
+    user = db.Users.find_one({"email": payload.email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
     # Hash the new password
-    hashed_password = bcrypt.hash(new_password)
+    hashed_password = bcrypt.hash(payload.new_password)
     
-    # Update the password in the database
+    # Update in DB
     db.Users.update_one(
-        {"email": email},
+        {"email": payload.email},
         {"$set": {"password": hashed_password}}
     )
     
-    return {"message": "Password reset successfully"}
+    return {"message": "Password reset successfully", "status": True}
 
 
 @app.post("/notes/create")
@@ -340,6 +333,42 @@ async def update_todo_completed(todo: CompleteTodoSchema):
             }
 
     return {"message": "Todo updated successfully"}
+
+
+@app.put("/todo/update")
+async def update_todo(todo: UpdateTodoSchema):
+    username = todo.username
+    task_key = todo.taskKey  # Ensure the request includes taskKey
+
+    # Find the user
+    user = db.Users.find_one({"username": username})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Find the task in user's todos
+    task = next((t for t in user.get("todos", []) if t["taskKey"] == task_key), None)
+    if not task:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    # Update task fields while keeping the same taskKey
+    updated_task = {
+        "taskKey": task_key,  # Keep the original taskKey
+        "taskName": todo.taskName,
+        "taskDescription": todo.taskDescription,
+        "dueDate": todo.dueDate,
+        "taskType": todo.taskType,
+        "taskColor": todo.taskColor,
+        "isCompleted": task["isCompleted"]  # Retain completion status
+    }
+
+    # Update the specific todo in the database
+    db.Users.update_one(
+        {"username": username, "todos.taskKey": task_key},
+        {"$set": {"todos.$": updated_task}}
+    )
+
+    return {"message": "Todo updated successfully"}
+
 
 @app.delete("/todo/delete")
 async def delete_todo(todo: DeleteTodoSchema):
@@ -649,7 +678,6 @@ async def process_video(file: UploadFile = File(...)):
         print(response.text)
     return json.loads(response.text)
 
-
 @app.post("/scorer")
 async def generate_resumeReview(file: UploadFile = File(None), jobDescription: str = Form(...)):
     print(f"Received file: {file.filename if file else 'No file'}")
@@ -882,14 +910,28 @@ async def chat(userPrompt: ChatSchema):
             db.Users.update_one({"username": userPrompt.username}, {"$push": {"roadmap": task}})
         
         if not found:
-            db.Users.update_one({"username": userPrompt.username}, {"$addToSet": {"taskTypes": {"taskTypeName": "Roadmap", "taskTypeColor": color, "taskTypeKey": str(uuid.uuid4())}}})
+            new_task_type = {
+                "taskTypeName": "Roadmap",
+                "taskTypeColor": color,
+                "taskTypeKey": str(uuid.uuid4())
+            }
+            db.Users.update_one({"username": userPrompt.username}, {"$addToSet": {"taskTypes": new_task_type}})
         
         if roadmap_tasks:
             first_task = roadmap_tasks[0]
             db.Users.update_one({"username": userPrompt.username}, {
                 "$push": {"todos": first_task}, "$pull": {"roadmap": {"taskKey": first_task["taskKey"]}}
             })
-            return {"response": "Roadmap created successfully!", "task": first_task}
+            response_payload = {
+                "response": "Roadmap created successfully!",
+                "task": first_task,
+                "found": found
+            }
+    
+            if not found:
+                response_payload["taskType"] = new_task_type
+    
+            return response_payload
     
     else:
         print("in else")
@@ -936,4 +978,4 @@ async def make_it_litt(note: LittNoteSchema):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=False, port=8000, host="0.0.0.0")
+    uvicorn.run("app:app", reload=True, port=8000, host="0.0.0.0")

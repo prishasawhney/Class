@@ -8,7 +8,15 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
 import { useTasks } from "../../contexts/TaskContext";
 
-const initialValue = dayjs();
+const initialValue = dayjs(); 
+
+
+// Method to convert date in ISO format
+const convertToISOFormat = (dateStr) => {
+  const parts = dateStr.split("-"); // Split by "-"
+  if (parts.length !== 3) return null; // Ensure valid format
+  return `${parts[2]}-${parts[1]}-${parts[0]}`; // Rearrange to yyyy-mm-dd
+}
 
 function ServerDay(props) {
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
@@ -57,21 +65,27 @@ export default function DateCalendarServerRequest() {
   const fetchHighlightedDays = (month) => {
     const selectedMonth = dayjs(month).month();
     const selectedYear = dayjs(month).year();
-
+  
     const daysToHighlight = tasks
-      .filter(
-        (task) =>
+      .filter((task) => {
+        const isoDate = convertToISOFormat(task.dueDate);
+        return (
+          isoDate &&
           !task.isCompleted &&
-          dayjs(task.dueDate).month() === selectedMonth &&
-          dayjs(task.dueDate).year() === selectedYear
-      )
-      .map((task) => ({
-        day: dayjs(task.dueDate).date(),
-        month: selectedMonth,
-        year: selectedYear,
-        color: task.taskColor,
-      }));
-
+          dayjs(isoDate).month() === selectedMonth &&
+          dayjs(isoDate).year() === selectedYear
+        );
+      })
+      .map((task) => {
+        const isoDate = convertToISOFormat(task.dueDate);
+        return {
+          day: dayjs(isoDate).date(),
+          month: selectedMonth,
+          year: selectedYear,
+          color: task.taskColor,
+        };
+      });
+  
     setHighlightedDays(daysToHighlight);
     setIsLoading(false);
   };

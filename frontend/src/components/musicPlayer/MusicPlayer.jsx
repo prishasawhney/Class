@@ -19,30 +19,19 @@ export default function MediaControlCard() {
         handleNext, handlePrevious, audioRef
     } = useSongs();
 
-    React.useEffect(() => {
-        // Ensure audio plays/pauses correctly when state updates
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.play().catch(error => console.error("Playback error:", error));
-            } else {
-                audioRef.current.pause();
-            }
-        }
-    }, [isPlaying, currentTrack]);
-
     return (
         <Card sx={{ display: 'flex', maxWidth: 320, height: 100, marginTop: '10px' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, p: 1 }}>
                 <CardContent sx={{ flex: '1 0 auto', p: 0.5 }}>
                     <Typography component="div" variant="h6" sx={{ fontSize: 16 }}>
-                        {tracks[currentTrack]?.title || "No Track Selected"}
+                        {tracks?.[currentTrack]?.title || "No Track Selected"}
                     </Typography>
                     <Typography
                         variant="subtitle2"
                         component="div"
                         sx={{ color: 'text.secondary', fontSize: 12 }}
                     >
-                        {tracks[currentTrack]?.artist || "Unknown Artist"}
+                        {tracks?.[currentTrack]?.artist || "Unknown Artist"}
                     </Typography>
                 </CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 0.3, pb: 0.5 }}>
@@ -60,7 +49,7 @@ export default function MediaControlCard() {
             <CardMedia
                 component="img"
                 sx={{ width: '35%', height: '100%' }}
-                image={tracks[currentTrack].image}
+                image={tracks?.[currentTrack]?.image || "fallback-image-url.jpg"}
                 alt="Album cover"
             />
         </Card>

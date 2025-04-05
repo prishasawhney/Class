@@ -4,22 +4,22 @@ import "boxicons";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import "./NotesPage.css";
-// import { makeItLitt } from "../../API/litt.api";
+import { makeItLitt } from "../../api/litt.api";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NoteWriter = ({
   noteTitle,
   noteText,
   setNoteTitle,
   setNoteText,
-  handleSubmit,
+  handleSubmit, 
   discardNote,
   closeNoteWriter,
-  editingNoteKey,
-  username,
+  isEditingNote
 }) => {
+  const { username } = useAuth(); // Get the username from AuthContext
   const [error, setError] = useState(""); // State to store error message
   const [loading, setLoading] = useState(false); // State to show loading
-  const [littResponse, setLittResponse] = useState(null); // Store API response
 
   const modules = {
     toolbar: [
@@ -42,7 +42,6 @@ const NoteWriter = ({
       setError("Both heading and note text are required.");
       return;
     }
-
     setError(""); // Clear any previous error
     handleSubmit(e); // Pass the event to handleSubmit
   };
@@ -56,13 +55,11 @@ const NoteWriter = ({
     setLoading(true);
     setError("");
     try {
-      // const response = await makeItLitt({
-      //   username: username,
-      //   noteTitle,
-      //   noteText,
-      // });
-      const response="hello";
-      console.log(response);
+      const response = await makeItLitt({
+        username: username,
+        noteTitle,
+        noteText,
+      });
       setNoteText(response.content);
       setNoteTitle(response.title);
     } catch (error) {
@@ -134,7 +131,7 @@ const NoteWriter = ({
             >
               <box-icon name="save" color="#999"></box-icon>
             </button>
-            {!editingNoteKey && (
+            {!isEditingNote && (
               <box-icon
                 name="reset"
                 color="#999"
@@ -144,13 +141,6 @@ const NoteWriter = ({
           </div>
         </div>
       </form>
-
-      {littResponse && (
-        <div className="litt-response">
-          <h1>{littResponse.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: littResponse.content }} />
-        </div>
-      )}
     </div>
   );
 };

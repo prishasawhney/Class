@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 
 const ChatBubble = ({ sender, message, username }) => {
   const isUser = sender === "user";
-  const firstLetter = username ? username.charAt(0).toUpperCase() : "?";
+  const firstLetter = username ? username.charAt(0).toUpperCase() : "?"; 
   
   const letterColors = (letter) => {
     const colors = {

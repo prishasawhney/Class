@@ -7,7 +7,7 @@ import SilverCoin from "../../assets/silver_coin.svg";
 import BronzeCoin from "../../assets/bronze_coin.svg";
 import { medalsData } from "../../data/MedalsData";
 
-const MedalsComponent = () => {
+const MedalsComponent = () => { 
     const coinImages = {
         BronzeCoin: BronzeCoin,
         SilverCoin: SilverCoin,
@@ -69,7 +69,7 @@ const MedalsComponent = () => {
                             <div className="medal-title">{medal.title}</div>
                             {medal.levels.map((level) => (
                                 <div className={`medal-level ${level.name.toLowerCase()} ${
-                                    level.isCompleted ? "completed" : "not-completed"
+                                    level.isCompleted ? "level-completed" : "not-completed"
                                 }`} key={level.name}>
                                     <span>{level.tasks}</span>
                                     <div className={level.name}>

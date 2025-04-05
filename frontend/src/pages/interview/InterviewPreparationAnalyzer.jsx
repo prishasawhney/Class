@@ -1,162 +1,15 @@
-// import React, { useState, useEffect } from 'react';
-// import './InterviewPreparationAnalyzer.css';
-// // import { readTodos, readTaskType } from "../../API/todo.api";
-// // import {ThreeDots} from 'react-loader-spinner';
-// // import Chatbot from "../Common/ChatBot/ChatBot.jsx";
-
-// const InterviewPrepAnalyzer = ({ username }) => {
-
-//   const [videoSrc, setVideoSrc] = useState('');
-//   const [scores, setScores] = useState({
-//     vocabulary: 0,
-//     confidence: 0,
-//     engaging: 0,
-//     speakingStyle: 0,
-//     overallPerformance: 0, 
-//   });
-//   const [review, setReview] = useState('');
-//   const [response, setResponse] = useState('');
-//   const [error, setError] = useState('');
-//   const [loading, setLoading] = useState(false);
-
-//   const displayNames = {
-//     vocabulary: 'Vocabulary',
-//     confidence: 'Confidence',
-//     engaging: 'Engaging Ability',
-//     speakingStyle: 'Speaking Style',
-//     overallPerformance: 'Overall Performance', 
-//   };
-
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     const videoLink = URL.createObjectURL(file);
-//     setVideoSrc(videoLink);
-//     setResponse('');
-//     setError('');
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-
-//     const formData = new FormData();
-//     formData.append("file", e.target.videoFile.files[0]);
-
-//     try {
-//       const response = await fetch("http://127.0.0.1:8000/upload-video", {
-//         method: "POST",
-//         body: formData,
-//       });
-
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok.");
-//       }
-
-//       const data = await response.json();
-//       console.log(data);
-//       if (!data) {
-//         throw new Error("Invalid response structure.");
-//       }
-//       const vocabulary = data.vocabulary;
-//       const confidence_level = data.confidence_level;
-//       const engaging_ability = data.engaging_ability;
-//       const speaking_style = data.speaking_style;
-//       const overall_average = data.overall_average;
-//       const review = data.review;
-//       // error might be here
-
-//       setScores({ vocabulary, confidence: confidence_level, engaging: engaging_ability, speakingStyle: speaking_style, overallPerformance: overall_average });
-//       setReview(review);
-//       setResponse('Video processed successfully!');
-//       setError('');
-//     } catch (error) {
-//       console.error("Error:", error);
-//       setResponse('');
-//       setError("Error occurred while fetching Data. Please provide a video as input. Acceptable formats are .mp4, .avi, .mkv");
-//     }finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const getBarColor = (score) => {
-//     if (score <= 2) return '#FE9903';
-//     if (score <= 5) return '#FECE00';
-//     if (score <= 8) return '#8ED203';
-//     return '#00BF11';
-//   };
-
-//   return ( 
-//     <div className="container">
-//       <div className="content-wrapper">
-//         <div className="upload-metrics-container">
-//           <div className="upload-area">
-//             <form id="video-upload-form" onSubmit={handleSubmit}>
-//               <div id="drop-area" onClick={() => document.getElementById('input-file').click()}>
-//                 <input
-//                   type="file"
-//                   id="input-file"
-//                   name="videoFile"
-//                   accept="video/*"
-//                   onChange={handleFileChange}
-//                   style={{ display: 'none' }}
-//                 />
-//                 {!videoSrc && (
-//                   <label htmlFor="input-file" className="drop-label">
-//                     Drag & Drop or Click to Upload Video
-//                   </label>
-//                 )}
-//                 {videoSrc && (
-//                   <div id="video-view">
-//                     <video src={videoSrc} controls className="uploaded-video" />
-//                   </div>
-//                 )}
-//               </div>
-//               <button id="submit-btn" type="submit">
-//                 Upload
-//               </button>
-//             </form>
-//             {loading && (
-//               <div className="loader">
-//                 {/* <ThreeDots type="ThreeDots" color="#4F29F0" height={80} width={80} /> */}
-//               </div>
-//             )}
-//             <div id="error">{error}</div>
-//             <div className="review-box">
-//               <h3>Review</h3>
-//               <p>{review}</p>
-//             </div>
-//           </div>
-//           <div className="meter-container">
-//             {Object.keys(scores).map((key) => (
-//               <div key={key} className="meter">
-//                 <span className="meter-label">{displayNames[key]}</span>
-//                 <div
-//                   className="meter-bar"
-//                   style={{
-//                     width: `${scores[key] * 10}%`,
-//                     backgroundColor: getBarColor(scores[key]),
-//                   }}
-//                 ></div>
-//                 <span className="meter-score">{scores[key]}</span>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//       {/* <Chatbot username={username}/> */}
-//     </div>
-//   );
-// };
-
-// export default InterviewPrepAnalyzer;
-
 import React, { useState } from "react";
-import VideoUploader from "./Uploader";
+import axios from "axios";
+import { useAuth } from "../../contexts/AuthContext";
+import { useError } from "../../contexts/ErrorContext";
 import "./InterviewPreparationAnalyzer.css";
 
-const InterviewPrepAnalyzer = ({ username }) => {
+const InterviewPrepAnalyzer = () => {
+  const { username } = useAuth();
+  const { showError } = useError();
   const [step, setStep] = useState(1);
   const [videoSrc, setVideoSrc] = useState("");
+  const [videoFile, setVideoFile] = useState(null);
   const [scores, setScores] = useState({
     vocabulary: 0,
     confidence: 0,
@@ -166,8 +19,8 @@ const InterviewPrepAnalyzer = ({ username }) => {
   });
   const [review, setReview] = useState('');
   const [response, setResponse] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
   const displayNames = {
     vocabulary: 'Vocabulary',
     confidence: 'Confidence',
@@ -176,7 +29,19 @@ const InterviewPrepAnalyzer = ({ username }) => {
     overallPerformance: 'Overall Performance',
   };
 
-  const goToAnalysis = () => setStep(2);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const videoUrl = URL.createObjectURL(file);
+      setVideoSrc(videoUrl);
+      setVideoFile(file);
+    }
+  };
+
+  const handleRemove = () => {
+    setVideoSrc("");
+    setVideoFile(null);
+  };
 
   const getBarColor = (score) => {
     if (score <= 2) return '#FE9903';
@@ -185,55 +50,83 @@ const InterviewPrepAnalyzer = ({ username }) => {
     return '#00BF11';
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!videoFile) {
+      showError("Please provide a valid video file.");
+      return;
+    }
+    
     setLoading(true);
-
     const formData = new FormData();
-    formData.append("file", e.target.videoFile.files[0]);
+    formData.append("file", videoFile);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/upload-video", {
-        method: "POST",
-        body: formData,
+      const { data } = await axios.post("http://localhost:8000/upload-video", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok.");
-      }
-
-      const data = await response.json();
-      console.log(data);
+      
       if (!data) {
         throw new Error("Invalid response structure.");
       }
-      const vocabulary = data.vocabulary;
-      const confidence_level = data.confidence_level;
-      const engaging_ability = data.engaging_ability;
-      const speaking_style = data.speaking_style;
-      const overall_average = data.overall_average;
-      const review = data.review;
-      // error might be here
-
-      setScores({ vocabulary, confidence: confidence_level, engaging: engaging_ability, speakingStyle: speaking_style, overallPerformance: overall_average });
-      setReview(review);
-      setResponse('Video processed successfully!');
-      setError('');
+      
+      setScores({
+        vocabulary: data.vocabulary,
+        confidence: data.confidence_level,
+        engaging: data.engaging_ability,
+        speakingStyle: data.speaking_style,
+        overallPerformance: data.overall_average,
+      });
+      setReview(data.review);
+      setResponse("Video processed successfully!");
+      setStep(2);
     } catch (error) {
       console.error("Error:", error);
       setResponse('');
-      setError("Error occurred while fetching Data. Please provide a video as input. Acceptable formats are .mp4, .avi, .mkv");
+      showError("Error occurred while processing the video.");
     } finally {
       setLoading(false);
     }
   };
 
-
-
   return (
     <div className="page-outside">
       <div className="container">
-        {step === 1 && <VideoUploader videoSrc={videoSrc} setVideoSrc={setVideoSrc} onNext={goToAnalysis} />}
+        {step === 1 && (
+          <div className="Uploadscreen">
+            <div id="headingg">
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="/online-interview.gif" style={{ height: "60px", gap: "5px" }} alt="Interview" />
+                <h1>Master Your Interview Performance</h1>
+              </div>
+              <div id="head_para">
+                <p>
+                  Upload your interview video to receive a detailed analysis and personalized feedback. Our tool evaluates your confidence, vocabulary, engagement, and speaking style—helping you leave a lasting impression and ace your next interview!
+                </p>
+              </div>
+            </div>
+            <div id="pdfdropbox">
+              <div id="droppdf" onClick={() => document.getElementById("video-input").click()}>
+                <input
+                  type="file"
+                  id="video-input"
+                  accept="video/*"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+                <label className="file-label" htmlFor="video-input">
+                  <p>Drag & Drop or Click to Upload Video</p>
+                </label>
+              </div>
+              {videoFile && (
+                <div className="pdf-info">
+                  <p>Uploaded Video: {videoFile.name}</p>
+                  <button className="remove-button" onClick={handleRemove}>Remove Video</button>
+                </div>
+              )}
+              <button id="next_button" onClick={handleSubmit} disabled={!videoFile || loading}>{loading ? 'Processing...' : 'Next'}</button>
+            </div>
+          </div>
+        )}
         {step === 2 && videoSrc && (
           <div className="video-preview">
             <div>
@@ -247,7 +140,7 @@ const InterviewPrepAnalyzer = ({ username }) => {
                         className="meter-fill"
                         style={{
                           width: `${scores[key] * 10}%`,
-                          backgroundColor: getBarColor(scores[key])
+                          backgroundColor: getBarColor(scores[key]),
                         }}
                       ></div>
                     </div>

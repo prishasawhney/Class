@@ -10,7 +10,7 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 # Helper functions for OTP
-def generate_otp(length=6):
+def generate_otp(length=4):
     """Generate a random numeric OTP"""
     return ''.join(random.choices(string.digits, k=length))
 

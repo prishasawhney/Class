@@ -2,7 +2,7 @@ import React from 'react';
 import "boxicons";
 import "./Todo.css";
 
-const Task = ({ task, setTaskPanel, setEditingTask, deleteTask, toggleTaskCompletion, openTaskKey, setOpenTaskKey }) => {
+const Task = ({ task, setTaskPanel, setEditingTask, removeTask, toggleTaskCompletion, openTaskKey, setOpenTaskKey }) => {
     
     const isExpanded = openTaskKey === task.taskKey;
 
@@ -50,7 +50,7 @@ const Task = ({ task, setTaskPanel, setEditingTask, deleteTask, toggleTaskComple
                             setEditingTask(task);
                             setTaskPanel(true);
                         }}></box-icon>
-                        <box-icon name="trash" size="18px" onClick={() => deleteTask(task.taskKey)}></box-icon>
+                        <box-icon name="trash" size="18px" onClick={() => removeTask(task.taskKey)}></box-icon>
                         <box-icon 
                             type="solid" 
                             name="chevron-down" 
@@ -75,7 +75,7 @@ const Task = ({ task, setTaskPanel, setEditingTask, deleteTask, toggleTaskComple
                             setEditingTask(task);
                             setTaskPanel(true);
                         }}></box-icon>
-                        <box-icon name="trash" size="18px" onClick={() => deleteTask(task.taskKey)}></box-icon>
+                        <box-icon name="trash" size="18px" onClick={() => removeTask(task.taskKey)}></box-icon>
                         <box-icon 
                             type="solid" 
                             name="chevron-down" 

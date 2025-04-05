@@ -21,7 +21,7 @@
   font-size: 30px;
   color: white;
   z-index: 1000;
-  text-align: center;
+  text-align: center; 
 }
  
 #pageMessagingArea {
@@ -33,6 +33,7 @@
   z-index: 1;
   overflow-y: scroll;
   scroll-behavior: smooth;
+  margin-top: 10px;
 }
 
 #pageInputArea {
@@ -43,6 +44,23 @@
   background: none;
   flex-direction: column;
   margin-left: 10%;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.folder-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.file-name {
+  /* font-size: 12px; */
+  color: #333;
+  word-break: break-word;
 }
 
 #pageInputArea form {
@@ -89,9 +107,9 @@
 #imagechatbubble {
   width: fit-content;
   height: fit-content;
-  border-radius: 20px;
+  border-radius: 10px;
   margin-bottom: 8px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .userchat {
@@ -109,18 +127,20 @@
 }
 
 #textmessagechat {
-  width: 500px;
+  max-width: 500px;
+  display:flex;
+  align-items: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.5;
-  padding-right: 5px;
+  /* padding-right: 25px; */
 }
 
 #messageresponse{
   width: 100%;
   padding: 5px;
   position: relative;
-  left: 15px;
+  /* left: 15px; */
 }
 
 #imageininput {
@@ -204,7 +224,7 @@ input:focus{
   transition: all 800ms ease;
 }
 
-.text {
+.chattext {
   font-weight: 600;
   color: #555;
   font-size: medium;
@@ -214,7 +234,7 @@ input:focus{
   background: linear-gradient(0deg,#A47CF3,#683FEA);
 }
 
-.btn-gemini:hover .text {
+.btn-gemini:hover .chattext {
   color: white;
 }
 

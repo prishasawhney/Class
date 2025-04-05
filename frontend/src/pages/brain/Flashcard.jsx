@@ -6,7 +6,7 @@ const Card = ({ key, question, answer, hint, color, darkerColors }) => {
     const [flipped, setFlipped] = useState(false);
 
     const handleClick = () => {
-        setFlipped(!flipped);  
+        setFlipped(!flipped);   
     };
 
     return (

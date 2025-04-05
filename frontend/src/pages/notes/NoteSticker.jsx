@@ -6,7 +6,7 @@ import rehypeRaw from "rehype-raw";
 import htmlToPdfmake from 'html-to-pdfmake';
 import pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { NotesContext } from "../../contexts/NotesContext";
+import { useNotes } from "../../contexts/NotesContext";
 
 pdfMake.vfs = pdfFonts?.pdfMake?.vfs;
 
@@ -50,7 +50,7 @@ const NoteSticker = ({
 
     return plainText;
   };
-  const { deleteNote } = useContext(NotesContext);
+  const { deleteNote } = useNotes();
   const plainText = parseMarkdownToPlainText(note.noteText);
 
   const downloadNote = async () => {

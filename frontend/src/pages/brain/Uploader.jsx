@@ -1,13 +1,16 @@
 import React, { useState, useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
-import "./BrainPage.css";
-import { FlashcardContext } from "../../contexts/FlashcardContext";  
+import { useBrain } from "../../contexts/BrainContext";
+import { useAuth } from "../../contexts/AuthContext"; // Import Auth context
+import "./BrainPage.css";  
 
 const Uploader = ({
   onNext
 }) => {
+  const { username } = useAuth(); // Get username from Auth context
+  const { PDFBrain } = useBrain();
   const [error, setError] = useState("");
-  const { acceptedFiles, setAcceptedFiles} = useContext(FlashcardContext);
+  const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [pdfName, setPdfName] = useState("");
 
   // Handle file drop
@@ -28,12 +31,17 @@ const Uploader = ({
   );
 
   // Proceed to next step
-  const handleNext = () => {
+  const handleNext = async () => {
     if (acceptedFiles.length === 0) {
       setError("Please upload a file before proceeding.");
       return;
     }
-    onNext(); // Proceed to the next step
+    try {
+      await PDFBrain(acceptedFiles[0], username); // Replace with dynamic username
+      onNext(); // Proceed to the next step
+    } catch (error) {
+      setError("Failed to process PDF. Please try again.");
+  }
   };
 
   // Remove the PDF

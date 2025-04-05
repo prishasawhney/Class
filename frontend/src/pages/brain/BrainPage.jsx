@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Uploader from "./Uploader";
 import ContentContainer from "./ContentContainer";
 import "./BrainPage.css";
 import Toggler from "./toggle"; 
 
 const BrainPage = () => {
 
-    const [showFluid, setShowFluid] = useState(false);
+    const [showFluid, setShowFluid] = useState(false); 
     useEffect(() => {
         const pdfButton = document.getElementById("pdf");
         const noteButton = document.getElementById("note");

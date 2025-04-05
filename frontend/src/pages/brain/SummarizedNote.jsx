@@ -3,10 +3,10 @@ import "./BrainPage.css";
 import "boxicons";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { FlashcardContext } from "../../contexts/FlashcardContext";  
+import { useBrain } from "../../contexts/BrainContext";  
 
 const SummerizedNote = () => {
-    const {summary} = useContext(FlashcardContext);
+    const {summary} = useBrain();
     return (
            <div id="SummarizedNoteContent">
                 <ReactMarkdown children={summary} remarkPlugins={[remarkGfm]} /> 
