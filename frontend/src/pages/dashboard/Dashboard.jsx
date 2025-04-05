@@ -4,7 +4,7 @@ import MedalsComponent from "./MedalsComponent.jsx";
 import "./Dashboard.css";
 import owlImage from "../../assets/dashboardOwl.png";
 import fire from "../../assets/fire.gif";
-import fire1 from "../../assets/fire1.gif";
+import fire1 from "../../assets/fire1.gif"; 
 import bullseye from "../../assets/mission.gif";
 // import { readTodos, readTaskType } from "../../API/todo.api.js";
 // import { readNotes } from "../../API/note.api.js";

@@ -362,7 +362,7 @@ transform: scale(1.1);
   background-color: transparent;
 }
 
-#edit-in-viewer:hover, #note-buttons>box-icon:hover{
+#edit-in-viewer:hover, #note-buttons>box-icon:hover, #note-buttons button:hover{
   transform: scale(1.2);
   transition: 0.3s ease;
 }
@@ -1154,23 +1154,22 @@ margin-top: 2px; /* Example value, adjust as needed */
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 5px;
+  /* padding: 5px; */
   padding-left: 10px;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
   width: fit-content;
   margin: 10px auto;
 }
 
-#searchSong input {
+#searchSong input { 
   flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
   border-radius: 6px;
   outline: none;
-  font-size: 14px;
   width: 120px;
+  border:none;
 }
 
 #searchSong button {
@@ -1197,4 +1196,10 @@ margin-top: 2px; /* Example value, adjust as needed */
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+#gradientLine{
+  width:2px;
+  height:100%;
+  background: linear-gradient(to bottom, #fff, #eee, #ddd,#eee, #fff);
 }

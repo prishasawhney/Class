@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import LoginSignupPage from "../src/pages/LoginSignupPage/LoginSignup";
+import LoginSignupPage from "../src/pages/loginSignupPage/LoginSignup";
 import ToDoPage from "../src/pages/todo/Todo";
 import CommunityPage from "../src/pages/community/CommunityPage";
 import ResumeScorer from "../src/pages/resumeScorer/ResumeScorer";
@@ -46,7 +46,7 @@ function AppContent() {
           <Route path="/resume" element={<ResumeScorer />} />
           <Route path="/interview" element={<InterviewAnalyzer />} />
           <Route path="/notes" element={<NotesPage />} />
-          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/chat" element={<ChatPage username={username}/>} />
           <Route
             path="/dashboard"
             element={<Dashboard username={username} />}

@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import TaskCard from './TaskCard';
 import { useTasks } from "../../contexts/TaskContext";
 
-export default function TaskCardContainer(){
+export default function TaskCardContainer(){ 
     const { tasks, setTasks } = useTasks();
     const getTop5TasksByDate = (tasks) => {
         return tasks

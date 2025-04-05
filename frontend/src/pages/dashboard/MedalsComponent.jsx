@@ -7,7 +7,7 @@ import SilverCoin from "../../assets/silver_coin.svg";
 import BronzeCoin from "../../assets/bronze_coin.svg";
 import { medalsData } from "../../data/MedalsData";
 
-const MedalsComponent = () => {
+const MedalsComponent = () => { 
     const coinImages = {
         BronzeCoin: BronzeCoin,
         SilverCoin: SilverCoin,

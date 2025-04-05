@@ -19,8 +19,10 @@ const SidePanel = () => {
   return (
     <div id="sidepanel">
       <div id="searchSong">
-        <box-icon name="search"></box-icon>
-        <input type="text" placeholder="Search any Song"></input>
+        <div style={{display:'flex', alignItems:'center', background:'#fff', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', padding:'5px', borderRadius:'10px'}}>
+          <box-icon name="search"></box-icon>
+          <input type="text" placeholder="Search any Song"></input>
+        </div>
         <button>Add to Playlist</button>
       </div>
       <div className="card-sidepanel">

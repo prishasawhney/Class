@@ -12,7 +12,7 @@ const NoteWriter = ({
   noteText,
   setNoteTitle,
   setNoteText,
-  handleSubmit,
+  handleSubmit, 
   discardNote,
   closeNoteWriter,
   isEditingNote

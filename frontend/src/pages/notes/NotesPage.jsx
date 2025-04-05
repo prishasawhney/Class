@@ -4,7 +4,7 @@ import "./NotesPage.css";
 import "boxicons";
 import NoteSticker from "./NoteSticker";
 import NoteWriter from "./NoteWriter.jsx";
-import NoteViewer from "./NoteViewer.jsx";
+import NoteViewer from "./NoteViewer.jsx"; 
 import SidePanel from "./SidePanel.jsx";
 import Lottie from 'react-lottie';
 import NotesAnimation from '../../assets/notes.json';
@@ -220,6 +220,7 @@ const NotesPage = () => {
             </div>
           </div>
         </div>
+        <div id="gradientLine"></div>
         <SidePanel />
       </div>
     </>
