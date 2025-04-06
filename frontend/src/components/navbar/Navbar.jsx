@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "./SideNav.css";
 import lottie from "lottie-web";
@@ -15,6 +16,7 @@ const NavBar = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
     const { tasks } = useTasks();
     const { hasPlayedOnce } = useSongs();
+    const navigate = useNavigate();
 
 
     const toggleNavbar = () => {
@@ -230,7 +232,7 @@ const NavBar = () => {
                         {username}
                     </div>)}
                 </div>
-                {isNavbarOpen && (<div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                {isNavbarOpen && (<div style={{ display: "flex", gap: "5px", alignItems: "center" }} onClick={() => navigate('/')}>
                     <box-icon name="power-off" color="#aaa" size="20px"></box-icon>
                     <p>Logout</p>
                 </div>)}

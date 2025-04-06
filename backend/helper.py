@@ -28,15 +28,15 @@ def generate_deadline_management_prompt(today, task_dict):
 
 def vidPrompt():
     prompt = """
-Analyze the video interview and provide a detailed description of the interviewee's performance. 
+Analyze the video and provide a detailed description of the candidate's performance. 
 The analysis should include the following parameters, each measured out of 10:
 
-1. Vocabulary: Assess the range and appropriateness of terms used by the interviewee.
-2. Confidence Level: Evaluate the interviewee's steadiness, tone, and lack of hesitation.
-3. Engaging Ability: Determine how well the interviewee captures and maintains the audience's attention.
-4. Speaking Style: Review the clarity, coherence, and expressiveness of the interviewee's speech.
+1. Vocabulary: Assess the range and appropriateness of terms used by the candidate.
+2. Confidence Level: Evaluate the candidate's steadiness, tone, and lack of hesitation.
+3. Engaging Ability: Determine how well the candidate captures and maintains the audience's attention.
+4. Speaking Style: Review the clarity, coherence, and expressiveness of the candidate's speech.
 
-Provide the output in the following JSON format with a text review summarizing the interviewee's performance:
+Provide the output in the following JSON format with a text review summarizing the candidate's performance:
 
 {
   "video_analysis": {
@@ -303,11 +303,68 @@ def parse_due_date(due_date_str):
     return datetime.strptime(due_date_str, "%d-%m-%Y")
 
 def FirstNote():
-    return """<p>We’re thrilled to have you on board! 🚀  </p>
-<p>C.L.A.S.S. is your ultimate companion for learning and productivity. Whether you&#39;re here to manage tasks, organize notes, or unlock your full potential with our AI-powered tools, we’re here to support you every step of the way.  </p>
-<p>Dive into your personalized dashboard, explore the exciting features we’ve crafted just for you, and start turning your goals into achievements.  </p>
-<p>Let’s make learning and productivity <em>Litt</em>! 🔥  </p>
-<p><strong>Welcome to the future. Welcome to C.L.A.S.S..</strong>  </p>"""
+    return """<p style="text-align:center;"><strong>🚀 Welcome to C.L.A.S.S. — Your Personalized Learning & Productivity Hub</strong></p>
+
+<p style="text-align:center;">
+  <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" alt="Welcome" width="300"/>
+</p>
+
+<p>We're thrilled to have you on board! At <strong>C.L.A.S.S.</strong>, we aim to revolutionize the way you learn and stay productive. Our platform integrates cutting-edge AI tools with user-friendly features to support your educational and professional journey.</p>
+
+<h3>📚 Key Features:</h3>
+
+<ul>
+  <li><strong>✨ Smart Task Manager:</strong> Plan smarter, not harder! Create, organize, and prioritize your tasks effortlessly to stay on top of everything.</li>
+
+  <li><strong>🧠 AI-Powered Notes:</strong> Transform your note-taking experience with interactive, context-aware enhancements that make studying more effective and fun.</li>
+
+  <li><strong>📅 Deadline Tracker:</strong> Never miss a beat! Get automated reminders and AI-generated smart suggestions to manage deadlines like a pro.</li>
+
+  <li><strong>📂 To-Do List & Calendar:</strong> Sync your goals with your schedule using a clean, interactive calendar and daily planner for maximum productivity.</li>
+
+  <li><strong>📈 Dashboard & Progress Analytics:</strong> Keep an eye on your personal growth. Track streaks, goals, and milestones in one beautiful, data-driven space.</li>
+
+  <li><strong>📸 SolveX:</strong> Upload images, PDFs, or docs and ask any question — SolveX decodes it with precision and gives you instant AI-powered answers.</li>
+
+  <li><strong>🗣 OratoPrism:</strong> Analyze your spoken English, receive personalized tips, and build confidence through engaging feedback and practice sessions.</li>
+
+  <li><strong>🧩 B.R.A.I.N (Boosting Resources for AI-driven Knowledge):</strong> A unified powerhouse of tools that helps you:
+    <ul>
+      <li><strong>🔍 Summarize:</strong> Instantly condense long content into key points.</li>
+      <li><strong>🃏 Flashcards:</strong> Auto-generate revision cards from your notes and readings.</li>
+      <li><strong>🧠 Mind Maps:</strong> Visualize complex ideas in a structured and interactive way.</li>
+    </ul>
+  </li>
+
+  <li><strong>🤝 Collaborative Forum:</strong> Share, discuss, and collaborate in community spaces designed for idea exchange and peer learning.</li>
+
+  <li><strong>🎯 Resume Scorer:</strong> Get instant feedback and actionable insights on your resume with AI-guided scoring.</li>
+</ul>
+
+
+<p style="text-align:center;">
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXJuOGVrYmZnZ3JocjZqNGdzamcxY2p3dXR5bjg1cXR5OTZtNW9raiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/69FqxKYGuzAyxyGDAU/giphy.gif" alt="Productivity" width="320"/>
+</p>
+
+<h3>🛠 Getting Started:</h3>
+
+<p>Begin by exploring your personalized dashboard. Here, you can set up your profile, customize your preferences, and familiarize yourself with the various tools available. Our intuitive design ensures a seamless onboarding experience.</p>
+
+<p style="text-align:center;">
+  <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNngyNmpobTM3ZHhrY3dsY3hkdW9sd3I4cDF6djMxNTNtamhuam8xOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/80KYXCRVLo1ji/giphy.gif" alt="Getting Started" width="300"/>
+</p>
+
+<h3>🌟 Join the Community:</h3>
+
+<p>Connect with like-minded individuals through our community forums. Share insights, ask questions, and collaborate on projects. Together, we can achieve more.</p>
+
+<p style="text-align:center;">
+  <img src="https://media.giphy.com/media/Rhf0uSWt1P2TFqVMZK/giphy.gif?cid=790b7611wj7vy68kgfruzwul1kvgjgzzt73wf9smhi0x37vm&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="Community" width="320"/>
+</p>
+
+<p>We're committed to providing you with the tools and support needed to excel. If you have any questions or need assistance, our support team is always ready to help.</p>
+
+<p style="text-align:center;"><strong>Welcome aboard, and here's to a productive journey with C.L.A.S.S.! 🎉</strong></p>"""
 
 def resumeScorerPrompt(docs, jobDescription):
     return f""" You are a highly specialized resume evaluator tasked with providing *strict, job-specific feedback* based on the *exact* job description provided. Your evaluation must emphasize precise alignment with the job description, penalizing mismatches and offering *detailed recommendations* on how to improve any deficiencies. The scoring should reflect how well the resume meets the requirements, and your feedback must provide clear, actionable suggestions for improvement.
@@ -374,39 +431,3 @@ def resumeScorerPrompt(docs, jobDescription):
 - Provide *clear, detailed recommendations* for each score. Offer precise suggestions on how to improve, including specific skills, keywords, and achievements the candidate should add or adjust to better match the job description. Be explicit about what the resume lacks and how those deficiencies can be addressed.
 
 """
-#     return f"""You are an expert in resume evaluation with extensive experience in assessing resumes across various industries and job roles. Your expertise lies in understanding what hiring managers seek and providing precise, actionable feedback to enhance resume quality. I am submitting my resume for your evaluation and request that you analyze it in the context of the specific job position I am targeting.
-
-# Job Description: {jobDescription}
-
-# ### Instructions:
-
-# #### 1. Resume Scoring:
-#    Evaluate the resume against the following criteria and provide a comprehensive score for each. The scoring should be detailed, reflecting the resume's effectiveness in meeting the job description's requirements and tech stack. Ensure that all scores are provided, and no parameters are left out. Each criterion is scored out of 100, with an overall score out of 100. For each score, include a detailed explanation of the reasoning behind the score, and cite specific examples from the resume text where relevant.
-
-#    - Overall Score (out of 100): Provide an aggregate score that reflects the resume's overall effectiveness for the targeted job. Offer a detailed explanation of the score, outlining key strengths and weaknesses observed, referencing specific text from the resume to support your evaluation.
-#    - Brevity Score (Keywords Matching): Assess how well the resume matches the specific keywords and phrases mentioned in the job description. Highlight specific sections or lines from the resume where keywords are used effectively or missing. Suggest precise keywords from the job description that should be integrated and indicate where they could be placed.
-#    - Impact Score (Achievements and Metrics): Evaluate the relevance and impact of the achievements listed. Reference specific achievements from the resume that demonstrate quantifiable results and contributions. Suggest how these could be improved or rephrased, providing examples of revised text that better align with job responsibilities and outcomes.
-#    - Style Score (Format and Readability): Examine the resume's overall style, including its format, structure, and readability. Provide feedback with direct references to specific formatting issues, such as inconsistent bullet points, awkward layouts, or poor readability, and suggest exact changes to improve these elements.
-#    - Skills Score (Skills and Qualifications): Evaluate the relevance, strength, and presentation of both technical and soft skills. Point out specific skills mentioned in the resume that align well with the job requirements or are missing. Suggest edits or additions with references to how these changes would better match the job description.
-
-# #### 2. Detailed Recommendations:
-#    Provide a comprehensive paragraph of recommendations with full clarity on how to improve the resume. Your feedback should be highly specific, referencing the exact text from the resume that requires adjustment:
-
-#    - Keyword Integration: Identify precise areas in the resume where critical keywords from the job description could be better integrated. Use direct excerpts from the resume and provide suggestions on how to refine the language to better align with the job description.
-#    - Achievements Enhancement: Suggest specific ways to quantify achievements more effectively, using current text from the resume as a baseline. Highlight bullet points that could benefit from more detail or clearer metrics, and provide examples of how these could be rewritten.
-#    - Skills Alignment: Offer targeted advice on improving the presentation of skills by referencing specific entries from the resume. Point out any gaps between the skills listed and those required by the job, and suggest edits or removals to streamline and strengthen the skills section.
-#    - Formatting Improvements: Comment on the resume's formatting and readability by citing exact examples of problematic areas. Suggest precise changes, such as reformatting sections or adjusting layout elements, to make the document more professional and easier to read.
-#    - Content Relevance: Highlight specific parts of the resume that include outdated or irrelevant information. Advise on removing or revising these sections, citing the text and offering more relevant alternatives that better align with the job description.
-#    - Overall Alignment: Provide an overall assessment of how well the resume aligns with the job description. Mention any critical issues that could hinder the resume's effectiveness, referencing specific resume sections and providing clear guidance on how to correct these issues.
-
-# #### 3. Mistakes to Avoid:
-#    Highlight common mistakes found in the resume by pulling specific examples from the text. Provide clear instructions on how to avoid these mistakes in the future, using direct excerpts to illustrate ineffective language, unnecessary jargon, or areas that fail to resonate with hiring managers. Offer corrected versions or alternative phrasing that would enhance the resume's appeal.
-
-# #### 4. Final Output:
-#    The final response must include all the following values. No output parameters should be omitted:
-
-#    - A comprehensive score for each evaluation criterion, with detailed explanations and references to the resume text.
-#    - Specific recommendations for each section, with actionable advice for improvements, including corrected text suggestions.
-#    - A clear summary of common mistakes to avoid in future resume versions, with examples from the resume text and proposed rectifications.
-
-#    Your response should be thorough and precise, providing clear guidance on what needs to be improved, why, and how, using direct references to the resume text to ensure full clarity and actionable advice."""

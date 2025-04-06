@@ -74,7 +74,7 @@ const InterviewPrepAnalyzer = () => {
         confidence: data.confidence_level,
         engaging: data.engaging_ability,
         speakingStyle: data.speaking_style,
-        overallPerformance: data.overall_average,
+        overallPerformance: (data.vocabulary + data.confidence_level + data.engaging_ability + data.speaking_style) / 4,
       });
       setReview(data.review);
       setResponse("Video processed successfully!");
