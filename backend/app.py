@@ -65,7 +65,7 @@ def extract_keywords_from_text(text):
 async def create_an_account(user_data: SignUpSchema):
     email = user_data.email
     password = user_data.password
-    username = user_data.usernameimage
+    username = user_data.username
 
     # Check if user already exists
     existing_user = db.Users.find_one({"username": username})
