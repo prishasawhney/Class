@@ -93,14 +93,14 @@ async def create_an_account(user_data: SignUpSchema):
     today = datetime.today().strftime('%d-%m-%Y')
     default_note = {
         "noteKey": str(uuid.uuid4()),  # Generate a unique key for the note
-        "noteTitle": "Welcome to Litt Labs",
+        "noteTitle": "Welcome to C.L.A.S.S.",
         "noteText": FirstNote(),
         "creationDate": today,
     }
     default_todo = {
         "taskKey": str(uuid.uuid4()),  # Generate a unique key for the task
-        "taskName": "First Task",
-        "taskDescription": "Explore this Website",
+        "taskName": "Kickoff Quest",
+        "taskDescription": "Dive into the experience — explore the website and discover what it has to offer!",
         "taskType": "Explore",
         "dueDate": today,
         "taskColor": "#A4E1FF",
@@ -132,32 +132,31 @@ async def create_access_token(user_data: LoginSchema):
 async def request_otp(payload: EmailRequest):
     """Request an OTP for password reset"""
     email = payload.email
-    print("Email:", email)
+    
     user = db.Users.find_one({"email": email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    print("User found")
+    
     otp = generate_otp()
     generation_time = datetime.now()
-    print("OTP:", otp)
+    
     
     db.Users.update_one(
         {"email": email},
         {"$set": {"otp": otp, "otpGenerationTime": generation_time}}
     )
-    print("OTP stored in DB")
+    
     
     success, message = send_otp_email(email, otp)
-    print("Email sent")
+    
     if not success:
         raise HTTPException(status_code=500, detail=message)
-    print("Email sent successfully")
+    
     return {"message": "OTP sent successfully"}
 
 @app.post("/forgot-password/verify-otp")
 async def verify_otp_api(verify_otp: VerifyOtpSchema):
-    print("Verifying OTP for email:", verify_otp.email)
-    print("Received OTP:", verify_otp.otp)
+    
     user = db.Users.find_one({"email": verify_otp.email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -660,12 +659,12 @@ async def process_video(file: UploadFile = File(...)):
         file_location = os.path.join(tmpdirname, file.filename)
         with open(file_location, "wb") as f:
             shutil.copyfileobj(file.file, f)
-        print("File saved ")
+        
         # Upload the video file to Google Generative AI
         video_file = genai.upload_file(path=file_location)
 
         while video_file.state.name == "PROCESSING":
-            print('.', end='')
+            
             time.sleep(10)
             video_file = genai.get_file(video_file.name)
     
@@ -673,15 +672,13 @@ async def process_video(file: UploadFile = File(...)):
             raise ValueError(video_file.state.name)
 
         # Generate content using the uploaded video and the prompt
-        print("Generating content...")
+        
         response = model.generate_content([video_file, prompt])
-        print(response.text)
+        
     return json.loads(response.text)
 
 @app.post("/scorer")
 async def generate_resumeReview(file: UploadFile = File(None), jobDescription: str = Form(...)):
-    print(f"Received file: {file.filename if file else 'No file'}")
-    print(f"Received jobDescription: {jobDescription}")
     
     content = ""
 
@@ -699,7 +696,7 @@ async def generate_resumeReview(file: UploadFile = File(None), jobDescription: s
             splits = text_splitter.split_documents(docs)
             
             content = '\n\n\n\n'.join([split.page_content for split in splits])
-            print("Processed PDF content.")
+            
 
     else:
         raise HTTPException(status_code=400, detail="No PDF uploaded.")
@@ -714,9 +711,9 @@ async def generate_resumeReview(file: UploadFile = File(None), jobDescription: s
             "response_schema": ResumeScore
         }
     )
-    # print(prompt_template)
+    
     response = model.generate_content(prompt_template)
-    # print(response.text)
+    
     
     return json.loads(response.text)
 
@@ -788,16 +785,16 @@ async def generate_summary(noteKey: str = Form(None), username: str = Form(None)
     """
     if not file and not (noteKey and username):
         raise HTTPException(status_code=400, detail="No PDF uploaded and no noteKey/username provided.")
-    print("function running")
+    
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7, top_p=0.85, google_api_key=api_key)
-    print("model loaded")
+    
     llm_prompt = summ_prompts()
-    print("prompt loaded")
+    
 
     content = ""
 
     if file:
-        print("file found")
+        
         # Process the uploaded PDF file
         with tempfile.TemporaryDirectory() as tmpdirname:
             file_location = os.path.join(tmpdirname, file.filename)
@@ -810,24 +807,24 @@ async def generate_summary(noteKey: str = Form(None), username: str = Form(None)
             content = "\n\n".join([doc.page_content for doc in docs])
     
     elif noteKey and username:
-        print("note found")
+        
         # Retrieve note from MongoDB using username and noteKey
         user = db.Users.find_one({"username": username}, {"notes": 1})
-        print("User retrieved")
+        
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         
         note = next((note for note in user.get("notes", []) if note["noteKey"] == noteKey), None)
-        print("Note retrieved")
+        
         if not note:
             raise HTTPException(status_code=404, detail="Note not found")
-        print("Note found")
+        
         content = note.get("noteText", "")
 
     # Prepare the content for summarization
     if not content:
         raise HTTPException(status_code=400, detail="No content found to summarize.")
-    print("Content found")
+    
     # Chain to generate summary
     stuff_chain = (
         {"text": lambda _: content}
@@ -837,12 +834,12 @@ async def generate_summary(noteKey: str = Form(None), username: str = Form(None)
     )
 
     try:
-        print("Invoking chain")
+        
         response = stuff_chain.invoke({})
-        print("Chain invoked")
+        
         return {"Summary": response}
     except Exception as e:
-        print("Error occurred: ",e)
+        
         raise HTTPException(status_code=500, detail=f"Error during summarization: {str(e)}")
 
 
@@ -858,13 +855,11 @@ async def chat(userPrompt: ChatSchema):
     chat_history = user.get("chatHistory", [])
     model = genai.GenerativeModel("gemini-2.0-flash")
     chat = model.start_chat(history=chat_history)
-    print("in chat")
+    
     if "/manage my deadlines" in userPrompt.question.lower():
         task_dict = {}
-        print("in manage deadlines")
+        
         for task in user.get("todos", []):
-            print("task")
-            print(task)
 
             if not task.get("isCompleted", True):
                 due = datetime.strptime(task["dueDate"], "%d-%m-%Y")
@@ -934,11 +929,8 @@ async def chat(userPrompt: ChatSchema):
             return response_payload
     
     else:
-        print("in else")
-        print(userPrompt.question)
         prompt=chatbot_default_prompt(userPrompt.question)
         response = chat.send_message(prompt)
-        print(response)
 
 
     return {"response": response.text}
