@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# 🚀 C.L.A.S.S. – Cognitive Learning with AI for Skill & Success
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **C.L.A.S.S.**, your personalized digital companion that fuses the power of Artificial Intelligence with productivity and learning. Whether you're a student aiming to optimize study sessions or a professional looking to stay organized, CLASS empowers you to stay ahead with intelligent tools designed to boost performance, clarity, and collaboration.
 
-## Available Scripts
+🌐 **Visit the platform here**: [class.ai](https://class-teal.vercel.app)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🧠 What is C.L.A.S.S.?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**C.L.A.S.S.** stands for **Cognitive Learning with AI for Skill & Success**. It is an all-in-one AI-powered productivity and learning platform tailored to help users organize, learn, collaborate, and grow—smarter and faster. It brings together a suite of intelligent tools and an intuitive interface to redefine digital learning experiences.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 📚 Key Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 📌 Smart Dashboard  
+Your personalized launchpad into every tool and productivity insight, adapting to your evolving needs.
 
-### `npm run build`
+### ✅ Task Management  
+Plan your goals, prioritize what matters, and track progress with a clean, dynamic to-do system.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 📝 AI-Powered Notes  
+Take rich, intelligent notes that enhance your learning with summaries, external references, and AI-suggested insights along with relevant images and GIFs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 📂 B.R.A.I.N – Boosting Resources for AI-driven Knowledge  
+Your power pack for deeper understanding:  
+- 🔍 **Summarizer** – Condense complex documents or articles into bite-sized, essential takeaways.  
+- 🧠 **Mind Map Generator** – Visually explore relationships between topics. *(Coming Soon)*  
+- 🧾 **Flashcard Generator** – Auto-generate flashcards to reinforce learning.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🧪 SolveX  
+SolveX enables users to upload **PDFs, DOCs, or images** and ask questions based on the content. Perfect for clarifying doubts from study material instantly.
 
-### `npm run eject`
+### 🗣 OratoPrism  
+Analyze your spoken English and communication style. Get constructive feedback on fluency, hesitation, and filler usage—helping you become more confident and fluent in English.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 💼 Resume Scorer  
+Evaluate your resume instantly with AI-powered metrics and personalized suggestions for improvement.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 🗂 Community Forum  
+Engage in meaningful discussions, ask questions, and collaborate on ideas with fellow learners and creators.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+⭐ _More exciting tools coming soon!_
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🛠️ Tech Highlights
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- React
+- Python - FastAPI
+- MongoDB
+- Gemini API
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 👥 About the Team
 
-### Analyzing the Bundle Size
+Meet the passionate minds behind **C.L.A.S.S.**, each bringing unique strengths to shape the future of learning:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Ikjot Singh**  
+  Backend maestro driving our server-side logic, database design, and Gen AI integrations. He ensures the engine of CLASS runs with precision and intelligence.  
+  🔗 [LinkedIn](https://www.linkedin.com/in/ikjot-singh-415089311) | 💻 [GitHub](https://github.com/IkjotSingh221)
 
-### Making a Progressive Web App
+- **Prisha Sawhney**  
+  Full Stack and DevOps lead who keeps everything connected and scalable. From AI implementation to seamless deployment, she ensures CLASS is always robust, responsive, and ready.  
+  🔗 [LinkedIn](https://www.linkedin.com/in/prishasawhney03) | 💻 [GitHub](https://github.com/prishasawhney)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **Harshita Khattar**  
+  Frontend developer passionate about crafting sleek, intuitive, and user-centric interfaces that make CLASS visually engaging and accessible.  
+  🔗 [LinkedIn](https://www.linkedin.com/in/harshita-khattar-4b4774252) | 💻 [GitHub](https://github.com/hkhattar22)
 
-### Advanced Configuration
+- **Yatish Garg**  
+  Frontend engineer focused on delivering clean design systems and enhancing usability. He ensures every user interaction feels effortless and natural.  
+  🔗 [LinkedIn](https://www.linkedin.com/in/yatish-garg-818554267) | 💻 [GitHub](https://github.com/yatishgarg-411)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 📬 Contact Us
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+💌 For any support, queries, or suggestions: [support@class](mailto:littlabs@yahoo.com)
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> “Let’s make learning and productivity **Litt**.” 🔥  
+> Welcome to the future. Welcome to **C.L.A.S.S.** 🚀
